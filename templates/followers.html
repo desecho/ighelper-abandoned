@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block content %}
+  <div>
+    <button class="btn btn-primary form-control col-sm-5 col-md-4"
+            @click="loadFollowers">{% trans 'Load followers' %}</button>
+    <br><br>
+    <div v-cloak>
+      <div v-for="follower in followers">[[ follower ]]</div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    'use strict';
+
+    urls.urlLoadFollowers = '{% url 'load_followers' %}';
+    vars.followers = JSON.parse('{{ followers|safe }}');
+  </script>
+  <script src="{% static 'js/followers.js' %}"></script>
+{% endblock %}
+

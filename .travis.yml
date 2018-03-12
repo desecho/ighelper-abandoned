@@ -1,0 +1,28 @@
+language: python
+
+python:
+  - 3.6
+
+after_success:
+  - codecov
+
+branches:
+  only:
+    - master
+
+env:
+  - TOXENV=pylint
+  - TOXENV=flake8
+  - TOXENV=isort
+  - TOXENV=bandit
+  - TOXENV=rstlint
+  - TOXENV=pydiatra
+  - TOXENV=pydocstyle
+  - TOXENV=safety
+  - TOXENV=py36
+
+before_install:
+  - pip install tox codecov
+
+script:
+  - tox

@@ -1,0 +1,23 @@
+{
+  "extends": ["eslint:recommended", "google", "plugin:vue/recommended"],
+  "rules": {
+    "require-jsdoc": 0,
+    "max-len": ["error", {
+      "code": 119
+    }]
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "gettext": false,
+    "urls": false,
+    "vars": false,
+    "vm": false
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}
