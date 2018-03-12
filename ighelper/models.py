@@ -64,6 +64,7 @@ class Follower(models.Model):
     avatar = models.URLField()
     approved = models.BooleanField(default=False)
     friend = models.BooleanField(default=False)
+    followed = models.BooleanField(default=False)
 
     def __str__(self):
         if self.name:
