@@ -10,7 +10,9 @@ from ighelper.views.ighelper import (
     FollowersView,
     HomeView,
     LoadFollowersView,
+    LoadLikesView,
     LoadMediasView,
+    UpdateFollowersView,
 )
 from ighelper.views.user import (
     PreferencesView,
@@ -46,6 +48,8 @@ urlpatterns += [
     # -------------------------------------------------------------------------------------------
     path('', HomeView.as_view(), name='home'),
     path('followers/', FollowersView.as_view(), name='followers'),
+    path('followers/update/', UpdateFollowersView.as_view(), name='update_followers'),
     path('followers/load/', LoadFollowersView.as_view(), name='load_followers'),
     path('load-medias/', LoadMediasView.as_view(), name='load_medias'),
+    path('load-likes/', LoadLikesView.as_view(), name='load_likes'),
 ]

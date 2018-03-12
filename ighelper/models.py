@@ -5,6 +5,8 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils.translation import LANGUAGE_SESSION_KEY
 
+from ighelper.helpers import dumb_to_smart_quotes
+
 
 def activate_user_language_preference(request, lang):
     request.session[LANGUAGE_SESSION_KEY] = lang
@@ -61,23 +63,27 @@ class Follower(models.Model):
     name = models.CharField(max_length=255, blank=True)
     avatar = models.URLField()
     approved = models.BooleanField(default=False)
+    friend = models.BooleanField(default=False)
 
     def __str__(self):
         if self.name:
-            return self.name
+            return dumb_to_smart_quotes(self.name)
         return self.instagram_username
 
     @property
     def profile(self):
         return f'{settings.INSTAGRAM_BASE_URL}/{self.instagram_username}/'
 
+    def get_number_likes(self, user):
+        return self.likes.filter(media__user=user).count()
+
 
 class Like(models.Model):
     media = models.ForeignKey(Media, models.CASCADE, related_name='likes')
-    follower = models.ForeignKey(Follower, models.CASCADE, related_name='likes')
+    follower = models.ForeignKey(Follower, models.CASCADE, related_name='likes', null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.media} - {self.follower}'
 
 
 @receiver(user_logged_in)

@@ -15,7 +15,7 @@ class Instagram:
 
     def get_followers(self):
         self.api.getUserFollowers(self.id)
-        followers = api.LastJson['users']
+        followers = self.api.LastJson['users']
         return [{
             'id': x['pk'],
             'username': x['username'],
@@ -69,3 +69,20 @@ class Instagram:
             medias_output.append(media)
 
         return medias_output
+
+    def get_likes(self, medias):
+        i = 0
+        total_medias = len(medias)
+        likes = []
+        for media in medias:
+            i += 1
+            self.api.getMediaLikers(media.instagram_id)
+            users = self.api.LastJson['users']
+            for user in users:
+                like = {
+                    'media': media,
+                    'user_instagram_id': user['pk'],
+                }
+                likes.append(like)
+            print(f'Loaded {i} / {total_medias}')
+        return likes

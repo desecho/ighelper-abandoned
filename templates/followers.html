@@ -7,10 +7,16 @@
             @click="loadFollowers">{% trans 'Load followers' %}</button>
     <br><br>
     <button class="btn btn-primary form-control col-sm-5 col-md-4"
+            @click="updateFollowers">{% trans 'Update followers' %}</button>
+    <br><br>
+    <button class="btn btn-primary form-control col-sm-5 col-md-4"
             @click="loadMedias">{% trans 'Load medias' %}</button>
     <br><br>
+    <button class="btn btn-primary form-control col-sm-5 col-md-4"
+            @click="loadLikes">{% trans 'Load likes' %}</button>
+    <br><br>
     <div v-cloak>
-      <div v-for="follower in followers">[[ follower ]]</div>
+      <div v-for="follower in followers">[[ follower.name ]] - [[ follower.number_likes ]]</div>
     </div>
   </div>
 {% endblock %}
@@ -20,7 +26,9 @@
     'use strict';
 
     urls.urlLoadFollowers = '{% url 'load_followers' %}';
+    urls.urlUpdateFollowers = '{% url 'update_followers' %}';
     urls.urlLoadMedias = '{% url 'load_medias' %}';
+    urls.urlLoadLikes = '{% url 'load_likes' %}';
 
     vars.followers = JSON.parse('{{ followers|safe }}');
   </script>
