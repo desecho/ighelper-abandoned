@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.signals import user_logged_in
@@ -15,6 +17,13 @@ def activate_user_language_preference(request, lang):
 class User(AbstractUser):
     language = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
     instagram_id = models.CharField(max_length=255, null=True, blank=True)
+
+    def get_followers(self):
+        followers = []
+        for f in self.followers.all():
+            follower = {'name': str(f), 'number_likes': f.get_number_likes(self)}
+            followers.append(follower)
+        return sorted(followers, key=itemgetter('number_likes'), reverse=True)
 
 
 class ImageManager(models.Manager):

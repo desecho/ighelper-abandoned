@@ -14,7 +14,7 @@ window.vm = new Vue({
       function success(response) {
         if (response.data.status === 'success') {
           vm.flash(gettext('Followers have been loaded'), 'success', vars.flashOptions);
-          location.reload();
+          vm.followers = response.data.followers;
         }
       }
 
@@ -29,7 +29,7 @@ window.vm = new Vue({
       function success(response) {
         if (response.data.status === 'success') {
           vm.flash(gettext('Followers have been updated'), 'success', vars.flashOptions);
-          location.reload();
+          vm.followers = response.data.followers;
         }
       }
 

@@ -1,5 +1,4 @@
 import json
-from operator import itemgetter
 
 import requests
 from django.conf import settings
@@ -39,15 +38,7 @@ class FollowersView(TemplateView):
         user = self.request.user
         if not user.instagram_id:
             get_instagram_id()
-        followers = user.followers.all()
-        followers_output = []
-        for f in followers:
-            follower = {'name': str(f), 'number_likes': f.get_number_likes(user)}
-            followers_output.append(follower)
-
-        followers_output = sorted(followers_output, key=itemgetter('number_likes'), reverse=True)
-
-        return {'followers': json.dumps(followers_output)}
+        return {'followers': json.dumps(user.get_followers())}
 
 
 class LoadFollowersView(AjaxView):
@@ -62,7 +53,7 @@ class LoadFollowersView(AjaxView):
             Follower.objects.create(
                 user=user, instagram_id=x['id'], instagram_username=x['username'], name=x['name'], avatar=x['avatar'])
 
-        return self.success()
+        return self.success(followers=user.get_followers())
 
 
 class UpdateFollowersView(AjaxView):
@@ -87,7 +78,7 @@ class UpdateFollowersView(AjaxView):
             Follower.objects.create(
                 user=user, instagram_id=x['id'], instagram_username=x['username'], name=x['name'], avatar=x['avatar'])
 
-        return self.success()
+        return self.success(followers=user.get_followers())
 
 
 class LoadMediasView(AjaxView):
