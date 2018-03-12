@@ -3,7 +3,7 @@ InstagramHelper
 
 |Build Status| |Requirements Status| |Codecov|
 
-The web application on Django_ 2, Vue.js_ 2, Bootstrap_ 4. It allows you to manage your followers.
+The web application on Django_ 2, Vue.js_ 2, Bootstrap_ 4. It allows you to manage your followers. It also allows you to see a total number of images, videos and likes.
 
 Installation instructions
 ----------------------------
