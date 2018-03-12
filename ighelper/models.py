@@ -15,6 +15,16 @@ class User(AbstractUser):
     instagram_id = models.CharField(max_length=255, null=True, blank=True)
 
 
+class ImageManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(media_type=Media.MEDIA_TYPE_IMAGE)
+
+
+class VideoManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(media_type=Media.MEDIA_TYPE_VIDEO)
+
+
 class Media(models.Model):
     MEDIA_TYPE_IMAGE = 1
     MEDIA_TYPE_VIDEO = 2
@@ -27,10 +37,12 @@ class Media(models.Model):
     instagram_id = models.CharField(max_length=255)
     date = models.DateTimeField()
     media_type = models.PositiveIntegerField(choices=MEDIA_TYPES)
-    text = models.CharField(max_length=255)
-    location = models.CharField(max_length=255)
-    image = models.URLField()
+    text = models.CharField(max_length=255, blank=True)
+    location = models.CharField(max_length=255, blank=True)
+    image = models.URLField(max_length=255)
     video = models.URLField(null=True, blank=True)
+    images = ImageManager()
+    videos = VideoManager()
 
     def __str__(self):
         return f'{self.user} - {self.instagram_id}'

@@ -6,6 +6,9 @@
     <button class="btn btn-primary form-control col-sm-5 col-md-4"
             @click="loadFollowers">{% trans 'Load followers' %}</button>
     <br><br>
+    <button class="btn btn-primary form-control col-sm-5 col-md-4"
+            @click="loadMedias">{% trans 'Load medias' %}</button>
+    <br><br>
     <div v-cloak>
       <div v-for="follower in followers">[[ follower ]]</div>
     </div>
@@ -17,6 +20,8 @@
     'use strict';
 
     urls.urlLoadFollowers = '{% url 'load_followers' %}';
+    urls.urlLoadMedias = '{% url 'load_medias' %}';
+
     vars.followers = JSON.parse('{{ followers|safe }}');
   </script>
   <script src="{% static 'js/followers.js' %}"></script>

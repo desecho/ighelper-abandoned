@@ -6,7 +6,12 @@ from django.contrib.auth.views import login
 from django.urls import path
 from django.views.i18n import JavaScriptCatalog
 
-from ighelper.views.ighelper import FollowersView, HomeView, LoadFollowersView
+from ighelper.views.ighelper import (
+    FollowersView,
+    HomeView,
+    LoadFollowersView,
+    LoadMediasView,
+)
 from ighelper.views.user import (
     PreferencesView,
     SavePreferencesView,
@@ -42,4 +47,5 @@ urlpatterns += [
     path('', HomeView.as_view(), name='home'),
     path('followers/', FollowersView.as_view(), name='followers'),
     path('followers/load/', LoadFollowersView.as_view(), name='load_followers'),
+    path('load-medias/', LoadMediasView.as_view(), name='load_medias'),
 ]
