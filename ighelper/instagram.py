@@ -24,19 +24,19 @@ class Instagram:
         } for x in followers]
 
     def get_medias(self):
-        def get_video():
-            if m['media_type'] == Media.MEDIA_TYPE_VIDEO:
-                return m['video_versions'][0]['url']
+        def get_video(media):
+            if media['media_type'] == Media.MEDIA_TYPE_VIDEO:
+                return media['video_versions'][0]['url']
             return None
 
-        def get_location():
-            if 'location' in m:
-                return m['location']['name']
+        def get_location(media):
+            if 'location' in media:
+                return media['location']['name']
             return ''
 
-        def get_text():
-            if 'caption' in m and m['caption']:
-                return m['caption']['text']
+        def get_text(media):
+            if 'caption' in media and media['caption']:
+                return media['caption']['text']
             return ''
 
         self.api.getUsernameInfo(self.id)
@@ -61,10 +61,10 @@ class Instagram:
                 'id': m['id'],
                 'media_type': m['media_type'],
                 'date': datetime.fromtimestamp(m['taken_at']),
-                'text': get_text(),
-                'location': get_location(),
+                'text': get_text(m),
+                'location': get_location(m),
                 'image': m['image_versions2']['candidates'][0]['url'],
-                'video': get_video()
+                'video': get_video(m)
             }
             medias_output.append(media)
 
