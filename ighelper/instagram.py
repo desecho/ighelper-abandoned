@@ -4,20 +4,20 @@ from datetime import datetime
 from django.conf import settings
 from InstagramAPI import InstagramAPI
 
+from ighelper.helpers import get_name
 from ighelper.models import Media
 
 
 class Instagram:
-    def __init__(self, username, password, instagram_id):
+    def __init__(self, username, password):
         self.api = InstagramAPI(username, password)
         self.api.login()
-        self.id = instagram_id
 
     def get_followers(self):
-        self.api.getUserFollowers(self.id)
+        self.api.getSelfUserFollowers()
         followers = self.api.LastJson['users']
         return [{
-            'id': x['pk'],
+            'id': str(x['pk']),
             'username': x['username'],
             'name': x['full_name'],
             'avatar': x['profile_pic_url']
@@ -39,14 +39,14 @@ class Instagram:
                 return media['caption']['text']
             return ''
 
-        self.api.getUsernameInfo(self.id)
+        self.api.getSelfUsernameInfo()
         media_number = self.api.LastJson['user']['media_count']
 
         medias = []
         max_id = ''
         pages = media_number // 18
         for i in range(pages + 1):
-            self.api.getUserFeed(usernameId=self.id, maxid=max_id)
+            self.api.getSelfUserFeed(maxid=max_id)
             medias += self.api.LastJson['items']
             if not self.api.LastJson['more_available']:
                 break
@@ -81,8 +81,13 @@ class Instagram:
             for user in users:
                 like = {
                     'media': media,
-                    'user_instagram_id': user['pk'],
+                    'user_instagram_id': str(user['pk']),
                 }
                 likes.append(like)
             print(f'Loaded {i} / {total_medias}')
         return likes
+
+    def get_users_i_am_following(self):
+        self.api.getSelfUsersFollowing()
+        users = self.api.LastJson['users']
+        return [{'id': str(user['pk']), 'name': get_name(user['full_name'], user['username'])} for user in users]

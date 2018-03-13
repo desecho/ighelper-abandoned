@@ -2,7 +2,7 @@ import re
 
 
 # Mainly taken from https://gist.github.com/davidtheclark/5521432
-def dumb_to_smart_quotes(string):
+def _dumb_to_smart_quotes(string):
     """Take a string and return it with dumb quotes, single and double,
     replaced by smart quotes. Accounts for the possibility of HTML tags
     within the string."""
@@ -21,3 +21,9 @@ def dumb_to_smart_quotes(string):
     string = string.replace("'", '‘')
     string = re.sub(r'=‘(.*?)’', r"='\1'", string)
     return string
+
+
+def get_name(name, username):
+    if name:
+        return _dumb_to_smart_quotes(name)
+    return username

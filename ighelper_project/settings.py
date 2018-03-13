@@ -76,6 +76,7 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'admin_reorder.middleware.ModelAdminReorder',
+    'ighelper.middleware.PutHandlerMiddleware',
 ]
 if DEBUG:  # pragma: no cover
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')

@@ -7,7 +7,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.utils.translation import LANGUAGE_SESSION_KEY
 
-from ighelper.helpers import dumb_to_smart_quotes
+from ighelper.helpers import get_name
 
 
 def activate_user_language_preference(request, lang):
@@ -16,12 +16,20 @@ def activate_user_language_preference(request, lang):
 
 class User(AbstractUser):
     language = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
-    instagram_id = models.CharField(max_length=255, null=True, blank=True)
 
     def get_followers(self):
         followers = []
         for f in self.followers.all():
-            follower = {'name': str(f), 'number_likes': f.get_number_likes(self)}
+            follower = {
+                'id': f.id,
+                'elementId': f'follower{f.id}',
+                'name': str(f),
+                'number_likes': f.get_number_likes(self),
+                'avatar': f.avatar,
+                'profile': f.profile,
+                'followed': f.followed,
+                'approved': f.approved
+            }
             followers.append(follower)
         return sorted(followers, key=itemgetter('number_likes'), reverse=True)
 
@@ -72,13 +80,10 @@ class Follower(models.Model):
     name = models.CharField(max_length=255, blank=True)
     avatar = models.URLField()
     approved = models.BooleanField(default=False)
-    friend = models.BooleanField(default=False)
     followed = models.BooleanField(default=False)
 
     def __str__(self):
-        if self.name:
-            return dumb_to_smart_quotes(self.name)
-        return self.instagram_username
+        return get_name(self.name, self.instagram_username)
 
     @property
     def profile(self):

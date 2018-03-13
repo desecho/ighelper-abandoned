@@ -15,11 +15,11 @@
 </head>
 <body>
 <div>
-{% include 'includes/menu.html' %}
-<div id="app" class="container-fluid mt-3">
-  <flash-message class="flashpool"></flash-message>
-  {% block content %}{% endblock %}
-</div>
+  {% include 'includes/menu.html' %}
+  <div id="app" class="container-fluid mt-3">
+    <flash-message class="flashpool"></flash-message>
+    {% block content %}{% endblock %}
+  </div>
 </div>
 <footer class="container-fluid py-3">
   Copyright © {% now 'Y' %} <a href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a>.

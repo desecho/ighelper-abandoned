@@ -3,20 +3,44 @@
 
 {% block content %}
   <div>
-    <button class="btn btn-primary form-control col-sm-5 col-md-4"
+    <button class="btn btn-primary form-control"
             @click="loadFollowers">{% trans 'Load followers' %}</button>
-    <br><br>
-    <button class="btn btn-primary form-control col-sm-5 col-md-4"
+    <button class="btn btn-primary form-control"
             @click="updateFollowers">{% trans 'Update followers' %}</button>
-    <br><br>
-    <button class="btn btn-primary form-control col-sm-5 col-md-4"
+    <button class="btn btn-primary form-control"
+            @click="updateUsersIAmFollowing">{% trans 'Update users I am following' %}</button>
+    <button class="btn btn-primary form-control"
             @click="loadMedias">{% trans 'Load medias' %}</button>
-    <br><br>
-    <button class="btn btn-primary form-control col-sm-5 col-md-4"
+    <button class="btn btn-primary form-control"
             @click="loadLikes">{% trans 'Load likes' %}</button>
     <br><br>
-    <div v-cloak>
-      <div v-for="follower in followers">[[ follower.name ]] - [[ follower.number_likes ]]</div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="float-right">
+            <label for="hide-approved">{% trans 'Hide approved' %}</label>
+            <input id="hide-approved" type="checkbox" v-model="hideApproved">
+          </div>
+          <table v-cloak class="table">
+            <tr>
+              <th>{% trans 'Avatar' %}</th>
+              <th>{% trans 'Name' %}</th>
+              <th>{% trans 'Likes' %}</th>
+              <th class="followed-by-me">{% trans 'Followed by me' %}</th>
+              <th>{% trans 'Approved' %}</th>
+            </tr>
+            <tr v-for="follower in followers" class="follower" v-show="!(hideApproved && isApproved(follower))">
+              <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name"/></a>
+              </td>
+              <td><a :href="follower.profile" target="_blank">[[ follower.name ]]</a></td>
+              <td>[[ follower.number_likes ]]</td>
+              <td><input type="checkbox" :checked="follower.followed" disabled></td>
+              <td><input :id="follower.elementId" type="checkbox" :checked="isApproved(follower)"
+                         :disabled="follower.followed" @click="setApprovedStatus(follower.id)"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}
@@ -25,13 +49,14 @@
   <script>
     'use strict';
 
-    urls.urlLoadFollowers = '{% url 'load_followers' %}';
-    urls.urlUpdateFollowers = '{% url 'update_followers' %}';
-    urls.urlLoadMedias = '{% url 'load_medias' %}';
-    urls.urlLoadLikes = '{% url 'load_likes' %}';
+    urls.followers = '{% url 'followers' %}';
+    urls.loadFollowers = '{% url 'load_followers' %}';
+    urls.updateFollowers = '{% url 'update_followers' %}';
+    urls.loadMedias = '{% url 'load_medias' %}';
+    urls.loadLikes = '{% url 'load_likes' %}';
+    urls.updateUsersIAmFollowing = '{% url 'update_users_i_am_following' %}';
 
     vars.followers = JSON.parse('{{ followers|safe }}');
   </script>
   <script src="{% static 'js/followers.js' %}"></script>
 {% endblock %}
-

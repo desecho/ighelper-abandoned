@@ -1,7 +1,7 @@
 import json
 
-import requests
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 
 from ighelper.instagram import Instagram
 from ighelper.models import Follower, Like, Media
@@ -30,15 +30,7 @@ class FollowersView(TemplateView):
     template_name = 'followers.html'
 
     def get_context_data(self):
-        def get_instagram_id():
-            r = requests.get(f'{settings.INSTAGRAM_BASE_URL}/{user.username}/?__a=1')
-            user.instagram_id = r.json()['user']['id']
-            user.save()
-
-        user = self.request.user
-        if not user.instagram_id:
-            get_instagram_id()
-        return {'followers': json.dumps(user.get_followers())}
+        return {'followers': json.dumps(self.request.user.get_followers())}
 
 
 class LoadFollowersView(AjaxView):
@@ -46,7 +38,7 @@ class LoadFollowersView(AjaxView):
         user = self.request.user
         if user.username == settings.DESECHO8653_USERNAME:
             password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password, user.instagram_id)
+        instagram = Instagram(user.username, password)
         followers = instagram.get_followers()
         user.followers.all().delete()
         for x in followers:
@@ -61,12 +53,12 @@ class UpdateFollowersView(AjaxView):
         user = self.request.user
         if user.username == settings.DESECHO8653_USERNAME:
             password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password, user.instagram_id)
+        instagram = Instagram(user.username, password)
         followers = instagram.get_followers()
         current_followers = user.followers.all()
 
         # Remove followers which have been deleted / have unfollowed
-        followers_ids = [str(x['id']) for x in followers]
+        followers_ids = [x['id'] for x in followers]
         for follower in current_followers:
             if follower.instagram_id not in followers_ids:
                 follower.delete()
@@ -86,7 +78,7 @@ class LoadMediasView(AjaxView):
         user = self.request.user
         if user.username == settings.DESECHO8653_USERNAME:
             password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password, user.instagram_id)
+        instagram = Instagram(user.username, password)
         medias = instagram.get_medias()
         Media.objects.filter(user=user).delete()
         for m in medias:
@@ -108,7 +100,7 @@ class LoadLikesView(AjaxView):
         user = self.request.user
         if user.username == settings.DESECHO8653_USERNAME:
             password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password, user.instagram_id)
+        instagram = Instagram(user.username, password)
         medias = user.medias.all()
         likes = instagram.get_likes(medias)
         Like.objects.filter(media__user=user).delete()
@@ -120,4 +112,40 @@ class LoadLikesView(AjaxView):
                 follower = None
             Like.objects.create(media=l['media'], follower=follower)
 
+        return self.success()
+
+
+class UpdateUsersIAmFollowingView(AjaxView):
+    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
+        user = self.request.user
+        if user.username == settings.DESECHO8653_USERNAME:
+            password = settings.DESECHO8653_PASSWORD
+        instagram = Instagram(user.username, password)
+        users_i_am_following = instagram.get_users_i_am_following()
+
+        # Reset followed status.
+        user.followers.update(followed=False)
+        followers = user.followers.all()
+
+        for u in users_i_am_following:
+            # We have a mutual followership.
+            followers_found = followers.filter(instagram_id=u['id'])
+            if followers_found.exists():
+                follower = followers_found[0]
+                follower.followed = True
+                follower.save()
+
+        return self.success(followers=user.get_followers())
+
+
+class SetApprovedStatusView(AjaxView):
+    def put(self, *args, **kwargs):  # pylint: disable=unused-argument
+        try:
+            status = json.loads(self.request.PUT['status'])
+        except KeyError:
+            return self.render_bad_request_response()
+
+        follower = get_object_or_404(Follower, user=self.request.user, id=kwargs['id'])
+        follower.approved = status
+        follower.save()
         return self.success()

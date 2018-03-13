@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls import include
 from django.contrib import admin
 from django.contrib.auth.views import login
-from django.urls import path
+from django.urls import path, re_path
 from django.views.i18n import JavaScriptCatalog
 
 from ighelper.views.ighelper import (
@@ -12,7 +12,9 @@ from ighelper.views.ighelper import (
     LoadFollowersView,
     LoadLikesView,
     LoadMediasView,
+    SetApprovedStatusView,
     UpdateFollowersView,
+    UpdateUsersIAmFollowingView,
 )
 from ighelper.views.user import (
     PreferencesView,
@@ -50,6 +52,9 @@ urlpatterns += [
     path('followers/', FollowersView.as_view(), name='followers'),
     path('followers/update/', UpdateFollowersView.as_view(), name='update_followers'),
     path('followers/load/', LoadFollowersView.as_view(), name='load_followers'),
+    re_path(
+        r'followers/(?P<id>\d+)/set-approved-status/', SetApprovedStatusView.as_view(), name='set_approved_status'),
     path('load-medias/', LoadMediasView.as_view(), name='load_medias'),
     path('load-likes/', LoadLikesView.as_view(), name='load_likes'),
+    path('update-users-i-am-following/', UpdateUsersIAmFollowingView.as_view(), name='update_users_i_am_following'),
 ]
