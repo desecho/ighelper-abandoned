@@ -9,7 +9,7 @@ django-rosetta==0.8.1
 -e git+https://github.com/mishbahr/django-modeladmin-reorder.git@fb40efa6d3d0668f3323aaca8e5c4486c0ffdd7b#egg=django-modeladmin-reorder
 
 
-python-dateutil==2.6.1
+python-dateutil==2.7.0
 mysqlclient==1.3.12
 raven==6.6.0
 InstagramAPI==1.0.2
