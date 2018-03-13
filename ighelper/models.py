@@ -62,6 +62,7 @@ class Media(models.Model):
     video = models.URLField(null=True, blank=True)
     images = ImageManager()
     videos = VideoManager()
+    objects = models.Manager()
 
     def __str__(self):
         return f'{self.user} - {self.instagram_id}'
