@@ -35,22 +35,6 @@ class LoadFollowersView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
         followers = self.instagram.get_followers()
-        self.user.followers.all().delete()
-        for x in followers:
-            Follower.objects.create(
-                user=self.user,
-                instagram_id=x['id'],
-                instagram_username=x['username'],
-                name=x['name'],
-                avatar=x['avatar'])
-
-        return self.success(followers=self.user.get_followers())
-
-
-class UpdateFollowersView(InstagramAjaxView):
-    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        self.get_data()
-        followers = self.instagram.get_followers()
         current_followers = self.user.followers.all()
 
         # Remove followers which have been deleted / have unfollowed

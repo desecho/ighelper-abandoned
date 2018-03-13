@@ -13,7 +13,6 @@ from ighelper.views.ighelper import (
     LoadLikesView,
     LoadMediasView,
     SetApprovedStatusView,
-    UpdateFollowersView,
     UpdateUsersIAmFollowingView,
 )
 from ighelper.views.user import (
@@ -50,7 +49,6 @@ urlpatterns += [
     # -------------------------------------------------------------------------------------------
     path('', HomeView.as_view(), name='home'),
     path('followers/', FollowersView.as_view(), name='followers'),
-    path('followers/update/', UpdateFollowersView.as_view(), name='update_followers'),
     path('followers/load/', LoadFollowersView.as_view(), name='load_followers'),
     re_path(
         r'followers/(?P<id>\d+)/set-approved-status/', SetApprovedStatusView.as_view(), name='set_approved_status'),

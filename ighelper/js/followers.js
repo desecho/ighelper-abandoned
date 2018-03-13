@@ -29,21 +29,6 @@ window.vm = new Vue({
       const vm = this;
       axios.post(urls.loadFollowers).then(success).catch(fail);
     },
-    updateFollowers: function() {
-      function success(response) {
-        if (response.data.status === 'success') {
-          vm.flash(gettext('Followers have been updated'), 'success', vars.flashOptions);
-          vm.followers = response.data.followers;
-        }
-      }
-
-      function fail() {
-        vm.flash(gettext('Error updating followers'), 'error', vars.flashOptions);
-      }
-
-      const vm = this;
-      axios.post(urls.updateFollowers).then(success).catch(fail);
-    },
     loadMedias: function() {
       function success(response) {
         if (response.data.status === 'success') {
