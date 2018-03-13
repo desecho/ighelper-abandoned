@@ -1,12 +1,10 @@
 import json
 
-from django.conf import settings
 from django.shortcuts import get_object_or_404
 
-from ighelper.instagram import Instagram
 from ighelper.models import Follower, Like, Media
 
-from .mixins import AjaxView, TemplateView
+from .mixins import AjaxView, InstagramAjaxView, TemplateView
 
 
 class HomeView(TemplateView):
@@ -33,29 +31,27 @@ class FollowersView(TemplateView):
         return {'followers': json.dumps(self.request.user.get_followers())}
 
 
-class LoadFollowersView(AjaxView):
+class LoadFollowersView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        user = self.request.user
-        if user.username == settings.DESECHO8653_USERNAME:
-            password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password)
-        followers = instagram.get_followers()
-        user.followers.all().delete()
+        self.get_data()
+        followers = self.instagram.get_followers()
+        self.user.followers.all().delete()
         for x in followers:
             Follower.objects.create(
-                user=user, instagram_id=x['id'], instagram_username=x['username'], name=x['name'], avatar=x['avatar'])
+                user=self.user,
+                instagram_id=x['id'],
+                instagram_username=x['username'],
+                name=x['name'],
+                avatar=x['avatar'])
 
-        return self.success(followers=user.get_followers())
+        return self.success(followers=self.user.get_followers())
 
 
-class UpdateFollowersView(AjaxView):
+class UpdateFollowersView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        user = self.request.user
-        if user.username == settings.DESECHO8653_USERNAME:
-            password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password)
-        followers = instagram.get_followers()
-        current_followers = user.followers.all()
+        self.get_data()
+        followers = self.instagram.get_followers()
+        current_followers = self.user.followers.all()
 
         # Remove followers which have been deleted / have unfollowed
         followers_ids = [x['id'] for x in followers]
@@ -68,22 +64,23 @@ class UpdateFollowersView(AjaxView):
             if current_followers.filter(instagram_id=instagram_id).exists():
                 continue
             Follower.objects.create(
-                user=user, instagram_id=x['id'], instagram_username=x['username'], name=x['name'], avatar=x['avatar'])
+                user=self.user,
+                instagram_id=x['id'],
+                instagram_username=x['username'],
+                name=x['name'],
+                avatar=x['avatar'])
 
-        return self.success(followers=user.get_followers())
+        return self.success(followers=self.user.get_followers())
 
 
-class LoadMediasView(AjaxView):
+class LoadMediasView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        user = self.request.user
-        if user.username == settings.DESECHO8653_USERNAME:
-            password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password)
-        medias = instagram.get_medias()
-        Media.objects.filter(user=user).delete()
+        self.get_data()
+        medias = self.instagram.get_medias()
+        Media.objects.filter(user=self.user).delete()
         for m in medias:
             Media.objects.create(
-                user=user,
+                user=self.user,
                 instagram_id=m['id'],
                 media_type=m['media_type'],
                 date=m['date'],
@@ -95,17 +92,14 @@ class LoadMediasView(AjaxView):
         return self.success()
 
 
-class LoadLikesView(AjaxView):
+class LoadLikesView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        user = self.request.user
-        if user.username == settings.DESECHO8653_USERNAME:
-            password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password)
-        medias = user.medias.all()
-        likes = instagram.get_likes(medias)
-        Like.objects.filter(media__user=user).delete()
+        self.get_data()
+        medias = self.user.medias.all()
+        likes = self.instagram.get_likes(medias)
+        Like.objects.filter(media__user=self.user).delete()
         for l in likes:
-            users = user.followers.filter(instagram_id=l['user_instagram_id'])
+            users = self.user.followers.filter(instagram_id=l['user_instagram_id'])
             if users.exists():
                 follower = users[0]
             else:
@@ -115,17 +109,14 @@ class LoadLikesView(AjaxView):
         return self.success()
 
 
-class UpdateUsersIAmFollowingView(AjaxView):
+class UpdateUsersIAmFollowingView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        user = self.request.user
-        if user.username == settings.DESECHO8653_USERNAME:
-            password = settings.DESECHO8653_PASSWORD
-        instagram = Instagram(user.username, password)
-        users_i_am_following = instagram.get_users_i_am_following()
+        self.get_data()
+        users_i_am_following = self.instagram.get_users_i_am_following()
 
         # Reset followed status.
-        user.followers.update(followed=False)
-        followers = user.followers.all()
+        self.user.followers.update(followed=False)
+        followers = self.user.followers.all()
 
         for u in users_i_am_following:
             # We have a mutual followership.
@@ -135,7 +126,7 @@ class UpdateUsersIAmFollowingView(AjaxView):
                 follower.followed = True
                 follower.save()
 
-        return self.success(followers=user.get_followers())
+        return self.success(followers=self.user.get_followers())
 
 
 class SetApprovedStatusView(AjaxView):
