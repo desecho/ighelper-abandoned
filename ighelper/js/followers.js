@@ -73,19 +73,24 @@ window.vm = new Vue({
       const vm = this;
       axios.post(urls.updateUsersIAmFollowing).then(success).catch(fail);
     },
-    setApprovedStatus: function(id) {
+    setApprovedStatus: function(follower) {
+      function success() {
+        follower.approved = true;
+      }
+
       function fail() {
         vm.flash(gettext('Error setting approved status'), 'error', vars.flashOptions);
         element.prop('checked', !status);
       }
 
       const vm = this;
+      const id = follower.id;
       const element = $('#follower' + id);
       const status = element.prop('checked');
       const url = `${urls.followers}${id}/set-approved-status/`;
       axios.put(url, $.param({
         status: status,
-      })).then(function() {}).catch(fail);
+      })).then(success).catch(fail);
     },
   },
 });

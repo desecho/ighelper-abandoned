@@ -34,7 +34,7 @@
               <td>[[ follower.number_likes ]]</td>
               <td><input type="checkbox" :checked="follower.followed" disabled></td>
               <td><input :id="follower.elementId" type="checkbox" :checked="isApproved(follower)"
-                         :disabled="follower.followed" @click="setApprovedStatus(follower.id)"></td>
+                         :disabled="follower.followed" @click="setApprovedStatus(follower)"></td>
             </tr>
           </table>
         </div>
