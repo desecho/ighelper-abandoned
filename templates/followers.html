@@ -15,9 +15,11 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-8">
-          <div class="float-right">
+          <div class="filters">
             <label for="hide-approved">{% trans 'Hide approved' %}</label>
-            <input id="hide-approved" type="checkbox" v-model="hideApproved">
+            <input id="hide-approved" type="checkbox" v-model="hideApproved"><br>
+            <label for="hide-followed">{% trans 'Hide followed by me' %}</label>
+            <input id="hide-followed" type="checkbox" v-model="hideFollowed">
           </div>
           <table v-cloak class="table">
             <tr>
@@ -27,7 +29,7 @@
               <th class="followed-by-me">{% trans 'Followed by me' %}</th>
               <th>{% trans 'Approved' %}</th>
             </tr>
-            <tr v-for="follower in followers" class="follower" v-show="!(hideApproved && isApproved(follower))">
+            <tr v-for="follower in followers" class="follower" v-show="!(hideApproved && isApproved(follower)) && !(hideFollowed && follower.followed)">
               <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name"/></a>
               </td>
               <td><a :href="follower.profile" target="_blank">[[ follower.name ]]</a></td>

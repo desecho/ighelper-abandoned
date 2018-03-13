@@ -9,6 +9,7 @@ window.vm = new Vue({
   data: {
     followers: vars.followers,
     hideApproved: false,
+    hideFollowed: false,
   },
   methods: {
     isApproved: function(follower) {
