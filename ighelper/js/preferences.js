@@ -12,7 +12,7 @@ window.vm = new Vue({
   methods: {
     savePreferences: function() {
       const vm = this;
-      axios.post(urls.urlSavePreferences, $.param({
+      axios.post(urls.savePreferences, $.param({
         language: vm.language,
       })).then(function() {
         location.reload();

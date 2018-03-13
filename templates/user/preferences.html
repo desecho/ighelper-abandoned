@@ -27,7 +27,7 @@
   <script>
     'use strict';
 
-    urls.urlSavePreferences = '{% url 'save_preferences' %}';
+    urls.savePreferences = '{% url 'save_preferences' %}';
     vars.language = '{{ user.language }}';
   </script>
   <script src="{% static 'js/preferences.js' %}"></script>
