@@ -146,6 +146,14 @@ TEMPLATES = [
                 # IGHelper
                 'ighelper.context_processors.variables',
             ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
+            'debug':
+            DEBUG
         },
     },
 ]
