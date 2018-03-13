@@ -2,9 +2,9 @@
 {% load i18n static %}
 
 {% block content %}
-  Total images - {{ images_number }}<br>
-  Total videos - {{ videos_number }}<br><br>
+  {% trans 'Total images' %} - {{ images_number }}<br>
+  {% trans 'Total videos' %} - {{ videos_number }}<br><br>
 
-  Total followers - {{ followers_number }}<br>
-  Total likes - {{ likes_number }}<br>
+  {% trans 'Total followers' %} - {{ followers_number }}<br>
+  {% trans 'Total likes' %} - {{ likes_number }}<br>
 {% endblock %}

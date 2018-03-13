@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-13 03:04-0400\n"
-"PO-Revision-Date: 2018-03-13 03:11-0456\n"
+"POT-Creation-Date: 2018-03-13 03:15-0400\n"
+"PO-Revision-Date: 2018-03-13 03:16-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -28,7 +28,6 @@ msgid "My Followers"
 msgstr "Мои Фолловеры"
 
 #: templates/followers.html:7
-#| msgid "Update followers"
 msgid "Load / Update followers"
 msgstr "Загрузить / Обновить фолловеров"
 
@@ -49,7 +48,6 @@ msgid "Hide approved"
 msgstr "Спрятать одобренные"
 
 #: templates/followers.html:21
-#| msgid "Followed by me"
 msgid "Hide followed by me"
 msgstr "Скрыть зафолловленных мной"
 
@@ -72,6 +70,24 @@ msgstr "Зафолловлен мной"
 #: templates/followers.html:30
 msgid "Approved"
 msgstr "Одобрен"
+
+#: templates/home.html:5
+msgid "Total images"
+msgstr "Всего фото"
+
+#: templates/home.html:6
+msgid "Total videos"
+msgstr "Всего видео"
+
+#: templates/home.html:8
+#| msgid "Load followers"
+msgid "Total followers"
+msgstr "Всего фолловеров"
+
+#: templates/home.html:9
+#| msgid "Load likes"
+msgid "Total likes"
+msgstr "Всего лайков"
 
 #: templates/includes/menu.html:8
 msgid "Toggle navigation"
@@ -96,6 +112,3 @@ msgstr "Настройки"
 #: templates/user/preferences.html:10
 msgid "Language"
 msgstr "Язык"
-
-#~ msgid "Load followers"
-#~ msgstr "Загрузить фолловеров"
