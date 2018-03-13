@@ -90,7 +90,7 @@ class LoadLikesView(InstagramAjaxView):
                 follower = None
             Like.objects.create(media=l['media'], follower=follower)
 
-        return self.success()
+        return self.success(followers=self.user.get_followers())
 
 
 class UpdateUsersIAmFollowingView(InstagramAjaxView):
