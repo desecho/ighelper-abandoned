@@ -46,8 +46,8 @@ class MediasView(TemplateView):
 class LoadMediasView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
-        medias = self.instagram.get_medias()
-        Media.objects.filter(user=self.user).delete()
+        media_ids = self.user.medias.values_list('instagram_id', flat=True)
+        medias = self.instagram.get_medias(media_ids)
         for m in medias:
             Media.objects.create(
                 user=self.user,

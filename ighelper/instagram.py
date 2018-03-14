@@ -40,7 +40,6 @@ class Instagram:
                 return media['caption']['text']
             return ''
 
-        m = m['items'][0]
         return {
             'id': m['id'],
             'media_type': m['media_type'],
@@ -53,19 +52,28 @@ class Instagram:
 
     def get_media(self, media_id):
         self.api.mediaInfo(media_id)
-        return self._get_media_data(self.api.LastJson)
+        return self._get_media_data(self.api.LastJson['items'][0])
 
-    def get_medias(self):
+    def get_medias(self, media_ids):
         self.api.getSelfUsernameInfo()
         media_number = self.api.LastJson['user']['media_count']
 
         medias = []
         max_id = ''
         pages = media_number // settings.MEDIAS_PER_PAGE
+        stop_loading = False
         for i in range(pages + 1):
             self.api.getSelfUserFeed(maxid=max_id)
-            medias += self.api.LastJson['items']
+            medias_on_page = self.api.LastJson['items']
+            for media in medias_on_page:
+                media_id = media['id']
+                if media_id in media_ids:
+                    stop_loading = True
+                    break
+                medias.append(media)
             if not self.api.LastJson['more_available']:
+                stop_loading = True
+            if stop_loading:
                 break
             max_id = self.api.LastJson['next_max_id']
             page = i + 1
@@ -73,7 +81,7 @@ class Instagram:
 
         medias_output = []
         for m in medias:
-            media = _get_media_data(m)
+            media = self._get_media_data(m)
             medias_output.append(media)
 
         return medias_output

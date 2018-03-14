@@ -64,6 +64,9 @@ class Media(models.Model):
     videos = VideoManager()
     objects = models.Manager()
 
+    class Meta:
+        ordering = ['-pk']
+
     def __str__(self):
         return f'{self.user} - {self.instagram_id}'
 
