@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-14 01:05-0400\n"
-"PO-Revision-Date: 2018-03-14 01:07-0456\n"
+"POT-Creation-Date: 2018-03-14 01:15-0400\n"
+"PO-Revision-Date: 2018-03-14 01:15-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -24,7 +24,6 @@ msgid "Home"
 msgstr "Домой"
 
 #: ighelper/menus.py:13
-#| msgid "My Followers"
 msgid "Followers"
 msgstr "Фолловеры"
 
@@ -88,6 +87,10 @@ msgstr "Всего фолловеров"
 msgid "Total likes"
 msgstr "Всего лайков"
 
+#: templates/home.html:10
+msgid "Average likes per media"
+msgstr "Среднее число лайков на медиа"
+
 #: templates/includes/menu.html:8
 msgid "Toggle navigation"
 msgstr "Переключить навигацию"
@@ -123,7 +126,6 @@ msgid "Actions"
 msgstr "Действия"
 
 #: templates/medias.html:26
-#| msgid "Load medias"
 msgid "Update media"
 msgstr "Обновить медиа"
 

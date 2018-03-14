@@ -16,11 +16,13 @@ class HomeView(TemplateView):
         images_number = Media.images.filter(user=user).count()
         videos_number = Media.videos.filter(user=user).count()
         likes_number = Like.objects.filter(media__user=user).count()
+        average_likes = likes_number // images_number
         return {
             'followers_number': followers_number,
             'images_number': images_number,
             'videos_number': videos_number,
-            'likes_number': likes_number
+            'likes_number': likes_number,
+            'average_likes': average_likes,
         }
 
 
