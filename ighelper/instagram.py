@@ -61,7 +61,7 @@ class Instagram:
 
         medias = []
         max_id = ''
-        pages = media_number // 18
+        pages = media_number // settings.MEDIAS_PER_PAGE
         for i in range(pages + 1):
             self.api.getSelfUserFeed(maxid=max_id)
             medias += self.api.LastJson['items']
@@ -70,7 +70,6 @@ class Instagram:
             max_id = self.api.LastJson['next_max_id']
             page = i + 1
             print(f'Loaded {page} / {pages}')
-            time.sleep(settings.MEDIA_SLEEP)
 
         medias_output = []
         for m in medias:

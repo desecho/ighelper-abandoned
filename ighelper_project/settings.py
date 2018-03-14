@@ -240,7 +240,7 @@ ADMIN_EMAIL = local_settings.ADMIN_EMAIL
 INSTAGRAM_BASE_URL = 'https://www.instagram.com'
 DESECHO8653_USERNAME = 'desecho8653'
 DESECHO8653_PASSWORD = local_settings.DESECHO8653_PASSWORD
-MEDIA_SLEEP = 3
+MEDIAS_PER_PAGE = 18
 
 # This is here to fix the problem with static files on dev
 try:
