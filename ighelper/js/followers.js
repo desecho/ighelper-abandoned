@@ -30,20 +30,6 @@ window.vm = new Vue({
       const vm = this;
       axios.post(urls.loadFollowers).then(success).catch(fail);
     },
-    loadMedias: function() {
-      function success(response) {
-        if (response.data.status === 'success') {
-          vm.flash(gettext('Medias have been loaded'), 'success', vars.flashOptions);
-        }
-      }
-
-      function fail() {
-        vm.flash(gettext('Error loading medias'), 'error', vars.flashOptions);
-      }
-
-      const vm = this;
-      axios.post(urls.loadMedias).then(success).catch(fail);
-    },
     loadLikes: function() {
       function success(response) {
         if (response.data.status === 'success') {

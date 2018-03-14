@@ -57,25 +57,6 @@ class LoadFollowersView(InstagramAjaxView):
         return self.success(followers=self.user.get_followers())
 
 
-class LoadMediasView(InstagramAjaxView):
-    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        self.get_data()
-        medias = self.instagram.get_medias()
-        Media.objects.filter(user=self.user).delete()
-        for m in medias:
-            Media.objects.create(
-                user=self.user,
-                instagram_id=m['id'],
-                media_type=m['media_type'],
-                date=m['date'],
-                text=m['text'],
-                location=m['location'],
-                image=m['image'],
-                video=m['video'])
-
-        return self.success()
-
-
 class LoadLikesView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()

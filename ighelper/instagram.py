@@ -23,7 +23,8 @@ class Instagram:
             'avatar': x['profile_pic_url']
         } for x in followers]
 
-    def get_medias(self):
+    @staticmethod
+    def _get_media_data(m):
         def get_video(media):
             if media['media_type'] == Media.MEDIA_TYPE_VIDEO:
                 return media['video_versions'][0]['url']
@@ -39,6 +40,22 @@ class Instagram:
                 return media['caption']['text']
             return ''
 
+        m = m['items'][0]
+        return {
+            'id': m['id'],
+            'media_type': m['media_type'],
+            'date': datetime.fromtimestamp(m['taken_at']),
+            'text': get_text(m),
+            'location': get_location(m),
+            'image': m['image_versions2']['candidates'][0]['url'],
+            'video': get_video(m)
+        }
+
+    def get_media(self, media_id):
+        self.api.mediaInfo(media_id)
+        return self._get_media_data(self.api.LastJson)
+
+    def get_medias(self):
         self.api.getSelfUsernameInfo()
         media_number = self.api.LastJson['user']['media_count']
 
@@ -57,15 +74,7 @@ class Instagram:
 
         medias_output = []
         for m in medias:
-            media = {
-                'id': m['id'],
-                'media_type': m['media_type'],
-                'date': datetime.fromtimestamp(m['taken_at']),
-                'text': get_text(m),
-                'location': get_location(m),
-                'image': m['image_versions2']['candidates'][0]['url'],
-                'video': get_video(m)
-            }
+            media = _get_media_data(m)
             medias_output.append(media)
 
         return medias_output

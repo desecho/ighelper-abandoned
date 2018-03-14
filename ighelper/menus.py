@@ -10,4 +10,5 @@ def is_authenticated(request):
 
 
 Menu.add_item('main', MenuItem(_('Home'), reverse('home'), check=is_authenticated))
-Menu.add_item('main', MenuItem(_('My Followers'), reverse('followers'), check=is_authenticated))
+Menu.add_item('main', MenuItem(_('Followers'), reverse('followers'), check=is_authenticated))
+Menu.add_item('main', MenuItem(_('Medias'), reverse('medias'), check=is_authenticated))

@@ -3,7 +3,7 @@ InstagramHelper
 
 |Build Status| |Requirements Status| |Codecov|
 
-The web application on Django_ 2, Vue.js_ 2, Bootstrap_ 4. It allows you to manage your followers. It also allows you to get statistics.
+The web application on Django_ 2, Vue.js_ 2, Bootstrap_ 4. It allows you to manage your followers and medias. It also allows you to get statistics.
 
 Features:
 
@@ -14,6 +14,10 @@ Features:
     - videos
     - followers
     - likes
+- Identify issues with medias like:
+    - no text
+    - no location
+    - no tags
 
 Installation instructions
 ----------------------------

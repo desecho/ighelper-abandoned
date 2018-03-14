@@ -2,13 +2,11 @@
 {% load i18n static %}
 
 {% block content %}
-  <div>
+  <div id="followers">
     <button class="btn btn-primary form-control"
             @click="loadFollowers">{% trans 'Load / Update followers' %}</button>
     <button class="btn btn-primary form-control"
             @click="updateUsersIAmFollowing">{% trans 'Update users I am following' %}</button>
-    <button class="btn btn-primary form-control"
-            @click="loadMedias">{% trans 'Load medias' %}</button>
     <button class="btn btn-primary form-control"
             @click="loadLikes">{% trans 'Load likes' %}</button>
     <br><br>
@@ -51,7 +49,6 @@
 
     urls.followers = '{% url 'followers' %}';
     urls.loadFollowers = '{% url 'load_followers' %}';
-    urls.loadMedias = '{% url 'load_medias' %}';
     urls.loadLikes = '{% url 'load_likes' %}';
     urls.updateUsersIAmFollowing = '{% url 'update_users_i_am_following' %}';
 
