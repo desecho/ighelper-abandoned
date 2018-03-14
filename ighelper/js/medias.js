@@ -45,6 +45,21 @@ window.vm = new Vue({
     },
     hasIssue: function(media){
       return media.noText || media.noTags || media.noLocation
-    }
+    },
+    loadLikes: function() {
+      function success(response) {
+        if (response.data.status === 'success') {
+          vm.flash(gettext('Likes have been loaded'), 'success', vars.flashOptions);
+          vm.followers = response.data.followers;
+        }
+      }
+
+      function fail() {
+        vm.flash(gettext('Error loading likes'), 'error', vars.flashOptions);
+      }
+
+      const vm = this;
+      axios.post(urls.loadLikes).then(success).catch(fail);
+    },
   },
 });

@@ -5,6 +5,8 @@
   <div>
     <button class="btn btn-primary form-control"
             @click="load">{% trans 'Load medias' %}</button>
+    <button class="btn btn-primary form-control"
+            @click="loadLikes">{% trans 'Load likes' %}</button>
     <p>{% trans 'Only medias which are missing tags, text or location are shown here' %}.</p>
     <br>
     <div class="container">
@@ -39,6 +41,7 @@
     urls.medias = '{% url 'medias' %}';
     urls.loadMedias = '{% url 'load_medias' %}';
     urls.media = '{% url 'media' %}';
+    urls.loadLikes = '{% url 'load_likes' %}';
 
     vars.medias = JSON.parse('{{ medias|safe }}');
   </script>

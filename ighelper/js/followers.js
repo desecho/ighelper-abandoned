@@ -30,21 +30,6 @@ window.vm = new Vue({
       const vm = this;
       axios.post(urls.loadFollowers).then(success).catch(fail);
     },
-    loadLikes: function() {
-      function success(response) {
-        if (response.data.status === 'success') {
-          vm.flash(gettext('Likes have been loaded'), 'success', vars.flashOptions);
-          vm.followers = response.data.followers;
-        }
-      }
-
-      function fail() {
-        vm.flash(gettext('Error loading likes'), 'error', vars.flashOptions);
-      }
-
-      const vm = this;
-      axios.post(urls.loadLikes).then(success).catch(fail);
-    },
     updateUsersIAmFollowing: function() {
       function success(response) {
         if (response.data.status === 'success') {

@@ -7,8 +7,6 @@
             @click="loadFollowers">{% trans 'Load / Update followers' %}</button>
     <button class="btn btn-primary form-control"
             @click="updateUsersIAmFollowing">{% trans 'Update users I am following' %}</button>
-    <button class="btn btn-primary form-control"
-            @click="loadLikes">{% trans 'Load likes' %}</button>
     <br><br>
     <div class="container">
       <div class="row">
@@ -49,7 +47,6 @@
 
     urls.followers = '{% url 'followers' %}';
     urls.loadFollowers = '{% url 'load_followers' %}';
-    urls.loadLikes = '{% url 'load_likes' %}';
     urls.updateUsersIAmFollowing = '{% url 'update_users_i_am_following' %}';
 
     vars.followers = JSON.parse('{{ followers|safe }}');
