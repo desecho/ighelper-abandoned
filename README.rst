@@ -9,11 +9,14 @@ Features:
 
 - See how many photos & videos your followers liked
 - Mark followers as approved
-- Get total number of:
-    - photos
-    - videos
-    - followers
-    - likes
+- Statistics:
+    - Get total number of:
+        - photos
+        - videos
+        - followers
+        - likes
+    - Get average number of likes
+
 - Identify issues with medias like:
     - no text
     - no location
