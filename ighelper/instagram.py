@@ -17,7 +17,7 @@ class Instagram:
         self.api.getSelfUserFollowers()
         followers = self.api.LastJson['users']
         return [{
-            'id': str(x['pk']),
+            'id': x['pk'],
             'username': x['username'],
             'name': x['full_name'],
             'avatar': x['profile_pic_url']
@@ -97,7 +97,7 @@ class Instagram:
             for user in users:
                 like = {
                     'media': media,
-                    'user_instagram_id': str(user['pk']),
+                    'user_instagram_id': user['pk'],
                 }
                 likes.append(like)
             print(f'Loaded {i} / {total_medias}')
@@ -106,4 +106,4 @@ class Instagram:
     def get_users_i_am_following(self):
         self.api.getSelfUsersFollowing()
         users = self.api.LastJson['users']
-        return [{'id': str(user['pk']), 'name': get_name(user['full_name'], user['username'])} for user in users]
+        return [{'id': user['pk'], 'name': get_name(user['full_name'], user['username'])} for user in users]

@@ -79,7 +79,7 @@ class Media(models.Model):
 
 class Follower(models.Model):
     user = models.ForeignKey(User, models.CASCADE, related_name='followers')
-    instagram_id = models.CharField(max_length=255)
+    instagram_id = models.BigIntegerField()
     instagram_username = models.CharField(max_length=255)
     name = models.CharField(max_length=255, blank=True)
     avatar = models.URLField()
