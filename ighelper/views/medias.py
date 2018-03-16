@@ -16,22 +16,16 @@ def get_medias(user, media_id=None):
             'noTags': False,
             'noLocation': False,
         }
-        media_issue = False
         if not m.text:
             media['noText'] = True
             media['noTags'] = True
-            media_issue = True
         elif '#' not in m.text:
             media['noTags'] = True
-            media_issue = True
         if not m.location:
             media['noLocation'] = True
-            media_issue = True
-        # We want to output the info if we request a particular media.
-        if media_issue or media_id:
-            media['image'] = m.image
-            media['id'] = m.id
-            medias_output.append(media)
+        media['image'] = m.image
+        media['id'] = m.id
+        medias_output.append(media)
     return medias_output
 
 

@@ -65,7 +65,7 @@ class Media(models.Model):
     objects = models.Manager()
 
     class Meta:
-        ordering = ['-pk']
+        ordering = ['-date']
 
     def __str__(self):
         return f'{self.user} - {self.instagram_id}'

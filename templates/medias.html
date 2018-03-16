@@ -12,19 +12,25 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-5">
+          <div class="filters">
+            <label for="show-issues-columns">{% trans 'Show issues columns' %}</label>
+            <input id="show-issues-columns" type="checkbox" v-model="showIssuesColumns"><br>
+            <label for="show-only-issues">{% trans 'Only shows medias with issues' %}</label>
+            <input id="show-only-issues" type="checkbox" v-model="showOnlyIssues"><br>
+          </div>
           <table v-cloak class="table">
             <tr>
               <th>{% trans 'Image' %}</th>
-              <th>{% trans 'No text' %}</th>
-              <th>{% trans 'No tags' %}</th>
-              <th>{% trans 'No location' %}</th>
+              <th v-show="showIssuesColumns">{% trans 'No text' %}</th>
+              <th v-show="showIssuesColumns">{% trans 'No tags' %}</th>
+              <th v-show="showIssuesColumns">{% trans 'No location' %}</th>
               <th>{% trans 'Actions' %}</th>
             </tr>
-            <tr v-for="media in medias" v-show="hasIssue(media)">
+            <tr v-for="media in medias" v-show="!(showOnlyIssues && !hasIssue(media))">
               <td><img :src="media.image" class="media-image"></td>
-              <td><input type="checkbox" :checked="media.noText" disabled></td>
-              <td><input type="checkbox" :checked="media.noTags" disabled></td>
-              <td><input type="checkbox" :checked="media.noLocation" disabled></td>
+              <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noText" disabled></td>
+              <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noTags" disabled></td>
+              <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noLocation" disabled></td>
               <td><button class="btn btn-primary form-control btn-update-media" @click="update(media)">{% trans 'Update media' %}</button></td>
             </tr>
           </table>

@@ -8,6 +8,8 @@ window.vm = new Vue({
   el: '#app',
   data: {
     medias: vars.medias,
+    showIssuesColumns: true,
+    showOnlyIssues: false,
   },
   methods: {
     load: function() {
