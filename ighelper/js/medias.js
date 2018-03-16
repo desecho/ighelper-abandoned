@@ -43,8 +43,8 @@ window.vm = new Vue({
       const url = `${urls.media}${media.id}/update/`;
       axios.put(url).then(success).catch(fail);
     },
-    hasIssue: function(media){
-      return media.noText || media.noTags || media.noLocation
+    hasIssue: function(media) {
+      return media.noText || media.noTags || media.noLocation;
     },
     loadLikes: function() {
       function success(response) {

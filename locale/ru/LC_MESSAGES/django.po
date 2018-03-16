@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-14 01:54-0400\n"
-"PO-Revision-Date: 2018-03-14 01:54-0456\n"
+"POT-Creation-Date: 2018-03-16 03:06-0400\n"
+"PO-Revision-Date: 2018-03-16 03:12-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -30,6 +30,10 @@ msgstr "Фолловеры"
 #: ighelper/menus.py:14
 msgid "Medias"
 msgstr "Медиа"
+
+#: ighelper/views/ighelper.py:23
+msgid "not available"
+msgstr "не доступно"
 
 #: templates/followers.html:7
 msgid "Load / Update followers"
@@ -92,7 +96,6 @@ msgid "Toggle navigation"
 msgstr "Переключить навигацию"
 
 #: templates/medias.html:7
-#| msgid "Update media"
 msgid "Load / Update medias"
 msgstr "Загрузить / Обновить медиа"
 

@@ -1,6 +1,7 @@
 import json
 
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 
 from ighelper.models import Follower, Like, Media
 
@@ -16,7 +17,10 @@ class HomeView(TemplateView):
         images_number = Media.images.filter(user=user).count()
         videos_number = Media.videos.filter(user=user).count()
         likes_number = Like.objects.filter(media__user=user).count()
-        average_likes = likes_number // images_number
+        if images_number:
+            average_likes = likes_number // images_number
+        else:
+            average_likes = _('not available')
         return {
             'followers_number': followers_number,
             'images_number': images_number,
