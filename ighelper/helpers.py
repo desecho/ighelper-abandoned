@@ -3,9 +3,11 @@ import re
 
 # Mainly taken from https://gist.github.com/davidtheclark/5521432
 def _dumb_to_smart_quotes(string):
-    """Take a string and return it with dumb quotes, single and double,
-    replaced by smart quotes. Accounts for the possibility of HTML tags
-    within the string."""
+    """
+    Take a string and return it with dumb quotes, single and double, replaced by smart quotes.
+
+    Accounts for the possibility of HTML tags within the string.
+    """
 
     # Find dumb double quotes coming directly after letters or punctuation,
     # and replace them with right double quotes.
