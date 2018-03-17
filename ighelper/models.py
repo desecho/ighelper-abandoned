@@ -56,13 +56,14 @@ class Media(models.Model):
     instagram_id = models.CharField(max_length=255)
     date = models.DateTimeField()
     media_type = models.PositiveIntegerField(choices=MEDIA_TYPES)
-    text = models.CharField(max_length=255, blank=True)
+    caption = models.CharField(max_length=255, blank=True)
     location = models.CharField(max_length=255, blank=True)
     image = models.URLField(max_length=255)
     video = models.URLField(null=True, blank=True)
     images = ImageManager()
     videos = VideoManager()
     objects = models.Manager()
+    likes_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-date']

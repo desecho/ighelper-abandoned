@@ -1,6 +1,6 @@
 import json
 
-from ighelper.models import Media
+from ighelper.models import Like, Media
 
 from .mixins import InstagramAjaxView, TemplateView
 
@@ -12,19 +12,21 @@ def get_medias(user, media_id=None):
     medias_output = []
     for m in medias:
         media = {
-            'noText': False,
+            'noCaption': False,
             'noTags': False,
             'noLocation': False,
         }
-        if not m.text:
-            media['noText'] = True
+        if not m.caption:
+            media['noCaption'] = True
             media['noTags'] = True
-        elif '#' not in m.text:
+        elif '#' not in m.caption:
             media['noTags'] = True
         if not m.location:
             media['noLocation'] = True
         media['image'] = m.image
         media['id'] = m.id
+        media['likes'] = m.likes_count
+        media['caption'] = m.caption
         medias_output.append(media)
     return medias_output
 
@@ -48,7 +50,7 @@ class LoadMediasView(InstagramAjaxView):
                 instagram_id=m['id'],
                 media_type=m['media_type'],
                 date=m['date'],
-                text=m['text'],
+                caption=m['caption'],
                 location=m['location'],
                 image=m['image'],
                 video=m['video'])
@@ -62,7 +64,28 @@ class UpdateMediaView(InstagramAjaxView):
         media_id = kwargs['id']
         media = self.user.medias.get(pk=media_id)
         instagram_media = self.instagram.get_media(media.instagram_id)
-        media.text = instagram_media['text']
+        media.caption = instagram_media['caption']
         media.location = instagram_media['location']
         media.save()
         return self.success(media=get_medias(self.user, media_id)[0])
+
+
+class LoadLikesView(InstagramAjaxView):
+    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
+        self.get_data()
+        medias = self.user.medias.all()
+        likes = self.instagram.get_likes(medias)
+        Like.objects.filter(media__user=self.user).delete()
+        for l in likes:
+            users = self.user.followers.filter(instagram_id=l['user_instagram_id'])
+            if users.exists():
+                follower = users[0]
+            else:
+                follower = None
+            Like.objects.create(media=l['media'], follower=follower)
+
+        # Update likes counter
+        for media in medias:
+            media.likes_count = media.likes.count()
+            media.save()
+        return self.success(medias=get_medias(self.user))

@@ -32,8 +32,10 @@ window.vm = new Vue({
         if (response.data.status === 'success') {
           const updatedMedia = response.data.media;
           media.noLocation = updatedMedia.noLocation;
-          media.noText = updatedMedia.noText;
+          media.noCaption = updatedMedia.noCaption;
           media.noTags = updatedMedia.noTags;
+          media.likes = updatedMedia.likes;
+          media.caption = updatedMedia.caption;
         }
       }
 
@@ -46,13 +48,13 @@ window.vm = new Vue({
       axios.put(url).then(success).catch(fail);
     },
     hasIssue: function(media) {
-      return media.noText || media.noTags || media.noLocation;
+      return media.noCaption || media.noTags || media.noLocation;
     },
     loadLikes: function() {
       function success(response) {
         if (response.data.status === 'success') {
           vm.flash(gettext('Likes have been loaded'), 'success', vars.flashOptions);
-          vm.followers = response.data.followers;
+          vm.medias = response.data.medias;
         }
       }
 

@@ -63,23 +63,6 @@ class LoadFollowersView(InstagramAjaxView):
         return self.success(followers=self.user.get_followers())
 
 
-class LoadLikesView(InstagramAjaxView):
-    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        self.get_data()
-        medias = self.user.medias.all()
-        likes = self.instagram.get_likes(medias)
-        Like.objects.filter(media__user=self.user).delete()
-        for l in likes:
-            users = self.user.followers.filter(instagram_id=l['user_instagram_id'])
-            if users.exists():
-                follower = users[0]
-            else:
-                follower = None
-            Like.objects.create(media=l['media'], follower=follower)
-
-        return self.success(followers=self.user.get_followers())
-
-
 class UpdateUsersIAmFollowingView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()

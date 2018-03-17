@@ -7,11 +7,10 @@
             @click="load">{% trans 'Load / Update medias' %}</button>
     <button class="btn btn-primary form-control"
             @click="loadLikes">{% trans 'Load likes' %}</button>
-    <p>{% trans 'Only medias which are missing tags, text or location are shown here' %}.</p>
     <br>
     <div class="container">
       <div class="row">
-        <div class="col-sm-5">
+        <div>
           <div class="filters">
             <label for="show-issues-columns">{% trans 'Show issues columns' %}</label>
             <input id="show-issues-columns" type="checkbox" v-model="showIssuesColumns"><br>
@@ -21,16 +20,20 @@
           <table v-cloak class="table">
             <tr>
               <th>{% trans 'Image' %}</th>
-              <th v-show="showIssuesColumns">{% trans 'No text' %}</th>
+              <th v-show="showIssuesColumns">{% trans 'No caption' %}</th>
               <th v-show="showIssuesColumns">{% trans 'No tags' %}</th>
               <th v-show="showIssuesColumns">{% trans 'No location' %}</th>
+              <th>{% trans 'Likes' %}</th>
+              <th>{% trans 'Caption' %}</th>
               <th>{% trans 'Actions' %}</th>
             </tr>
             <tr v-for="media in medias" v-show="!(showOnlyIssues && !hasIssue(media))">
               <td><img :src="media.image" class="media-image"></td>
-              <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noText" disabled></td>
+              <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noCaption" disabled></td>
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noTags" disabled></td>
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noLocation" disabled></td>
+              <td>[[ media.likes ]]</td>
+              <td>[[ media.caption ]]</td>
               <td><button class="btn btn-primary form-control btn-update-media" @click="update(media)">{% trans 'Update media' %}</button></td>
             </tr>
           </table>

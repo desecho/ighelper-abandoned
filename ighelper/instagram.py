@@ -1,4 +1,3 @@
-import time
 from datetime import datetime
 
 from django.conf import settings
@@ -35,7 +34,7 @@ class Instagram:
                 return media['location']['name']
             return ''
 
-        def get_text(media):
+        def get_caption(media):
             if 'caption' in media and media['caption']:
                 return media['caption']['text']
             return ''
@@ -44,7 +43,7 @@ class Instagram:
             'id': m['id'],
             'media_type': m['media_type'],
             'date': datetime.fromtimestamp(m['taken_at']),
-            'text': get_text(m),
+            'caption': get_caption(m),
             'location': get_location(m),
             'image': m['image_versions2']['candidates'][0]['url'],
             'video': get_video(m)

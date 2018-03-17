@@ -28,7 +28,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.min.js',
+      vue: 'vue/dist/vue.js',
     },
   },
   output: {
@@ -94,6 +94,11 @@ module.exports = {
       filename: 'js/commons.js',
       minChunks: 2,
       minSize: 0,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"',
+      },
     }),
   ],
 };

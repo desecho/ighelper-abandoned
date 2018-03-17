@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-16 03:11-0400\n"
+"POT-Creation-Date: 2018-03-16 04:52-0400\n"
 "PO-Revision-Date: 2018-03-14 01:55-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,23 +41,23 @@ msgstr "Ошибка обновления пользователей котор�
 msgid "Error setting approved status"
 msgstr "Ошибка установки статуса одобрено"
 
-#: ighelper/js/medias.js:16
+#: ighelper/js/medias.js:18
 msgid "Medias have been loaded"
 msgstr "Медиа были загружены"
 
-#: ighelper/js/medias.js:22
+#: ighelper/js/medias.js:24
 msgid "Error loading medias"
 msgstr "Ошибка загрузки медиа"
 
-#: ighelper/js/medias.js:39
+#: ighelper/js/medias.js:41
 msgid "Error updating media"
 msgstr "Ошибка обновления медиа"
 
-#: ighelper/js/medias.js:52
+#: ighelper/js/medias.js:54
 msgid "Likes have been loaded"
 msgstr "Лайки были загружены"
 
-#: ighelper/js/medias.js:58
+#: ighelper/js/medias.js:60
 msgid "Error loading likes"
 msgstr "Ошибка загрузки лайков"
 

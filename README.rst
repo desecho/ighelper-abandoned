@@ -17,10 +17,15 @@ Features:
         - likes
     - Get average number of likes
 
+- Manage your medias
+    - caption
+    - number of likes
+
 - Identify issues with medias like:
-    - no text
+    - no caption
     - no location
     - no tags
+
 
 Installation instructions
 ----------------------------

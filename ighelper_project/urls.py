@@ -11,11 +11,15 @@ from ighelper.views.ighelper import (
     FollowersView,
     HomeView,
     LoadFollowersView,
-    LoadLikesView,
     SetApprovedStatusView,
     UpdateUsersIAmFollowingView,
 )
-from ighelper.views.medias import LoadMediasView, MediasView, UpdateMediaView
+from ighelper.views.medias import (
+    LoadLikesView,
+    LoadMediasView,
+    MediasView,
+    UpdateMediaView,
+)
 from ighelper.views.user import (
     PreferencesView,
     SavePreferencesView,

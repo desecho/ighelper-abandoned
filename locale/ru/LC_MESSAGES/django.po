@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-16 03:06-0400\n"
-"PO-Revision-Date: 2018-03-16 03:12-0456\n"
+"POT-Creation-Date: 2018-03-16 04:52-0400\n"
+"PO-Revision-Date: 2018-03-16 04:55-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -59,7 +59,7 @@ msgstr "Аватар"
 msgid "Name"
 msgstr "Имя"
 
-#: templates/followers.html:24
+#: templates/followers.html:24 templates/medias.html:26
 msgid "Likes"
 msgstr "Лайки"
 
@@ -103,33 +103,40 @@ msgstr "Загрузить / Обновить медиа"
 msgid "Load likes"
 msgstr "Загрузить лайки"
 
-#: templates/medias.html:10
-msgid "Only medias which are missing tags, text or location are shown here"
-msgstr ""
-"Только медиа у которых отсутствуют таги, текст или местонахождение "
-"отображены здесь"
+#: templates/medias.html:15
+msgid "Show issues columns"
+msgstr "Показывать столбцы с проблемами"
 
 #: templates/medias.html:17
+msgid "Only shows medias with issues"
+msgstr "Показывать только медиа с проблемами"
+
+#: templates/medias.html:22
 msgid "Image"
 msgstr "Изображение"
 
-#: templates/medias.html:18
-msgid "No text"
-msgstr "Нет текста"
+#: templates/medias.html:23
+#| msgid "No location"
+msgid "No caption"
+msgstr "Нет описания"
 
-#: templates/medias.html:19
+#: templates/medias.html:24
 msgid "No tags"
 msgstr "Нет тагов"
 
-#: templates/medias.html:20
+#: templates/medias.html:25
 msgid "No location"
 msgstr "Нет местонахождения"
 
-#: templates/medias.html:21
+#: templates/medias.html:27
+msgid "Caption"
+msgstr "Описание"
+
+#: templates/medias.html:28
 msgid "Actions"
 msgstr "Действия"
 
-#: templates/medias.html:28
+#: templates/medias.html:37
 msgid "Update media"
 msgstr "Обновить медиа"
 
@@ -152,6 +159,14 @@ msgstr "Настройки"
 #: templates/user/preferences.html:10
 msgid "Language"
 msgstr "Язык"
+
+#~ msgid "Only medias which are missing tags, text or location are shown here"
+#~ msgstr ""
+#~ "Только медиа у которых отсутствуют таги, текст или местонахождение "
+#~ "отображены здесь"
+
+#~ msgid "No text"
+#~ msgstr "Нет текста"
 
 #~ msgid "Load medias"
 #~ msgstr "Загрузить медиа"
