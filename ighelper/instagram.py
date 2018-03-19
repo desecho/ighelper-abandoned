@@ -13,12 +13,12 @@ class Instagram:
     _MEDIA_NOT_FOUND_MESSAGE = 'Media not found or unavailable'
 
     def __init__(self, username, password):
-        self.api = InstagramAPI(username, password)
-        self.api.login()
+        self._api = InstagramAPI(username, password)
+        self._api.login()
 
     def get_followers(self):
-        self.api.getSelfUserFollowers()
-        followers = self.api.LastJson['users']
+        self._api.getSelfUserFollowers()
+        followers = self._api.LastJson['users']
         return [{
             'id': x['pk'],
             'username': x['username'],
@@ -54,8 +54,8 @@ class Instagram:
         }
 
     def get_media(self, media_id):
-        success = self.api.mediaInfo(media_id)
-        result = self.api.LastJson
+        success = self._api.mediaInfo(media_id)
+        result = self._api.LastJson
         if success:
             return self._get_media_data(['items'][0])
 
@@ -66,27 +66,27 @@ class Instagram:
             raise InstagramException(f'Error getting media. API response - {api_response}')
 
     def get_medias(self, media_ids):
-        self.api.getSelfUsernameInfo()
-        media_number = self.api.LastJson['user']['media_count']
+        self._api.getSelfUsernameInfo()
+        media_number = self._api.LastJson['user']['media_count']
 
         medias = []
         max_id = ''
         pages = media_number // settings.MEDIAS_PER_PAGE
         stop_loading = False
         for i in range(pages + 1):
-            self.api.getSelfUserFeed(maxid=max_id)
-            medias_on_page = self.api.LastJson['items']
+            self._api.getSelfUserFeed(maxid=max_id)
+            medias_on_page = self._api.LastJson['items']
             for media in medias_on_page:
                 media_id = media['id']
                 if media_id in media_ids:
                     stop_loading = True
                     break
                 medias.append(media)
-            if not self.api.LastJson['more_available']:
+            if not self._api.LastJson['more_available']:
                 stop_loading = True
             if stop_loading:
                 break
-            max_id = self.api.LastJson['next_max_id']
+            max_id = self._api.LastJson['next_max_id']
             page = i + 1
             print(f'Loaded {page} / {pages}')
 
@@ -107,8 +107,8 @@ class Instagram:
         medias_deleted = []
         for media in medias:
             i += 1
-            success = self.api.getMediaLikers(media.instagram_id)
-            result = self.api.LastJson
+            success = self._api.getMediaLikers(media.instagram_id)
+            result = self._api.LastJson
             if success:
                 users = result['users']
                 for user in users:
@@ -128,6 +128,6 @@ class Instagram:
         return likes, medias_deleted
 
     def get_users_i_am_following(self):
-        self.api.getSelfUsersFollowing()
-        users = self.api.LastJson['users']
+        self._api.getSelfUsersFollowing()
+        users = self._api.LastJson['users']
         return [{'id': user['pk'], 'name': get_name(user['full_name'], user['username'])} for user in users]
