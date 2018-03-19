@@ -1,5 +1,7 @@
 import json
 
+from babel.dates import format_date
+
 from ighelper.models import Like, Media
 
 from .mixins import InstagramAjaxView, TemplateView
@@ -26,7 +28,9 @@ def get_medias(user, media_id=None):
         media['image'] = m.image
         media['id'] = m.id
         media['likes'] = m.likes_count
-        media['caption'] = m.caption
+        media['caption'] = m.caption_formatted
+        media['location'] = m.location_formatted
+        media['date'] = format_date(m.date, locale=user.language)
         medias_output.append(media)
     return medias_output
 

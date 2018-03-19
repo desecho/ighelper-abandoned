@@ -105,7 +105,7 @@ window.vm = new Vue({
         }
         const url = `${urls.medias}${media.id}/caption/`;
         axios.put(url, $.param({
-          caption: caption
+          caption: caption,
         })).then(success).catch(fail);
       }
     },

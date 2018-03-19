@@ -10,7 +10,7 @@
     <br>
     <div class="container">
       <div class="row">
-        <div class="col-sm-5">
+        <div>
           <div class="filters">
             <label for="show-issues-columns">{% trans 'Show issues columns' %}</label>
             <input id="show-issues-columns" type="checkbox" v-model="showIssuesColumns"><br>
@@ -25,6 +25,8 @@
               <th v-show="showIssuesColumns">{% trans 'No location' %}</th>
               <th>{% trans 'Likes' %}</th>
               <th>{% trans 'Caption' %}</th>
+              <th>{% trans 'Location' %}</th>
+              <th class="date">{% trans 'Date' %}</th>
               <th>{% trans 'Actions' %}</th>
             </tr>
             <tr v-for="media in medias" v-show="!(showOnlyIssues && !hasIssue(media))">
@@ -34,6 +36,8 @@
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noLocation" disabled></td>
               <td>[[ media.likes ]]</td>
               <td>[[ media.caption ]]</td>
+              <td>[[ media.location ]]</td>
+              <td class="date">[[ media.date ]]</td>
               <td>
                 <button class="btn btn-primary form-control" @click="editCaption(media)">{% trans 'Edit caption' %}</button>
                 <button class="btn btn-primary form-control" @click="update(media)">{% trans 'Update media' %}</button>

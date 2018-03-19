@@ -71,11 +71,23 @@ class Media(models.Model):
     def __str__(self):
         return f'{self.user} - {self.instagram_id}'
 
+    @staticmethod
+    def _replace_single_quotes(text):
+        return text.replace("'", '’')
+
     @property
     def content(self):
         if self.video:
             return self.video
         return self.image
+
+    @property
+    def caption_formatted(self):
+        return self._replace_single_quotes(self.caption)
+
+    @property
+    def location_formatted(self):
+        return self._replace_single_quotes(self.location)
 
 
 class Follower(models.Model):
