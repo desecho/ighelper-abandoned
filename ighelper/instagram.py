@@ -12,6 +12,7 @@ from ighelper.models import Media
 class Instagram:
     _MESSAGE_MEDIA_NOT_FOUND = 'Media not found or unavailable'
     _MESSAGE_MEDIA_NOT_FOUND2 = 'You cannot edit this media'
+    _MESSAGE_MEDIA_NOT_FOUND3 = 'Sorry, this photo has been deleted.'
 
     def __init__(self, username, password):
         self._api = InstagramAPI(username, password)
@@ -119,7 +120,7 @@ class Instagram:
                     }
                     likes.append(like)
             else:
-                if 'message' in result and result['message'] == 'Sorry, this photo has been deleted.':
+                if 'message' in result and result['message'] == self._MESSAGE_MEDIA_NOT_FOUND3:
                     medias_deleted.append(media.id)
                 else:
                     api_response = json.dumps(result)

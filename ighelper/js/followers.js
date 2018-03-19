@@ -27,7 +27,6 @@ window.vm = new Vue({
         vm.flash(gettext('Error loading followers'), 'error', vars.flashOptions);
       }
 
-      const vm = this;
       axios.post(urls.loadFollowers).then(success).catch(fail);
     },
     updateUsersIAmFollowing: function() {
@@ -42,7 +41,6 @@ window.vm = new Vue({
         vm.flash(gettext('Error updating users you are following'), 'error', vars.flashOptions);
       }
 
-      const vm = this;
       axios.post(urls.updateUsersIAmFollowing).then(success).catch(fail);
     },
     setApprovedStatus: function(follower) {
@@ -55,7 +53,6 @@ window.vm = new Vue({
         element.prop('checked', !status);
       }
 
-      const vm = this;
       const id = follower.id;
       const element = $('#follower' + id);
       const status = element.prop('checked');

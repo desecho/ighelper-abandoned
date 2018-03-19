@@ -24,7 +24,6 @@ window.vm = new Vue({
         vm.flash(gettext('Error loading medias'), 'error', vars.flashOptions);
       }
 
-      const vm = this;
       axios.post(urls.loadMedias).then(success).catch(fail);
     },
     removeMedia: function(id) {
@@ -49,7 +48,6 @@ window.vm = new Vue({
         vm.flash(gettext('Error updating media'), 'error', vars.flashOptions);
       }
 
-      const vm = this;
       const url = `${urls.medias}${media.id}/`;
       axios.put(url).then(success).catch(fail);
     },
@@ -62,7 +60,6 @@ window.vm = new Vue({
         vm.flash(gettext('Error deleting media'), 'error', vars.flashOptions);
       }
 
-      const vm = this;
       const url = `${urls.medias}${media.id}/`;
       axios.delete(url).then(success).catch(fail);
     },
@@ -84,7 +81,6 @@ window.vm = new Vue({
         vm.flash(gettext('Error loading likes'), 'error', vars.flashOptions);
       }
 
-      const vm = this;
       axios.post(urls.loadLikes).then(success).catch(fail);
     },
     editCaption: function(media) {
