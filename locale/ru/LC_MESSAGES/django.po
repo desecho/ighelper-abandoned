@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-16 04:52-0400\n"
-"PO-Revision-Date: 2018-03-16 04:55-0456\n"
+"POT-Creation-Date: 2018-03-19 01:59-0400\n"
+"PO-Revision-Date: 2018-03-19 02:00-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -96,8 +96,9 @@ msgid "Toggle navigation"
 msgstr "Переключить навигацию"
 
 #: templates/medias.html:7
-msgid "Load / Update medias"
-msgstr "Загрузить / Обновить медиа"
+#| msgid "Load medias"
+msgid "Load new medias"
+msgstr "Загрузить новые медиа"
 
 #: templates/medias.html:9
 msgid "Load likes"
@@ -116,7 +117,6 @@ msgid "Image"
 msgstr "Изображение"
 
 #: templates/medias.html:23
-#| msgid "No location"
 msgid "No caption"
 msgstr "Нет описания"
 
@@ -136,9 +136,19 @@ msgstr "Описание"
 msgid "Actions"
 msgstr "Действия"
 
-#: templates/medias.html:37
+#: templates/medias.html:38
+#| msgid "No caption"
+msgid "Edit caption"
+msgstr "Изменить описание"
+
+#: templates/medias.html:39
 msgid "Update media"
 msgstr "Обновить медиа"
+
+#: templates/medias.html:40
+#| msgid "Update media"
+msgid "Delete media"
+msgstr "Удалить медиа"
 
 #: templates/user/login.html:11
 msgid "Username"
@@ -160,6 +170,9 @@ msgstr "Настройки"
 msgid "Language"
 msgstr "Язык"
 
+#~ msgid "Load / Update medias"
+#~ msgstr "Загрузить / Обновить медиа"
+
 #~ msgid "Only medias which are missing tags, text or location are shown here"
 #~ msgstr ""
 #~ "Только медиа у которых отсутствуют таги, текст или местонахождение "
@@ -167,6 +180,3 @@ msgstr "Язык"
 
 #~ msgid "No text"
 #~ msgstr "Нет текста"
-
-#~ msgid "Load medias"
-#~ msgstr "Загрузить медиа"
