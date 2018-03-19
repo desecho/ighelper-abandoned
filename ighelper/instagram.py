@@ -1,13 +1,17 @@
+import json
 from datetime import datetime
 
 from django.conf import settings
 from InstagramAPI import InstagramAPI
 
+from ighelper.exceptions import InstagramException
 from ighelper.helpers import get_name
 from ighelper.models import Media
 
 
 class Instagram:
+    _MEDIA_NOT_FOUND_MESSAGE = 'Media not found or unavailable'
+
     def __init__(self, username, password):
         self.api = InstagramAPI(username, password)
         self.api.login()
@@ -50,8 +54,16 @@ class Instagram:
         }
 
     def get_media(self, media_id):
-        self.api.mediaInfo(media_id)
-        return self._get_media_data(self.api.LastJson['items'][0])
+        success = self.api.mediaInfo(media_id)
+        result = self.api.LastJson
+        if success:
+            return self._get_media_data(['items'][0])
+
+        if 'message' in result and result['message'] == self._MEDIA_NOT_FOUND_MESSAGE:
+            return None
+        else:
+            api_response = json.dumps(result)
+            raise InstagramException(f'Error getting media. API response - {api_response}')
 
     def get_medias(self, media_ids):
         self.api.getSelfUsernameInfo()
@@ -85,22 +97,35 @@ class Instagram:
 
         return medias_output
 
-    def get_likes(self, medias):
+    def get_likes_and_deleted_medias(self, medias):
+        """
+        Return a tuple - (likes, deleted_medias) - (list of dicts, 'deleted_medias': list)
+        """
         i = 0
         total_medias = len(medias)
         likes = []
+        medias_deleted = []
         for media in medias:
             i += 1
-            self.api.getMediaLikers(media.instagram_id)
-            users = self.api.LastJson['users']
-            for user in users:
-                like = {
-                    'media': media,
-                    'user_instagram_id': user['pk'],
-                }
-                likes.append(like)
+            success = self.api.getMediaLikers(media.instagram_id)
+            result = self.api.LastJson
+            if success:
+                users = result['users']
+                for user in users:
+                    like = {
+                        'media': media,
+                        'user_instagram_id': user['pk'],
+                    }
+                    likes.append(like)
+            else:
+                if 'message' in result and result['message'] == 'Sorry, this photo has been deleted.':
+                    medias_deleted.append(media.id)
+                else:
+                    api_response = json.dumps(result)
+                    raise InstagramException(f'Error getting media likes. API response - {api_response}')
             print(f'Loaded {i} / {total_medias}')
-        return likes
+
+        return likes, medias_deleted
 
     def get_users_i_am_following(self):
         self.api.getSelfUsersFollowing()

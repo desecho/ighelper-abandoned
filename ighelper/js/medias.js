@@ -27,6 +27,9 @@ window.vm = new Vue({
       const vm = this;
       axios.post(urls.loadMedias).then(success).catch(fail);
     },
+    removeMedia: function(id) {
+      vm.medias = vm.medias.filter((m) => m.id != id);
+    },
     update: function(media) {
       function success(response) {
         if (response.data.status === 'success') {
@@ -36,6 +39,8 @@ window.vm = new Vue({
           media.noTags = updatedMedia.noTags;
           media.likes = updatedMedia.likes;
           media.caption = updatedMedia.caption;
+        } else {
+          vm.removeMedia(media.id);
         }
       }
 
@@ -44,8 +49,21 @@ window.vm = new Vue({
       }
 
       const vm = this;
-      const url = `${urls.media}${media.id}/update/`;
+      const url = `${urls.media}${media.id}/`;
       axios.put(url).then(success).catch(fail);
+    },
+    del: function(media) {
+      function success(response) {
+        vm.removeMedia(media.id);
+      }
+
+      function fail() {
+        vm.flash(gettext('Error deleting media'), 'error', vars.flashOptions);
+      }
+
+      const vm = this;
+      const url = `${urls.media}${media.id}/`;
+      axios.delete(url).then(success).catch(fail);
     },
     hasIssue: function(media) {
       return media.noCaption || media.noTags || media.noLocation;

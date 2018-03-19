@@ -10,14 +10,14 @@
     <br>
     <div class="container">
       <div class="row">
-        <div>
+        <div class="col-sm-5">
           <div class="filters">
             <label for="show-issues-columns">{% trans 'Show issues columns' %}</label>
             <input id="show-issues-columns" type="checkbox" v-model="showIssuesColumns"><br>
             <label for="show-only-issues">{% trans 'Only shows medias with issues' %}</label>
             <input id="show-only-issues" type="checkbox" v-model="showOnlyIssues"><br>
           </div>
-          <table v-cloak class="table">
+          <table v-cloak class="table" id="medias">
             <tr>
               <th>{% trans 'Image' %}</th>
               <th v-show="showIssuesColumns">{% trans 'No caption' %}</th>
@@ -34,7 +34,10 @@
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noLocation" disabled></td>
               <td>[[ media.likes ]]</td>
               <td>[[ media.caption ]]</td>
-              <td><button class="btn btn-primary form-control btn-update-media" @click="update(media)">{% trans 'Update media' %}</button></td>
+              <td>
+                <button class="btn btn-primary form-control" @click="update(media)">{% trans 'Update media' %}</button>
+                <button class="btn btn-primary form-control" @click="del(media)">{% trans 'Delete media' %}</button>
+              </td>
             </tr>
           </table>
         </div>

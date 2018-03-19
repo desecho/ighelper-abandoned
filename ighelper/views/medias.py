@@ -1,5 +1,7 @@
 import json
 
+from django.utils.translation import gettext_lazy as _
+
 from ighelper.models import Like, Media
 
 from .mixins import InstagramAjaxView, TemplateView
@@ -58,24 +60,31 @@ class LoadMediasView(InstagramAjaxView):
         return self.success(medias=get_medias(self.user))
 
 
-class UpdateMediaView(InstagramAjaxView):
+class MediaView(InstagramAjaxView):
     def put(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
         media_id = kwargs['id']
         media = self.user.medias.get(pk=media_id)
         instagram_media = self.instagram.get_media(media.instagram_id)
+        if instagram_media is None:
+            media.delete()
+            return self.fail()
         media.caption = instagram_media['caption']
         media.location = instagram_media['location']
         media.save()
         return self.success(media=get_medias(self.user, media_id)[0])
+
+    def delete(self, *args, **kwargs):  # pylint: disable=unused-argument
+        return self.success()
 
 
 class LoadLikesView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
         medias = self.user.medias.all()
-        likes = self.instagram.get_likes(medias)
+        likes, medias_deleted = self.instagram.get_likes_and_deleted_medias(medias)
         Like.objects.filter(media__user=self.user).delete()
+        self.user.medias.filter(pk__in=medias_deleted).delete()
         for l in likes:
             users = self.user.followers.filter(instagram_id=l['user_instagram_id'])
             if users.exists():

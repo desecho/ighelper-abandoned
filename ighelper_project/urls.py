@@ -18,7 +18,7 @@ from ighelper.views.medias import (
     LoadLikesView,
     LoadMediasView,
     MediasView,
-    UpdateMediaView,
+    MediaView,
 )
 from ighelper.views.user import (
     PreferencesView,
@@ -59,7 +59,7 @@ urlpatterns += [
     re_path(
         r'followers/(?P<id>\d+)/set-approved-status/', SetApprovedStatusView.as_view(), name='set_approved_status'),
     path('load-medias/', LoadMediasView.as_view(), name='load_medias'),
-    re_path(r'media/(?P<id>\d+)/update/', UpdateMediaView.as_view(), name='update_media'),
+    re_path(r'media/(?P<id>\d+)/', MediaView.as_view(), name='media'),
     path(
         'media/',
         django.views.defaults.page_not_found,
