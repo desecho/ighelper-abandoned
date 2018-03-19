@@ -4,7 +4,7 @@
 {% block content %}
   <div>
     <button class="btn btn-primary form-control"
-            @click="load">{% trans 'Load / Update medias' %}</button>
+            @click="load">{% trans 'Load new medias' %}</button>
     <button class="btn btn-primary form-control"
             @click="loadLikes">{% trans 'Load likes' %}</button>
     <br>
@@ -35,6 +35,7 @@
               <td>[[ media.likes ]]</td>
               <td>[[ media.caption ]]</td>
               <td>
+                <button class="btn btn-primary form-control" @click="editCaption(media)">{% trans 'Edit caption' %}</button>
                 <button class="btn btn-primary form-control" @click="update(media)">{% trans 'Update media' %}</button>
                 <button class="btn btn-primary form-control" @click="del(media)">{% trans 'Delete media' %}</button>
               </td>
@@ -52,7 +53,6 @@
 
     urls.medias = '{% url 'medias' %}';
     urls.loadMedias = '{% url 'load_medias' %}';
-    urls.media = '{% url 'media' %}';
     urls.loadLikes = '{% url 'load_likes' %}';
 
     vars.medias = JSON.parse('{{ medias|safe }}');

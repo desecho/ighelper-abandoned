@@ -41,6 +41,7 @@ window.vm = new Vue({
           media.caption = updatedMedia.caption;
         } else {
           vm.removeMedia(media.id);
+          vm.showRemovedMediaMessage();
         }
       }
 
@@ -49,7 +50,7 @@ window.vm = new Vue({
       }
 
       const vm = this;
-      const url = `${urls.media}${media.id}/`;
+      const url = `${urls.medias}${media.id}/`;
       axios.put(url).then(success).catch(fail);
     },
     del: function(media) {
@@ -62,11 +63,14 @@ window.vm = new Vue({
       }
 
       const vm = this;
-      const url = `${urls.media}${media.id}/`;
+      const url = `${urls.medias}${media.id}/`;
       axios.delete(url).then(success).catch(fail);
     },
     hasIssue: function(media) {
       return media.noCaption || media.noTags || media.noLocation;
+    },
+    showRemovedMediaMessage: function() {
+      vm.flash(gettext('Media has been removed because it no longer exists on Instagram'), 'info', vars.flashOptions);
     },
     loadLikes: function() {
       function success(response) {
@@ -82,6 +86,32 @@ window.vm = new Vue({
 
       const vm = this;
       axios.post(urls.loadLikes).then(success).catch(fail);
+    },
+    editCaption: function(media) {
+      function success(response) {
+        if (response.data.status === 'success') {
+          media.caption = caption;
+        } else {
+          vm.removeMedia(media.id);
+          vm.showRemovedMediaMessage();
+        }
+      }
+
+      function fail() {
+        vm.flash(gettext('Error editing caption'), 'error', vars.flashOptions);
+      }
+
+      let caption = prompt(gettext('Caption'), media.caption);
+      if (caption != null) {
+        caption = $.trim(caption);
+        if (caption == media.caption) {
+          return;
+        }
+        const url = `${urls.medias}${media.id}/caption/`;
+        axios.put(url, $.param({
+          caption: caption
+        })).then(success).catch(fail);
+      }
     },
   },
 });

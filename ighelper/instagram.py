@@ -10,7 +10,8 @@ from ighelper.models import Media
 
 
 class Instagram:
-    _MEDIA_NOT_FOUND_MESSAGE = 'Media not found or unavailable'
+    _MESSAGE_MEDIA_NOT_FOUND = 'Media not found or unavailable'
+    _MESSAGE_MEDIA_NOT_FOUND2 = 'You cannot edit this media'
 
     def __init__(self, username, password):
         self._api = InstagramAPI(username, password)
@@ -59,7 +60,7 @@ class Instagram:
         if success:
             return self._get_media_data(['items'][0])
 
-        if 'message' in result and result['message'] == self._MEDIA_NOT_FOUND_MESSAGE:
+        if 'message' in result and result['message'] == self._MESSAGE_MEDIA_NOT_FOUND:
             return None
         else:
             api_response = json.dumps(result)
@@ -99,7 +100,7 @@ class Instagram:
 
     def get_likes_and_deleted_medias(self, medias):
         """
-        Return a tuple - (likes, deleted_medias) - (list of dicts, 'deleted_medias': list)
+        Return a tuple - (likes, deleted_medias) - (list of dicts, 'deleted_medias': list).
         """
         i = 0
         total_medias = len(medias)
@@ -131,3 +132,14 @@ class Instagram:
         self._api.getSelfUsersFollowing()
         users = self._api.LastJson['users']
         return [{'id': user['pk'], 'name': get_name(user['full_name'], user['username'])} for user in users]
+
+    def update_media_caption(self, media_id, caption):
+        """
+        Return True on success and False on failure.
+        """
+        success = self._api.editMedia(media_id, caption)
+        if success:
+            return True
+        result = self._api.LastJson
+        if result['message'] == self._MESSAGE_MEDIA_NOT_FOUND2:
+            return False

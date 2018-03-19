@@ -1,5 +1,4 @@
 """URL Configuration."""
-import django
 from django.conf import settings
 from django.conf.urls import include
 from django.contrib import admin
@@ -15,6 +14,7 @@ from ighelper.views.ighelper import (
     UpdateUsersIAmFollowingView,
 )
 from ighelper.views.medias import (
+    CaptionUpdateView,
     LoadLikesView,
     LoadMediasView,
     MediasView,
@@ -54,17 +54,13 @@ urlpatterns += [
     # -------------------------------------------------------------------------------------------
     path('', HomeView.as_view(), name='home'),
     path('medias/', MediasView.as_view(), name='medias'),
+    re_path(r'medias/(?P<id>\d+)/caption/', CaptionUpdateView.as_view(), name='media'),
+    re_path(r'medias/(?P<id>\d+)/', MediaView.as_view(), name='media'),
+    path('medias/load/', LoadMediasView.as_view(), name='load_medias'),
     path('followers/', FollowersView.as_view(), name='followers'),
     path('followers/load/', LoadFollowersView.as_view(), name='load_followers'),
     re_path(
         r'followers/(?P<id>\d+)/set-approved-status/', SetApprovedStatusView.as_view(), name='set_approved_status'),
-    path('load-medias/', LoadMediasView.as_view(), name='load_medias'),
-    re_path(r'media/(?P<id>\d+)/', MediaView.as_view(), name='media'),
-    path(
-        'media/',
-        django.views.defaults.page_not_found,
-        name='media',
-        kwargs={'exception': Exception('Page not Found')}),
     path('load-likes/', LoadLikesView.as_view(), name='load_likes'),
     path('update-users-i-am-following/', UpdateUsersIAmFollowingView.as_view(), name='update_users_i_am_following'),
 ]

@@ -1,7 +1,5 @@
 import json
 
-from django.utils.translation import gettext_lazy as _
-
 from ighelper.models import Like, Media
 
 from .mixins import InstagramAjaxView, TemplateView
@@ -76,6 +74,26 @@ class MediaView(InstagramAjaxView):
 
     def delete(self, *args, **kwargs):  # pylint: disable=unused-argument
         return self.success()
+
+
+class CaptionUpdateView(InstagramAjaxView):
+    def put(self, *args, **kwargs):  # pylint: disable=unused-argument
+        try:
+            caption = self.request.PUT['caption']
+        except KeyError:
+            return self.render_bad_request_response()
+
+        self.get_data()
+        media_id = kwargs['id']
+        media = self.user.medias.get(pk=media_id)
+        success = self.instagram.update_media_caption(media.instagram_id, caption)
+        if success:
+            media.caption = caption
+            media.save()
+            return self.success()
+
+        media.delete()
+        return self.fail()
 
 
 class LoadLikesView(InstagramAjaxView):
