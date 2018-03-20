@@ -8,7 +8,11 @@ The web application on Django_ 2, Vue.js_ 2, Bootstrap_ 4. It allows you to mana
 Features:
 
 - See how many photos & videos your followers liked
-- Mark followers as approved
+- Manage your followers:
+    - follow
+    - unfollow
+    - block
+    - mark as approved
 - Statistics:
     - Get total number of:
         - photos
@@ -17,9 +21,9 @@ Features:
         - likes
     - Get average number of likes
 
-- Manage your medias
-    - caption
-    - number of likes
+- Manage your medias:
+    - see caption, location, date and number of likes
+    - edit caption
 
 - Identify issues with medias like:
     - no caption
