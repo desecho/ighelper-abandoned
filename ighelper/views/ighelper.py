@@ -68,7 +68,7 @@ class LoadFollowersView(InstagramAjaxView):
         return self.success(followers=self.user.get_followers())
 
 
-class UpdateUsersIAmFollowingView(InstagramAjaxView):
+class LoadUsersIAmFollowingView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
         users_i_am_following = self.instagram.get_users_i_am_following()

@@ -4,9 +4,9 @@
 {% block content %}
   <div id="followers">
     <button class="btn btn-primary form-control"
-            @click="loadFollowers">{% trans 'Load / Update followers' %}</button>
+            @click="loadFollowers">{% trans 'Load followers' %}</button>
     <button class="btn btn-primary form-control"
-            @click="updateUsersIAmFollowing">{% trans 'Update users I am following' %}</button>
+            @click="loadUsersIAmFollowing">{% trans 'Load users I am following' %}</button>
     <br><br>
     <div class="container">
       <div class="row">
@@ -51,7 +51,7 @@
 
     urls.followers = '{% url 'followers' %}';
     urls.loadFollowers = '{% url 'load_followers' %}';
-    urls.updateUsersIAmFollowing = '{% url 'update_users_i_am_following' %}';
+    urls.loadUsersIAmFollowing = '{% url 'load_users_i_am_following' %}';
 
     vars.followers = JSON.parse('{{ followers|safe }}');
   </script>

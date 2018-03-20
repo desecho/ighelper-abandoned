@@ -13,7 +13,7 @@ from ighelper.views.ighelper import (
     LoadFollowersView,
     SetApprovedStatusView,
     SetFollowedStatusView,
-    UpdateUsersIAmFollowingView,
+    LoadUsersIAmFollowingView,
 )
 from ighelper.views.medias import (
     CaptionUpdateView,
@@ -67,5 +67,5 @@ urlpatterns += [
     re_path(
         r'followers/(?P<id>\d+)/set-followed-status/', SetFollowedStatusView.as_view(), name='set_followed_status'),
     path('load-likes/', LoadLikesView.as_view(), name='load_likes'),
-    path('update-users-i-am-following/', UpdateUsersIAmFollowingView.as_view(), name='update_users_i_am_following'),
+    path('load-users-i-am-following/', LoadUsersIAmFollowingView.as_view(), name='load_users_i_am_following'),
 ]

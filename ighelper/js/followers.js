@@ -29,7 +29,7 @@ window.vm = new Vue({
 
       axios.post(urls.loadFollowers).then(success).catch(fail);
     },
-    updateUsersIAmFollowing: function() {
+    loadUsersIAmFollowing: function() {
       function success(response) {
         if (response.data.status === 'success') {
           vm.flash(gettext('Users you are following have updated'), 'success', vars.flashOptions);
@@ -41,7 +41,7 @@ window.vm = new Vue({
         vm.flash(gettext('Error updating users you are following'), 'error', vars.flashOptions);
       }
 
-      axios.post(urls.updateUsersIAmFollowing).then(success).catch(fail);
+      axios.post(urls.loadUsersIAmFollowing).then(success).catch(fail);
     },
     setApprovedStatus: function(follower) {
       function success() {
