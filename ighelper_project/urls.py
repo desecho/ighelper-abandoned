@@ -7,10 +7,12 @@ from django.urls import path, re_path
 from django.views.i18n import JavaScriptCatalog
 
 from ighelper.views.ighelper import (
+    BlockView,
     FollowersView,
     HomeView,
     LoadFollowersView,
     SetApprovedStatusView,
+    SetFollowedStatusView,
     UpdateUsersIAmFollowingView,
 )
 from ighelper.views.medias import (
@@ -59,8 +61,11 @@ urlpatterns += [
     path('medias/load/', LoadMediasView.as_view(), name='load_medias'),
     path('followers/', FollowersView.as_view(), name='followers'),
     path('followers/load/', LoadFollowersView.as_view(), name='load_followers'),
+    re_path(r'followers/(?P<id>\d+)/block/', BlockView.as_view(), name='block'),
     re_path(
         r'followers/(?P<id>\d+)/set-approved-status/', SetApprovedStatusView.as_view(), name='set_approved_status'),
+    re_path(
+        r'followers/(?P<id>\d+)/set-followed-status/', SetFollowedStatusView.as_view(), name='set_followed_status'),
     path('load-likes/', LoadLikesView.as_view(), name='load_likes'),
     path('update-users-i-am-following/', UpdateUsersIAmFollowingView.as_view(), name='update_users_i_am_following'),
 ]

@@ -45,7 +45,7 @@ window.vm = new Vue({
     },
     setApprovedStatus: function(follower) {
       function success() {
-        follower.approved = true;
+        follower.approved = status;
       }
 
       function fail() {
@@ -54,12 +54,43 @@ window.vm = new Vue({
       }
 
       const id = follower.id;
-      const element = $('#follower' + id);
+      const element = $('#follower-approved' + id);
       const status = element.prop('checked');
       const url = `${urls.followers}${id}/set-approved-status/`;
       axios.put(url, $.param({
         status: status,
       })).then(success).catch(fail);
+    },
+    setFollowedStatus: function(follower) {
+      function success() {
+        follower.followed = status;
+      }
+
+      function fail() {
+        vm.flash(gettext('Error'), 'error', vars.flashOptions);
+        element.prop('checked', !status);
+      }
+
+      const id = follower.id;
+      const element = $('#follower-followed' + id);
+      const status = element.prop('checked');
+      const url = `${urls.followers}${id}/set-followed-status/`;
+      axios.put(url, $.param({
+        status: status,
+      })).then(success).catch(fail);
+    },
+    block: function(follower) {
+      function success() {
+        vm.followers = vm.followers.filter((m) => m.id != id);
+      }
+
+      function fail() {
+        vm.flash(gettext('Error blocking follower'), 'error', vars.flashOptions);
+      }
+
+      const id = follower.id;
+      const url = `${urls.followers}${id}/block/`;
+      axios.delete(url).then(success).catch(fail);
     },
   },
 });

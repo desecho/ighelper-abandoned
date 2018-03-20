@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-19 03:21-0400\n"
-"PO-Revision-Date: 2018-03-19 03:21-0456\n"
+"POT-Creation-Date: 2018-03-20 00:57-0400\n"
+"PO-Revision-Date: 2018-03-20 00:57-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -70,6 +70,14 @@ msgstr "Зафолловлен мной"
 #: templates/followers.html:26
 msgid "Approved"
 msgstr "Одобрен"
+
+#: templates/followers.html:27 templates/medias.html:30
+msgid "Actions"
+msgstr "Действия"
+
+#: templates/followers.html:38
+msgid "Block"
+msgstr "Заблокировать"
 
 #: templates/home.html:5
 msgid "Total images"
@@ -132,17 +140,12 @@ msgid "Caption"
 msgstr "Описание"
 
 #: templates/medias.html:28
-#| msgid "No caption"
 msgid "Location"
 msgstr "Местонахождение"
 
 #: templates/medias.html:29
 msgid "Date"
 msgstr "Дата"
-
-#: templates/medias.html:30
-msgid "Actions"
-msgstr "Действия"
 
 #: templates/medias.html:42
 msgid "Edit caption"

@@ -144,3 +144,12 @@ class Instagram:
         result = self._api.LastJson
         if result['message'] == self._MESSAGE_MEDIA_NOT_FOUND2:
             return False
+
+    def follow(self, user_id):
+        return self._api.follow(user_id)
+
+    def unfollow(self, user_id):
+        return self._api.unfollow(user_id)
+
+    def block(self, user_id):
+        return self._api.block(user_id)

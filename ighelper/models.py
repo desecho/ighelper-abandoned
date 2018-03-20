@@ -22,7 +22,8 @@ class User(AbstractUser):
         for f in self.followers.all():
             follower = {
                 'id': f.id,
-                'elementId': f'follower{f.id}',
+                'elementIdApproved': f'follower-approved{f.id}',
+                'elementIdFollowed': f'follower-followed{f.id}',
                 'name': str(f),
                 'number_likes': f.get_number_likes(self),
                 'avatar': f.avatar,
@@ -112,7 +113,7 @@ class Follower(models.Model):
 
 class Like(models.Model):
     media = models.ForeignKey(Media, models.CASCADE, related_name='likes')
-    follower = models.ForeignKey(Follower, models.CASCADE, related_name='likes', null=True, blank=True)
+    follower = models.ForeignKey(Follower, models.SET_NULL, related_name='likes', null=True, blank=True)
 
     def __str__(self):
         return f'{self.media} - {self.follower}'

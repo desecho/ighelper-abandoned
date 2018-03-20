@@ -90,7 +90,43 @@ class SetApprovedStatusView(AjaxView):
         except KeyError:
             return self.render_bad_request_response()
 
-        follower = get_object_or_404(Follower, user=self.request.user, id=kwargs['id'])
+        follower = get_object_or_404(Follower, user=self.request.user, pk=kwargs['id'])
         follower.approved = status
         follower.save()
         return self.success()
+
+
+class SetFollowedStatusView(InstagramAjaxView):
+    def put(self, *args, **kwargs):  # pylint: disable=unused-argument
+        try:
+            status = json.loads(self.request.PUT['status'])
+        except KeyError:
+            return self.render_bad_request_response()
+
+        self.get_data()
+        follower_id = kwargs['id']
+        follower = get_object_or_404(Follower, user=self.request.user, pk=follower_id)
+        if status:
+            result = self.instagram.follow(follower.instagram_id)
+        else:
+            result = self.instagram.unfollow(follower.instagram_id)
+        if result:
+
+            follower.followed = status
+            follower.save()
+            return self.success()
+        else:
+            return self.fail()
+
+
+class BlockView(InstagramAjaxView):
+    def delete(self, *args, **kwargs):  # pylint: disable=unused-argument
+        self.get_data()
+        follower_id = kwargs['id']
+        follower = get_object_or_404(Follower, user=self.request.user, pk=follower_id)
+        result = self.instagram.block(follower.instagram_id)
+        if result:
+            follower.delete()
+            return self.success()
+        else:
+            return self.fail()

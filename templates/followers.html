@@ -24,15 +24,19 @@
               <th>{% trans 'Likes' %}</th>
               <th class="followed-by-me">{% trans 'Followed by me' %}</th>
               <th>{% trans 'Approved' %}</th>
+              <th>{% trans 'Actions' %}</th>
             </tr>
             <tr v-for="follower in followers" class="follower" v-show="!(hideApproved && isApproved(follower)) && !(hideFollowed && follower.followed)">
               <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name"/></a>
               </td>
               <td><a :href="follower.profile" target="_blank">[[ follower.name ]]</a></td>
               <td>[[ follower.number_likes ]]</td>
-              <td><input type="checkbox" :checked="follower.followed" disabled></td>
-              <td><input :id="follower.elementId" type="checkbox" :checked="isApproved(follower)"
+              <td><input :id="follower.elementIdFollowed" type="checkbox" :checked="follower.followed" @click="setFollowedStatus(follower)"></td>
+              <td><input :id="follower.elementIdApproved" type="checkbox" :checked="isApproved(follower)"
                          :disabled="follower.followed" @click="setApprovedStatus(follower)"></td>
+              <td>
+                <button v-show="!follower.approved && !follower.followed" class="btn btn-primary form-control" @click="block(follower)">{% trans 'Block' %}</button>
+              </td>
             </tr>
           </table>
         </div>
