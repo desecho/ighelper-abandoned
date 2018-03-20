@@ -51,14 +51,19 @@ class LoadFollowersView(InstagramAjaxView):
 
         for x in followers:
             instagram_id = x['id']
-            if current_followers.filter(instagram_id=instagram_id).exists():
-                continue
-            Follower.objects.create(
-                user=self.user,
-                instagram_id=x['id'],
-                instagram_username=x['username'],
-                name=x['name'],
-                avatar=x['avatar'])
+            found_followers = current_followers.filter(instagram_id=instagram_id)
+            if found_followers.exists():
+                follower = found_followers[0]
+                follower.name = x['name']
+                follower.avatar = x['avatar']
+                follower.save()
+            else:
+                Follower.objects.create(
+                    user=self.user,
+                    instagram_id=x['id'],
+                    instagram_username=x['username'],
+                    name=x['name'],
+                    avatar=x['avatar'])
 
         return self.success(followers=self.user.get_followers())
 
