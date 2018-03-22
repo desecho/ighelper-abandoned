@@ -84,7 +84,7 @@ window.vm = new Vue({
 
       axios.post(urls.loadLikes).then(success).catch(fail);
     },
-    loadViews: function(){
+    loadViews: function() {
       function success(response) {
         if (response.data.status === 'success') {
           vm.flash(gettext('Views have been loaded'), 'success', vars.flashOptions);
