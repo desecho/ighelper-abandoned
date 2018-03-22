@@ -123,3 +123,18 @@ class LoadLikesView(InstagramAjaxView):
             media.likes_count = media.likes.count()
             media.save()
         return self.success(medias=get_medias(self.user))
+
+
+class LoadViewsView(InstagramAjaxView):
+    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
+        self.get_data()
+        videos = self.user.videos.all()
+        for video in videos:
+            instagram_media = self.instagram.get_media(video.instagram_id)
+            if instagram_media is None:
+                media.delete()
+                return self.fail()
+            video.views_count = instagram_media['views_count']
+            video.save()
+
+        return self.success(medias=get_medias(self.user))

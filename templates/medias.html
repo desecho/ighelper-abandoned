@@ -7,6 +7,8 @@
             @click="load">{% trans 'Load new medias' %}</button>
     <button class="btn btn-primary form-control"
             @click="loadLikes">{% trans 'Load likes' %}</button>
+    <button class="btn btn-primary form-control"
+            @click="loadViews">{% trans 'Load views' %}</button>
     <br>
     <div class="container">
       <div class="row">
@@ -60,6 +62,7 @@
     urls.medias = '{% url 'medias' %}';
     urls.loadMedias = '{% url 'load_medias' %}';
     urls.loadLikes = '{% url 'load_likes' %}';
+    urls.loadViews = '{% url 'load_views' %}';
 
     vars.medias = JSON.parse('{{ medias|safe }}');
   </script>

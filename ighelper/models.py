@@ -34,6 +34,10 @@ class User(AbstractUser):
             followers.append(follower)
         return sorted(followers, key=itemgetter('number_likes'), reverse=True)
 
+    @property
+    def videos(self):
+        return self.medias.filter(media_type=Media.MEDIA_TYPE_VIDEO)
+
 
 class ImageManager(models.Manager):
     def get_queryset(self):

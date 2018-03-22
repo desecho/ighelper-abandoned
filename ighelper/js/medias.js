@@ -84,6 +84,20 @@ window.vm = new Vue({
 
       axios.post(urls.loadLikes).then(success).catch(fail);
     },
+    loadViews: function(){
+      function success(response) {
+        if (response.data.status === 'success') {
+          vm.flash(gettext('Views have been loaded'), 'success', vars.flashOptions);
+          vm.medias = response.data.medias;
+        }
+      }
+
+      function fail() {
+        vm.flash(gettext('Error loading views'), 'error', vars.flashOptions);
+      }
+
+      axios.post(urls.loadViews).then(success).catch(fail);
+    },
     editCaption: function(media) {
       function success(response) {
         if (response.data.status === 'success') {
