@@ -25,14 +25,14 @@ class User(AbstractUser):
                 'elementIdApproved': f'follower-approved{f.id}',
                 'elementIdFollowed': f'follower-followed{f.id}',
                 'name': str(f),
-                'number_likes': f.get_number_likes(self),
+                'likes_count': f.get_likes_count(self),
                 'avatar': f.avatar,
                 'profile': f.profile,
                 'followed': f.followed,
                 'approved': f.approved
             }
             followers.append(follower)
-        return sorted(followers, key=itemgetter('number_likes'), reverse=True)
+        return sorted(followers, key=itemgetter('likes_count'), reverse=True)
 
     @property
     def videos(self):
@@ -112,7 +112,7 @@ class Follower(models.Model):
     def profile(self):
         return f'{settings.INSTAGRAM_BASE_URL}/{self.instagram_username}/'
 
-    def get_number_likes(self, user):
+    def get_likes_count(self, user):
         return self.likes.filter(media__user=user).count()
 
 

@@ -2,10 +2,10 @@
 {% load i18n static %}
 
 {% block content %}
-  {% trans 'Total images' %} - {{ images_number }}<br>
-  {% trans 'Total videos' %} - {{ videos_number }}<br><br>
+  {% trans 'Total images' %} - {{ images_count }}<br>
+  {% trans 'Total videos' %} - {{ videos_count }}<br><br>
 
-  {% trans 'Total followers' %} - {{ followers_number }}<br>
-  {% trans 'Total likes' %} - {{ likes_number }}<br>
-  {% trans 'Average likes per media' %} - {{ average_likes }}<br>
+  {% trans 'Total followers' %} - {{ followers_count }}<br>
+  {% trans 'Total likes' %} - {{ likes_count }}<br>
+  {% trans 'Average likes per media' %} - {{ likes_average }}<br>
 {% endblock %}

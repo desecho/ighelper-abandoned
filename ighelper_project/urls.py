@@ -6,10 +6,10 @@ from django.contrib.auth.views import login
 from django.urls import path, re_path
 from django.views.i18n import JavaScriptCatalog
 
-from ighelper.views.ighelper import (
+from ighelper.views.home import HomeView
+from ighelper.views.followers import (
     BlockView,
     FollowersView,
-    HomeView,
     LoadFollowersView,
     LoadUsersIAmFollowingView,
     SetApprovedStatusView,

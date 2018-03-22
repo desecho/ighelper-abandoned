@@ -1,33 +1,10 @@
 import json
 
 from django.shortcuts import get_object_or_404
-from django.utils.translation import ugettext_lazy as _
 
-from ighelper.models import Follower, Like, Media
+from ighelper.models import Follower
 
 from .mixins import AjaxView, InstagramAjaxView, TemplateView
-
-
-class HomeView(TemplateView):
-    template_name = 'home.html'
-
-    def get_context_data(self):
-        user = self.request.user
-        followers_number = user.followers.count()
-        images_number = Media.images.filter(user=user).count()
-        videos_number = Media.videos.filter(user=user).count()
-        likes_number = Like.objects.filter(media__user=user).count()
-        if images_number:
-            average_likes = likes_number // images_number
-        else:
-            average_likes = _('not available')
-        return {
-            'followers_number': followers_number,
-            'images_number': images_number,
-            'videos_number': videos_number,
-            'likes_number': likes_number,
-            'average_likes': average_likes,
-        }
 
 
 class FollowersView(TemplateView):
