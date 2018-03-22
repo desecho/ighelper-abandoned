@@ -39,6 +39,7 @@ window.vm = new Vue({
           media.likes = updatedMedia.likes;
           media.views = updatedMedia.views;
           media.caption = updatedMedia.caption;
+          media.image = updatedMedia.image;
         } else {
           vm.removeMedia(media.id);
           vm.showRemovedMediaMessage();

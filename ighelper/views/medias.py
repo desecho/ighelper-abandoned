@@ -26,6 +26,7 @@ def get_medias(user, media_id=None):
         if not m.location:
             media['noLocation'] = True
         media['image'] = m.image
+        media['content'] = m.content
         media['id'] = m.id
         media['likes'] = m.likes_count
         media['views'] = m.views_count
@@ -76,6 +77,7 @@ class MediaView(InstagramAjaxView):
         media.caption = instagram_media['caption']
         media.location = instagram_media['location']
         media.views_count = instagram_media['views_count']
+        media.image = instagram_media['image']
         media.save()
         return self.success(media=get_medias(self.user, media_id)[0])
 
