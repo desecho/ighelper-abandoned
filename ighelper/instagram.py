@@ -59,7 +59,7 @@ class Instagram:
         success = self._api.mediaInfo(media_id)
         result = self._api.LastJson
         if success:
-            return self._get_media_data(['items'][0])
+            return self._get_media_data(result['items'][0])
 
         if 'message' in result and result['message'] == self._MESSAGE_MEDIA_NOT_FOUND:
             return None
