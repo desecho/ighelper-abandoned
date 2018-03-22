@@ -11,9 +11,9 @@ from ighelper.views.ighelper import (
     FollowersView,
     HomeView,
     LoadFollowersView,
+    LoadUsersIAmFollowingView,
     SetApprovedStatusView,
     SetFollowedStatusView,
-    LoadUsersIAmFollowingView,
 )
 from ighelper.views.medias import (
     CaptionUpdateView,
