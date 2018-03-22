@@ -24,6 +24,7 @@
               <th v-show="showIssuesColumns">{% trans 'No tags' %}</th>
               <th v-show="showIssuesColumns">{% trans 'No location' %}</th>
               <th>{% trans 'Likes' %}</th>
+              <th>{% trans 'Views' %}</th>
               <th>{% trans 'Caption' %}</th>
               <th>{% trans 'Location' %}</th>
               <th class="date">{% trans 'Date' %}</th>
@@ -35,6 +36,7 @@
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noTags" disabled></td>
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noLocation" disabled></td>
               <td>[[ media.likes ]]</td>
+              <td>[[ media.views ]]</td>
               <td>[[ media.caption ]]</td>
               <td>[[ media.location ]]</td>
               <td class="date">[[ media.date ]]</td>

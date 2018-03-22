@@ -28,6 +28,7 @@ def get_medias(user, media_id=None):
         media['image'] = m.image
         media['id'] = m.id
         media['likes'] = m.likes_count
+        media['views'] = m.views_count
         media['caption'] = m.caption_formatted
         media['location'] = m.location_formatted
         media['date'] = format_date(m.date, locale=user.language)
@@ -57,7 +58,8 @@ class LoadMediasView(InstagramAjaxView):
                 caption=m['caption'],
                 location=m['location'],
                 image=m['image'],
-                video=m['video'])
+                video=m['video'],
+                views_count=m['views_count'])
 
         return self.success(medias=get_medias(self.user))
 
@@ -73,6 +75,7 @@ class MediaView(InstagramAjaxView):
             return self.fail()
         media.caption = instagram_media['caption']
         media.location = instagram_media['location']
+        media.views_count = instagram_media['views_count']
         media.save()
         return self.success(media=get_medias(self.user, media_id)[0])
 

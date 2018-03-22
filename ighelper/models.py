@@ -65,6 +65,7 @@ class Media(models.Model):
     images = ImageManager()
     videos = VideoManager()
     likes_count = models.PositiveIntegerField(default=0)
+    views_count = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         ordering = ['-date']

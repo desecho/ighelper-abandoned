@@ -52,7 +52,8 @@ class Instagram:
             'caption': get_caption(m),
             'location': get_location(m),
             'image': m['image_versions2']['candidates'][0]['url'],
-            'video': get_video(m)
+            'video': get_video(m),
+            'views_count': m['view_count'],
         }
 
     def get_media(self, media_id):
