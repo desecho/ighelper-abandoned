@@ -1,5 +1,6 @@
 from braces.views import JsonRequestResponseMixin, LoginRequiredMixin
 from django.conf import settings
+from django.core.cache import cache
 from django.views.generic import TemplateView as TemplateViewOriginal, View
 
 from ighelper.instagram import Instagram
@@ -34,7 +35,11 @@ class InstagramAjaxView(AjaxView):
         self.user = self.request.user
         if self.user.username == settings.DESECHO8653_USERNAME:
             password = settings.DESECHO8653_PASSWORD
-        self.instagram = Instagram(self.user.username, password)
+        instagram = cache.get('instagram')
+        if instagram is None:
+            instagram = Instagram(self.user.username, password)
+            cache.set('instagram', instagram)
+        self.instagram = instagram
 
 
 class TemplateView(LoginRequiredMixin, TemplateViewOriginal):
