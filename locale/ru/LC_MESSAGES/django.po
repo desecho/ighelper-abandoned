@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-20 01:39-0400\n"
-"PO-Revision-Date: 2018-03-20 01:39-0456\n"
+"POT-Creation-Date: 2018-03-22 03:40-0400\n"
+"PO-Revision-Date: 2018-03-22 03:40-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -36,12 +36,10 @@ msgid "not available"
 msgstr "не доступно"
 
 #: templates/followers.html:7
-#| msgid "Total followers"
 msgid "Load followers"
 msgstr "Загрузить фолловеров"
 
 #: templates/followers.html:9
-#| msgid "Update users I am following"
 msgid "Load users I am following"
 msgstr "Загрузить пользователей которых я фолловлю"
 
@@ -61,7 +59,7 @@ msgstr "Аватар"
 msgid "Name"
 msgstr "Имя"
 
-#: templates/followers.html:24 templates/medias.html:26
+#: templates/followers.html:24 templates/medias.html:28
 msgid "Likes"
 msgstr "Лайки"
 
@@ -73,7 +71,7 @@ msgstr "Зафолловлен мной"
 msgid "Approved"
 msgstr "Одобрен"
 
-#: templates/followers.html:27 templates/medias.html:30
+#: templates/followers.html:27 templates/medias.html:33
 msgid "Actions"
 msgstr "Действия"
 
@@ -113,51 +111,60 @@ msgstr "Загрузить новые медиа"
 msgid "Load likes"
 msgstr "Загрузить лайки"
 
-#: templates/medias.html:15
+#: templates/medias.html:11
+#| msgid "Load likes"
+msgid "Load views"
+msgstr "Загрузить просмотры"
+
+#: templates/medias.html:17
 msgid "Show issues columns"
 msgstr "Показывать столбцы с проблемами"
 
-#: templates/medias.html:17
+#: templates/medias.html:19
 msgid "Only shows medias with issues"
 msgstr "Показывать только медиа с проблемами"
 
-#: templates/medias.html:22
+#: templates/medias.html:24
 msgid "Image"
 msgstr "Изображение"
 
-#: templates/medias.html:23
+#: templates/medias.html:25
 msgid "No caption"
 msgstr "Нет описания"
 
-#: templates/medias.html:24
+#: templates/medias.html:26
 msgid "No tags"
 msgstr "Нет тагов"
 
-#: templates/medias.html:25
+#: templates/medias.html:27
 msgid "No location"
 msgstr "Нет местонахождения"
 
-#: templates/medias.html:27
+#: templates/medias.html:29
+msgid "Views"
+msgstr "Просмотры"
+
+#: templates/medias.html:30
 msgid "Caption"
 msgstr "Описание"
 
-#: templates/medias.html:28
+#: templates/medias.html:31
 msgid "Location"
 msgstr "Местонахождение"
 
-#: templates/medias.html:29
+#: templates/medias.html:32
 msgid "Date"
 msgstr "Дата"
 
-#: templates/medias.html:42
+#: templates/medias.html:46
 msgid "Edit caption"
 msgstr "Изменить описание"
 
-#: templates/medias.html:43
+#: templates/medias.html:47
 msgid "Update media"
 msgstr "Обновить медиа"
 
-#: templates/medias.html:44
+#: templates/medias.html:48
 msgid "Delete media"
 msgstr "Удалить медиа"
 
