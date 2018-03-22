@@ -61,9 +61,9 @@ class Media(models.Model):
     location = models.CharField(max_length=255, blank=True)
     image = models.URLField(max_length=255)
     video = models.URLField(null=True, blank=True)
+    objects = models.Manager()
     images = ImageManager()
     videos = VideoManager()
-    objects = models.Manager()
     likes_count = models.PositiveIntegerField(default=0)
 
     class Meta:
