@@ -65,6 +65,7 @@ class Media(models.Model):
     location_name = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=255, blank=True)
     image = models.URLField(max_length=255)
+    image_small = models.URLField(max_length=255)
     video = models.URLField(null=True, blank=True)
     objects = models.Manager()
     images = ImageManager()
@@ -94,8 +95,10 @@ class Media(models.Model):
 
     @property
     def location_formatted(self):
-        location_name = self._replace_single_quotes(self.location_name)
-        return f'{location_name}; {self.city}'
+        location = self._replace_single_quotes(self.location_name)
+        if self.city:
+            location += f'; {self.city}'
+        return location
 
 
 class Follower(models.Model):

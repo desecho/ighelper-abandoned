@@ -25,14 +25,17 @@ def get_medias(user, media_id=None):
             media['noTags'] = True
         if not m.location_name:
             media['noLocation'] = True
-        media['image'] = m.image
-        media['content'] = m.content
-        media['id'] = m.id
-        media['likes'] = m.likes_count
-        media['views'] = m.views_count
-        media['caption'] = m.caption_formatted
-        media['location'] = m.location_formatted
-        media['date'] = format_date(m.date, locale=user.language)
+        media.update({
+            'image': m.image,
+            'imageSmall': m.image_small,
+            'content': m.content,
+            'id': m.id,
+            'likes': m.likes_count,
+            'views': m.views_count,
+            'caption': m.caption_formatted,
+            'location': m.location_formatted,
+            'date': format_date(m.date, locale=user.language),
+        })
         medias_output.append(media)
     return medias_output
 
@@ -63,8 +66,12 @@ class UpdateMediasView(InstagramAjaxView):
         instagram_medias = {m['instagram_id']: m for m in instagram_medias}
         medias = self.user.medias.all()
         medias_instagram_ids = medias.values_list('instagram_id', flat=True)
-        for medias_instagram_id in medias_instagram_ids:
-            medias.filter(instagram_id=medias_instagram_id).update(**m)
+        for media_instagram_id in medias_instagram_ids:
+            medias_found = medias.filter(instagram_id=media_instagram_id)
+            if medias_found.exists():
+                medias_found.update(**instagram_medias[media_instagram_id])
+            else:
+                medias_found.delete()
         return self.success(medias=get_medias(self.user))
 
 

@@ -9,7 +9,7 @@ const loaderFontOptions = {
 };
 const vendorPackages = ['font-awesome-webpack', 'vue-flash-message/dist/vue-flash-message.min.css',
   'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/js/bootstrap.min.js',
-  'axios-progress-bar/dist/nprogress.css', 'popper.js/dist/umd/popper.min.js',
+  'axios-progress-bar/dist/nprogress.css', 'popper.js/dist/umd/popper.min.js', 'retinajs/dist/retina.min.js',
 ];
 
 
