@@ -18,13 +18,13 @@ window.vm = new Vue({
     loadFollowers: function() {
       function success(response) {
         if (response.data.status === 'success') {
-          vm.flash(gettext('Followers have been loaded'), 'success', vars.flashOptions);
+          vm.success(gettext('Followers have been loaded'));
           vm.followers = response.data.followers;
         }
       }
 
       function fail() {
-        vm.flash(gettext('Error loading followers'), 'error', vars.flashOptions);
+        vm.error(gettext('Error loading followers'));
       }
 
       axios.post(urls.loadFollowers).then(success).catch(fail);
@@ -32,13 +32,13 @@ window.vm = new Vue({
     loadUsersIAmFollowing: function() {
       function success(response) {
         if (response.data.status === 'success') {
-          vm.flash(gettext('Users you are following have updated'), 'success', vars.flashOptions);
+          vm.success(gettext('Users you are following have updated'));
         }
         vm.followers = response.data.followers;
       }
 
       function fail() {
-        vm.flash(gettext('Error updating users you are following'), 'error', vars.flashOptions);
+        vm.error(gettext('Error updating users you are following'));
       }
 
       axios.post(urls.loadUsersIAmFollowing).then(success).catch(fail);
@@ -49,7 +49,7 @@ window.vm = new Vue({
       }
 
       function fail() {
-        vm.flash(gettext('Error setting approved status'), 'error', vars.flashOptions);
+        vm.error(gettext('Error setting approved status'));
         element.prop('checked', !status);
       }
 
@@ -67,7 +67,7 @@ window.vm = new Vue({
       }
 
       function fail() {
-        vm.flash(gettext('Error'), 'error', vars.flashOptions);
+        vm.error(gettext('Error'));
         element.prop('checked', !status);
       }
 
@@ -85,7 +85,7 @@ window.vm = new Vue({
       }
 
       function fail() {
-        vm.flash(gettext('Error blocking follower'), 'error', vars.flashOptions);
+        vm.error(gettext('Error blocking follower'));
       }
 
       const id = follower.id;

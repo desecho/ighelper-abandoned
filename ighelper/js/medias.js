@@ -15,13 +15,13 @@ window.vm = new Vue({
     load: function() {
       function success(response) {
         if (response.data.status === 'success') {
-          vm.flash(gettext('Medias have been loaded'), 'success', vars.flashOptions);
+          vm.success(gettext('Medias have been loaded'));
           vm.medias = response.data.medias;
         }
       }
 
       function fail() {
-        vm.flash(gettext('Error loading medias'), 'error', vars.flashOptions);
+        vm.error(gettext('Error loading medias'));
       }
 
       axios.post(urls.loadMedias).then(success).catch(fail);
@@ -32,13 +32,13 @@ window.vm = new Vue({
     updateMedias: function(media) {
       function success(response) {
         if (response.data.status === 'success') {
-          vm.flash(gettext('Medias have been updated'), 'success', vars.flashOptions);
+          vm.success(gettext('Medias have been updated'));
           vm.medias = response.data.medias;
         }
       }
 
       function fail() {
-        vm.flash(gettext('Error updating medias'), 'error', vars.flashOptions);
+        vm.error(gettext('Error updating medias'));
       }
 
       axios.post(urls.updateMedias).then(success).catch(fail);
@@ -62,7 +62,7 @@ window.vm = new Vue({
       }
 
       function fail() {
-        vm.flash(gettext('Error updating media'), 'error', vars.flashOptions);
+        vm.error(gettext('Error updating media'));
       }
 
       const url = `${urls.medias}${media.id}/`;
@@ -74,7 +74,7 @@ window.vm = new Vue({
       }
 
       function fail() {
-        vm.flash(gettext('Error deleting media'), 'error', vars.flashOptions);
+        vm.error(gettext('Error deleting media'));
       }
 
       const url = `${urls.medias}${media.id}/`;
@@ -84,18 +84,18 @@ window.vm = new Vue({
       return media.noCaption || media.noTags || media.noLocation;
     },
     showRemovedMediaMessage: function() {
-      vm.flash(gettext('Media has been removed because it no longer exists on Instagram'), 'info', vars.flashOptions);
+      vm.info(gettext('Media has been removed because it no longer exists on Instagram'));
     },
     loadLikes: function() {
       function success(response) {
         if (response.data.status === 'success') {
-          vm.flash(gettext('Likes have been loaded'), 'success', vars.flashOptions);
+          vm.success(gettext('Likes have been loaded'));
           vm.medias = response.data.medias;
         }
       }
 
       function fail() {
-        vm.flash(gettext('Error loading likes'), 'error', vars.flashOptions);
+        vm.error(gettext('Error loading likes'));
       }
 
       axios.post(urls.loadLikes).then(success).catch(fail);
@@ -103,13 +103,13 @@ window.vm = new Vue({
     loadViews: function() {
       function success(response) {
         if (response.data.status === 'success') {
-          vm.flash(gettext('Views have been loaded'), 'success', vars.flashOptions);
+          vm.success(gettext('Views have been loaded'));
           vm.medias = response.data.medias;
         }
       }
 
       function fail() {
-        vm.flash(gettext('Error loading views'), 'error', vars.flashOptions);
+        vm.error(gettext('Error loading views'));
       }
 
       axios.post(urls.loadViews).then(success).catch(fail);
@@ -125,7 +125,7 @@ window.vm = new Vue({
       }
 
       function fail() {
-        vm.flash(gettext('Error editing caption'), 'error', vars.flashOptions);
+        vm.error(gettext('Error editing caption'));
       }
 
       let caption = prompt(gettext('Caption'), media.caption);

@@ -16,7 +16,7 @@ window.vm = new Vue({
       })).then(function() {
         location.reload();
       }).catch(function() {
-        vm.flash(gettext('Error saving settings'), 'error', vars.flashOptions);
+        vm.error(gettext('Error saving settings'));
       });
     },
   },
