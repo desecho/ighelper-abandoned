@@ -62,7 +62,8 @@ class Media(models.Model):
     date = models.DateTimeField()
     media_type = models.PositiveIntegerField(choices=MEDIA_TYPES)
     caption = models.CharField(max_length=255, blank=True)
-    location = models.CharField(max_length=255, blank=True)
+    location_name = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
     image = models.URLField(max_length=255)
     video = models.URLField(null=True, blank=True)
     objects = models.Manager()
@@ -93,7 +94,8 @@ class Media(models.Model):
 
     @property
     def location_formatted(self):
-        return self._replace_single_quotes(self.location)
+        location_name = self._replace_single_quotes(self.location_name)
+        return f'{location_name}; {self.city}'
 
 
 class Follower(models.Model):

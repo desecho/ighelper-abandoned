@@ -37,7 +37,7 @@ class Instagram:
 
         def get_location(media):
             if 'location' in media:
-                return media['location']['name']
+                return media['location']['name'], media['location']['city']
             return ''
 
         def get_caption(media):
@@ -45,15 +45,22 @@ class Instagram:
                 return media['caption']['text']
             return ''
 
+        def get_views_count(media):
+            if 'view_count' in media:
+                return media['view_count']
+            return None
+
+        location_name, city = get_location(m)
         return {
             'id': m['id'],
             'media_type': m['media_type'],
             'date': datetime.fromtimestamp(m['taken_at']),
             'caption': get_caption(m),
-            'location': get_location(m),
+            'location_name': location_name,
+            'city': city,
             'image': m['image_versions2']['candidates'][0]['url'],
             'video': get_video(m),
-            'views_count': m['view_count'],
+            'views_count': get_views_count(m),
         }
 
     def get_media(self, media_id):

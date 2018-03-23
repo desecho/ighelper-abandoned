@@ -23,7 +23,7 @@ def get_medias(user, media_id=None):
             media['noTags'] = True
         elif '#' not in m.caption:
             media['noTags'] = True
-        if not m.location:
+        if not m.location_name:
             media['noLocation'] = True
         media['image'] = m.image
         media['content'] = m.content
@@ -57,7 +57,8 @@ class LoadMediasView(InstagramAjaxView):
                 media_type=m['media_type'],
                 date=m['date'],
                 caption=m['caption'],
-                location=m['location'],
+                location_name=m['location_name'],
+                city=m['city'],
                 image=m['image'],
                 video=m['video'],
                 views_count=m['views_count'])
@@ -75,7 +76,8 @@ class MediaView(InstagramAjaxView):
             media.delete()
             return self.fail()
         media.caption = instagram_media['caption']
-        media.location = instagram_media['location']
+        media.location_name = instagram_media['location_name']
+        media.city = instagram_media['city']
         media.views_count = instagram_media['views_count']
         media.image = instagram_media['image']
         media.save()
