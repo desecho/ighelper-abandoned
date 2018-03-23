@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 01:54-0400\n"
-"PO-Revision-Date: 2018-03-23 01:54-0456\n"
+"POT-Creation-Date: 2018-03-23 02:09-0400\n"
+"PO-Revision-Date: 2018-03-23 02:09-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,7 +31,7 @@ msgstr "Фолловеры"
 msgid "Medias"
 msgstr "Медиа"
 
-#: ighelper/views/home.py:20
+#: ighelper/views/home.py:22 ighelper/views/home.py:26
 msgid "not available"
 msgstr "не доступно"
 
@@ -99,6 +99,16 @@ msgstr "Всего лайков"
 msgid "Average likes per media"
 msgstr "Среднее число лайков на медиа"
 
+#: templates/home.html:12
+#| msgid "Total videos"
+msgid "Total videos views"
+msgstr "Всего видео просмотров"
+
+#: templates/home.html:13
+#| msgid "Average likes per media"
+msgid "Average views per video"
+msgstr "Среднее число просмотров на видео"
+
 #: templates/includes/menu.html:8
 msgid "Toggle navigation"
 msgstr "Переключить навигацию"
@@ -108,7 +118,6 @@ msgid "Load new medias"
 msgstr "Загрузить новые медиа"
 
 #: templates/medias.html:9
-#| msgid "Update media"
 msgid "Update medias"
 msgstr "Обновить медиа"
 
