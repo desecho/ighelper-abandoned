@@ -19,7 +19,10 @@ Features:
         - videos
         - followers
         - likes
-    - Get average number of likes
+        - views
+    - Get average number of:
+        - likes
+        - views
 
 - Manage your medias:
     - see caption, location, date and number of likes
