@@ -30,7 +30,7 @@
               <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name"/></a>
               </td>
               <td><a :href="follower.profile" target="_blank">[[ follower.name ]]</a></td>
-              <td>[[ follower.number_likes ]]</td>
+              <td>[[ follower.likes_count ]]</td>
               <td><input :id="follower.elementIdFollowed" type="checkbox" :checked="follower.followed" @click="setFollowedStatus(follower)"></td>
               <td><input :id="follower.elementIdApproved" type="checkbox" :checked="isApproved(follower)"
                          :disabled="follower.followed" @click="setApprovedStatus(follower)"></td>
