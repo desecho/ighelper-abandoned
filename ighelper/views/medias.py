@@ -51,18 +51,20 @@ class LoadMediasView(InstagramAjaxView):
         media_ids = self.user.medias.values_list('instagram_id', flat=True)
         medias = self.instagram.get_medias(media_ids)
         for m in medias:
-            Media.objects.create(
-                user=self.user,
-                instagram_id=m['id'],
-                media_type=m['media_type'],
-                date=m['date'],
-                caption=m['caption'],
-                location_name=m['location_name'],
-                city=m['city'],
-                image=m['image'],
-                video=m['video'],
-                views_count=m['views_count'])
+            Media.objects.create(user=self.user, **m)
 
+        return self.success(medias=get_medias(self.user))
+
+
+class UpdateMediasView(InstagramAjaxView):
+    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
+        self.get_data()
+        instagram_medias = self.instagram.get_medias()
+        instagram_medias = {m['instagram_id']: m for m in instagram_medias}
+        medias = self.user.medias.all()
+        medias_instagram_ids = medias.values_list('instagram_id', flat=True)
+        for medias_instagram_id in medias_instagram_ids:
+            medias.filter(instagram_id=medias_instagram_id).update(**m)
         return self.success(medias=get_medias(self.user))
 
 

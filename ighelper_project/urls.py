@@ -6,7 +6,6 @@ from django.contrib.auth.views import login
 from django.urls import path, re_path
 from django.views.i18n import JavaScriptCatalog
 
-from ighelper.views.home import HomeView
 from ighelper.views.followers import (
     BlockView,
     FollowersView,
@@ -15,6 +14,7 @@ from ighelper.views.followers import (
     SetApprovedStatusView,
     SetFollowedStatusView,
 )
+from ighelper.views.home import HomeView
 from ighelper.views.medias import (
     CaptionUpdateView,
     LoadLikesView,
@@ -22,6 +22,7 @@ from ighelper.views.medias import (
     LoadViewsView,
     MediasView,
     MediaView,
+    UpdateMediasView,
 )
 from ighelper.views.user import (
     PreferencesView,
@@ -62,6 +63,7 @@ urlpatterns += [
     path('medias/load/likes/', LoadLikesView.as_view(), name='load_likes'),
     path('medias/load/views/', LoadViewsView.as_view(), name='load_views'),
     path('medias/load/', LoadMediasView.as_view(), name='load_medias'),
+    path('medias/update/', UpdateMediasView.as_view(), name='update_medias'),
     path('followers/', FollowersView.as_view(), name='followers'),
     path('followers/load/', LoadFollowersView.as_view(), name='load_followers'),
     re_path(r'followers/(?P<id>\d+)/block/', BlockView.as_view(), name='block'),

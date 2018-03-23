@@ -29,7 +29,21 @@ window.vm = new Vue({
     removeMedia: function(id) {
       vm.medias = vm.medias.filter((m) => m.id != id);
     },
-    update: function(media) {
+    updateMedias: function(media) {
+      function success(response) {
+        if (response.data.status === 'success') {
+          vm.flash(gettext('Medias have been updated'), 'success', vars.flashOptions);
+          vm.medias = response.data.medias;
+        }
+      }
+
+      function fail() {
+        vm.flash(gettext('Error updating medias'), 'error', vars.flashOptions);
+      }
+
+      axios.post(urls.updateMedias).then(success).catch(fail);
+    },
+    updateMedia: function(media) {
       function success(response) {
         if (response.data.status === 'success') {
           const updatedMedia = response.data.media;

@@ -52,7 +52,7 @@ class Instagram:
 
         location_name, city = get_location(m)
         return {
-            'id': m['id'],
+            'instagram_id': m['id'],
             'media_type': m['media_type'],
             'date': datetime.fromtimestamp(m['taken_at']),
             'caption': get_caption(m),
@@ -75,7 +75,9 @@ class Instagram:
             api_response = json.dumps(result)
             raise InstagramException(f'Error getting media. API response - {api_response}')
 
-    def get_medias(self, media_ids):
+    def get_medias(self, media_ids=None):
+        if media_ids is None:
+            media_ids = []
         self._api.getSelfUsernameInfo()
         media_number = self._api.LastJson['user']['media_count']
 

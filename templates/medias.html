@@ -6,6 +6,8 @@
     <button class="btn btn-primary form-control"
             @click="load">{% trans 'Load new medias' %}</button>
     <button class="btn btn-primary form-control"
+            @click="updateMedias">{% trans 'Update medias' %}</button>
+    <button class="btn btn-primary form-control"
             @click="loadLikes">{% trans 'Load likes' %}</button>
     <button class="btn btn-primary form-control"
             @click="loadViews">{% trans 'Load views' %}</button>
@@ -44,7 +46,7 @@
               <td class="date">[[ media.date ]]</td>
               <td>
                 <button class="btn btn-primary form-control" @click="editCaption(media)">{% trans 'Edit caption' %}</button>
-                <button class="btn btn-primary form-control" @click="update(media)">{% trans 'Update media' %}</button>
+                <button class="btn btn-primary form-control" @click="updateMedia(media)">{% trans 'Update media' %}</button>
                 <button class="btn btn-primary form-control" @click="del(media)">{% trans 'Delete media' %}</button>
               </td>
             </tr>
@@ -61,6 +63,7 @@
 
     urls.medias = '{% url 'medias' %}';
     urls.loadMedias = '{% url 'load_medias' %}';
+    urls.updateMedias = '{% url 'update_medias' %}';
     urls.loadLikes = '{% url 'load_likes' %}';
     urls.loadViews = '{% url 'load_views' %}';
 
