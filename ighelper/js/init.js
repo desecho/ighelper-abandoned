@@ -14,7 +14,7 @@ Vue.use(VueFlashMessage, {
   messageOptions: {
     timeout: 1500,
     important: true,
-  }
+  },
 });
 Vue.use(VueCookie);
 
@@ -26,4 +26,3 @@ new Vue({
     },
   },
 });
-

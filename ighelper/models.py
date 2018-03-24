@@ -25,7 +25,7 @@ class User(AbstractUser):
                 'elementIdApproved': f'follower-approved{f.id}',
                 'elementIdFollowed': f'follower-followed{f.id}',
                 'name': str(f),
-                'likes_count': f.get_likes_count(self),
+                'likes_count': f.get_likes_count(),
                 'avatar': f.avatar,
                 'profile': f.profile,
                 'followed': f.followed,
@@ -101,32 +101,54 @@ class Media(models.Model):
         return location
 
 
-class Follower(models.Model):
-    user = models.ForeignKey(User, models.CASCADE, related_name='followers')
+class InstagramUser(models.Model):
     instagram_id = models.BigIntegerField()
-    instagram_username = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
     name = models.CharField(max_length=255, blank=True)
     avatar = models.URLField()
-    approved = models.BooleanField(default=False)
-    followed = models.BooleanField(default=False)
 
     def __str__(self):
-        return get_name(self.name, self.instagram_username)
+        return get_name(self.name, self.username)
 
     @property
     def profile(self):
-        return f'{settings.INSTAGRAM_BASE_URL}/{self.instagram_username}/'
+        return f'{settings.INSTAGRAM_BASE_URL}/{self.username}/'
 
     def get_likes_count(self, user):
         return self.likes.filter(media__user=user).count()
 
 
-class Like(models.Model):
-    media = models.ForeignKey(Media, models.CASCADE, related_name='likes')
-    follower = models.ForeignKey(Follower, models.SET_NULL, related_name='likes', null=True, blank=True)
+class Follower(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, related_name='followers')
+    instagram_user = models.ForeignKey(InstagramUser, models.CASCADE)
+    approved = models.BooleanField(default=False)
+    followed = models.BooleanField(default=False)
+
+    @property
+    def instagram_id(self):
+        return self.instagram_user.instagram_id
+
+    @property
+    def avatar(self):
+        return self.instagram_user.avatar
+
+    @property
+    def profile(self):
+        return self.instagram_user.profile
 
     def __str__(self):
-        return f'{self.media} - {self.follower}'
+        return str(self.instagram_user)
+
+    def get_likes_count(self):
+        return self.instagram_user.get_likes_count(self.user)
+
+
+class Like(models.Model):
+    media = models.ForeignKey(Media, models.CASCADE, related_name='likes')
+    instagram_user = models.ForeignKey(InstagramUser, models.CASCADE, related_name='likes')
+
+    def __str__(self):
+        return f'{self.media} - {self.instagram_user}'
 
 
 @receiver(user_logged_in)

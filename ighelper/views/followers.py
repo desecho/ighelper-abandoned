@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import get_object_or_404
 
-from ighelper.models import Follower
+from ighelper.models import Follower, InstagramUser
 
 from .mixins import AjaxView, InstagramAjaxView, TemplateView
 
@@ -17,30 +17,25 @@ class FollowersView(TemplateView):
 class LoadFollowersView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
-        followers = self.instagram.get_followers()
+        instagram_followers = self.instagram.get_followers()
         current_followers = self.user.followers.all()
 
         # Remove followers which have been deleted / have unfollowed
-        followers_ids = [x['id'] for x in followers]
+        followers_instagram_ids = [x['instagram_id'] for x in instagram_followers]
         for follower in current_followers:
-            if follower.instagram_id not in followers_ids:
+            if follower.instagram_id not in followers_instagram_ids:
                 follower.delete()
 
-        for x in followers:
-            instagram_id = x['id']
-            found_followers = current_followers.filter(instagram_id=instagram_id)
-            if found_followers.exists():
-                follower = found_followers[0]
-                follower.name = x['name']
-                follower.avatar = x['avatar']
-                follower.save()
+        for instagram_follower in instagram_followers:
+            instagram_users = InstagramUser.objects.filter(instagram_id=instagram_follower['instagram_id'])
+            if instagram_users.exists():
+                instagram_users.update(**instagram_follower)
+                instagram_user = instagram_users[0]
             else:
-                Follower.objects.create(
-                    user=self.user,
-                    instagram_id=x['id'],
-                    instagram_username=x['username'],
-                    name=x['name'],
-                    avatar=x['avatar'])
+                instagram_user = InstagramUser.objects.create(**instagram_follower)
+
+            if not current_followers.filter(instagram_user=instagram_user).exists():
+                Follower.objects.create(user=self.user, instagram_user=instagram_user)
 
         return self.success(followers=self.user.get_followers())
 
@@ -56,7 +51,7 @@ class LoadUsersIAmFollowingView(InstagramAjaxView):
 
         for u in users_i_am_following:
             # We have a mutual followership.
-            followers_found = followers.filter(instagram_id=u['id'])
+            followers_found = followers.filter(instagram_user__instagram_id=u['id'])
             if followers_found.exists():
                 follower = followers_found[0]
                 follower.followed = True

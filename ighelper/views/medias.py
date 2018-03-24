@@ -2,7 +2,7 @@ import json
 
 from babel.dates import format_date
 
-from ighelper.models import Like, Media
+from ighelper.models import InstagramUser, Like, Media
 
 from .mixins import InstagramAjaxView, TemplateView
 
@@ -124,12 +124,15 @@ class LoadLikesView(InstagramAjaxView):
         Like.objects.filter(media__user=self.user).delete()
         self.user.medias.filter(pk__in=medias_deleted).delete()
         for l in likes:
-            users = self.user.followers.filter(instagram_id=l['user_instagram_id'])
-            if users.exists():
-                follower = users[0]
+            instagram_user = l['user']
+            instagram_users = InstagramUser.objects.filter(instagram_id=instagram_user['instagram_id'])
+            if instagram_users.exists():
+                instagram_users.update(**instagram_user)
+                instagram_user = instagram_users[0]
             else:
-                follower = None
-            Like.objects.create(media=l['media'], follower=follower)
+                instagram_user = InstagramUser.objects.create(**instagram_user)
+
+            Like.objects.create(media=l['media'], instagram_user=instagram_user)
 
         # Update likes counter
         for media in medias:
