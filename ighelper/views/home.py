@@ -25,6 +25,9 @@ class HomeView(TemplateView):
         else:
             views_average = _('not available')
 
+        if videos_views_count is None:
+            videos_views_count = _('not available')
+
         return {
             'followers_count': followers_count,
             'images_count': images_count,
