@@ -32,29 +32,29 @@ class Instagram:
         users = self._api.LastJson['users']
         return [self._get_user_data(user) for user in users]
 
-    def get_likes_and_deleted_medias(self, medias):
+    def get_likes_and_deleted_medias(self, medias_ids):
         """
         Return a tuple - (likes, deleted_medias) - (list of dicts, 'deleted_medias': list).
         """
         i = 0
-        total_medias = len(medias)
+        total_medias = len(medias_ids)
         likes = []
         medias_deleted = []
-        for media in medias:
+        for media_id in medias_ids:
             i += 1
-            success = self._api.getMediaLikers(media.instagram_id)
+            success = self._api.getMediaLikers(media_id)
             result = self._api.LastJson
             if success:
                 users = result['users']
                 for user in users:
                     like = {
-                        'media': media,
+                        'media_instagram_id': media_id,
                         'user': self._get_user_data(user),
                     }
                     likes.append(like)
             else:
                 if 'message' in result and result['message'] == self._MESSAGE_MEDIA_NOT_FOUND3:
-                    medias_deleted.append(media.id)
+                    medias_deleted.append(media_id)
                 else:
                     api_response = json.dumps(result)
                     raise InstagramException(f'Error getting media likes. API response - {api_response}')
