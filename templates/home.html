@@ -2,14 +2,54 @@
 {% load i18n static %}
 
 {% block content %}
-  {% trans 'Total images' %} - {{ images_count }}<br>
-  {% trans 'Total videos' %} - {{ videos_count }}<br><br>
-
-  {% trans 'Total followers' %} - {{ followers_count }}<br>
-  {% trans 'Percentage of likes from followers' %} - {{ likes_followers_percentage }}%<br><br>
-  {% trans 'Total likes' %} - {{ likes_count }}<br>
-  {% trans 'Average likes per media' %} - {{ likes_average }}<br><br>
-
-  {% trans 'Total videos views' %} - {{ videos_views_count }}<br>
-  {% trans 'Average views per video' %} - {{ views_average }}<br>
+  <div class="row">
+    <div class="col-sm-3">
+      <table class="table">
+        <tr>
+          <td>{% trans 'Total images' %}</td>
+          <td>{{ images_count }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Total videos' %}</td>
+          <td>{{ videos_count }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Total followers' %}</td>
+          <td>{{ followers_count }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans 'Percentage of likes from followers' %}</td>
+          <td>{{ likes_followers_percentage }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans 'Total likes' %}</td>
+          <td>{{ likes_count }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Average likes per media' %}</td>
+          <td>{{ likes_average }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans 'Total videos views' %}</td>
+          <td>{{ videos_views_count }}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Average views per video' %}</td>
+          <td>{{ views_average }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 {% endblock %}
