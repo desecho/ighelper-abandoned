@@ -27,7 +27,7 @@
               <th>{% trans 'Actions' %}</th>
             </tr>
             <tr v-for="follower in followers" class="follower" v-show="!(hideApproved && isApproved(follower)) && !(hideFollowed && follower.followed)">
-              <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name"/></a>
+              <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name" class="avatar" /></a>
               </td>
               <td><a :href="follower.profile" target="_blank">[[ follower.name ]]</a></td>
               <td>[[ follower.likes_count ]]</td>

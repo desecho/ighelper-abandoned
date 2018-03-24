@@ -15,6 +15,7 @@ from ighelper.views.followers import (
     SetFollowedStatusView,
 )
 from ighelper.views.home import HomeView
+from ighelper.views.likes import LikesView
 from ighelper.views.medias import (
     CaptionUpdateView,
     LoadLikesView,
@@ -58,6 +59,7 @@ urlpatterns += [
     # -------------------------------------------------------------------------------------------
     path('', HomeView.as_view(), name='home'),
     path('medias/', MediasView.as_view(), name='medias'),
+    path('likes/', LikesView.as_view(), name='likes'),
     re_path(r'medias/(?P<id>\d+)/caption/', CaptionUpdateView.as_view(), name='media'),
     re_path(r'medias/(?P<id>\d+)/', MediaView.as_view(), name='media'),
     path('medias/load/likes/', LoadLikesView.as_view(), name='load_likes'),

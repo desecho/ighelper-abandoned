@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 02:09-0400\n"
-"PO-Revision-Date: 2018-03-23 02:09-0456\n"
+"POT-Creation-Date: 2018-03-24 17:25-0400\n"
+"PO-Revision-Date: 2018-03-24 17:26-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,7 +31,13 @@ msgstr "Фолловеры"
 msgid "Medias"
 msgstr "Медиа"
 
+#: ighelper/menus.py:15 templates/followers.html:24 templates/likes.html:13
+#: templates/medias.html:30
+msgid "Likes"
+msgstr "Лайки"
+
 #: ighelper/views/home.py:22 ighelper/views/home.py:26
+#: ighelper/views/home.py:29
 msgid "not available"
 msgstr "не доступно"
 
@@ -51,17 +57,13 @@ msgstr "Спрятать одобренные"
 msgid "Hide followed by me"
 msgstr "Скрыть зафолловленных мной"
 
-#: templates/followers.html:22
+#: templates/followers.html:22 templates/likes.html:11
 msgid "Avatar"
 msgstr "Аватар"
 
-#: templates/followers.html:23
+#: templates/followers.html:23 templates/likes.html:12
 msgid "Name"
 msgstr "Имя"
-
-#: templates/followers.html:24 templates/medias.html:30
-msgid "Likes"
-msgstr "Лайки"
 
 #: templates/followers.html:25
 msgid "Followed by me"
@@ -100,18 +102,24 @@ msgid "Average likes per media"
 msgstr "Среднее число лайков на медиа"
 
 #: templates/home.html:12
-#| msgid "Total videos"
 msgid "Total videos views"
 msgstr "Всего видео просмотров"
 
 #: templates/home.html:13
-#| msgid "Average likes per media"
 msgid "Average views per video"
 msgstr "Среднее число просмотров на видео"
 
 #: templates/includes/menu.html:8
 msgid "Toggle navigation"
 msgstr "Переключить навигацию"
+
+#: templates/likes.html:5
+msgid ""
+"List of users which does not include your followers but who liked your "
+"medias"
+msgstr ""
+"Список пользователей который не включает ваших фолловеров но которые "
+"залайкали ваши медиа"
 
 #: templates/medias.html:7
 msgid "Load new medias"
