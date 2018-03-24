@@ -15,7 +15,11 @@ class HomeView(TemplateView):
         images_count = Media.images.filter(user=user).count()
         videos_count = Media.videos.filter(user=user).count()
         videos_views_count = Media.videos.filter(user=user).aggregate(count=Sum('views_count'))['count']
-        likes_count = Like.objects.filter(media__user=user).count()
+        likes = Like.objects.filter(media__user=user)
+        likes_count = likes.count()
+        followers_instagram_users = user.followers.values('instagram_user')
+        likes_followers_count = likes.filter(instagram_user__in=followers_instagram_users).count()
+        likes_followers_percentage = round(likes_followers_count / likes_count * 100)
         if images_count:
             likes_average = likes_count // images_count
         else:
@@ -34,6 +38,7 @@ class HomeView(TemplateView):
             'videos_count': videos_count,
             'videos_views_count': videos_views_count,
             'likes_count': likes_count,
+            'likes_followers_percentage': likes_followers_percentage,
             'likes_average': likes_average,
             'views_average': views_average,
         }
