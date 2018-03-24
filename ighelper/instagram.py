@@ -169,3 +169,6 @@ class Instagram:
 
     def block(self, user_id):
         return self._api.block(user_id)
+
+    def delete_media(self, media_id):
+        return self._api.deleteMedia(media_id)

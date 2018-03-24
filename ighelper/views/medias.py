@@ -93,7 +93,14 @@ class MediaView(InstagramAjaxView):
         return self.success(media=get_medias(self.user, media_id)[0])
 
     def delete(self, *args, **kwargs):  # pylint: disable=unused-argument
-        return self.success()
+        self.get_data()
+        media_id = kwargs['id']
+        media = self.user.medias.get(pk=media_id)
+        result = self.instagram.delete_media(media.instagram_id)
+        if result:
+            media.delete()
+            return self.success()
+        return self.fail()
 
 
 class CaptionUpdateView(InstagramAjaxView):
