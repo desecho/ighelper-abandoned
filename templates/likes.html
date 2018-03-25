@@ -19,7 +19,7 @@
           </tr>
           <tr v-for="user in users">
             <td><a :href="user.profile" target="_blank"><img :src="user.avatar" :alt="user.name"
-                                                                  class="avatar"/></a></td>
+                                                             class="avatar"/></a></td>
             <td><a :href="user.profile" target="_blank">[[ user.name ]]</a></td>
             <td>[[ user.likes_count ]]</td>
           </tr>

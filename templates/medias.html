@@ -33,7 +33,8 @@
               <th>{% trans 'Actions' %}</th>
             </tr>
             <tr v-for="media in medias" v-show="!(showOnlyIssues && !hasIssue(media))">
-              <td><a :href="media.content" target="_blank"><img :src="media.imageSmall" :data-rjs="media.image" class="media-image"></a></td>
+              <td><a :href="media.content" target="_blank"><img :src="media.imageSmall" :data-rjs="media.image"
+                                                                class="media-image"></a></td>
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noCaption" disabled></td>
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noTags" disabled></td>
               <td v-show="showIssuesColumns"><input type="checkbox" :checked="media.noLocation" disabled></td>
@@ -43,8 +44,10 @@
               <td>[[ media.location ]]</td>
               <td class="date">[[ media.date ]]</td>
               <td>
-                <button class="btn btn-primary form-control" @click="editCaption(media)">{% trans 'Edit caption' %}</button>
-                <button class="btn btn-primary form-control" @click="updateMedia(media)">{% trans 'Update media' %}</button>
+                <button class="btn btn-primary form-control"
+                        @click="editCaption(media)">{% trans 'Edit caption' %}</button>
+                <button class="btn btn-primary form-control"
+                        @click="updateMedia(media)">{% trans 'Update media' %}</button>
                 <button class="btn btn-primary form-control" @click="del(media)">{% trans 'Delete media' %}</button>
               </td>
             </tr>

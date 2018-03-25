@@ -9,10 +9,10 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-9">
-          <div class="filters">
-            <label for="hide-confirmed">{% trans 'Hide confirmed' %}</label>
-            <input id="hide-confirmed" type="checkbox" v-model="hideConfirmed"><br>
-          </div>
+        <div class="filters">
+          <label for="hide-confirmed">{% trans 'Hide confirmed' %}</label>
+          <input id="hide-confirmed" type="checkbox" v-model="hideConfirmed"><br>
+        </div>
         <table class="table" v-cloak>
           <tr>
             <th>{% trans 'Avatar' %}</th>
@@ -22,9 +22,10 @@
           </tr>
           <tr v-for="user in followed" v-show="!(hideConfirmed && user.confirmed)">
             <td><a :href="user.profile" target="_blank"><img :src="user.avatar" :alt="user.name"
-                                                                  class="avatar"/></a></td>
+                                                             class="avatar"/></a></td>
             <td><a :href="user.profile" target="_blank">[[ user.name ]]</a></td>
-            <td><input :id="user.elementIdConfirmed" type="checkbox" :checked="user.confirmed" @click="setConfirmedStatus(user)"></td>
+            <td><input :id="user.elementIdConfirmed" type="checkbox" :checked="user.confirmed"
+                       @click="setConfirmedStatus(user)"></td>
             <td>
               <button class="btn btn-primary form-control" @click="unfollow(user)">{% trans 'Unfollow' %}</button>
             </td>
