@@ -1,4 +1,5 @@
 import json
+import time
 from datetime import datetime
 
 from django.conf import settings
@@ -66,6 +67,9 @@ class Instagram:
                 else:
                     api_response = json.dumps(result)
                     raise InstagramException(f'Error getting media likes. API response - {api_response}')
+            # Slow down in attempt to avoid blocking by Instagram
+            # Slow down in attempt to avoid blocking by Instagram
+            time.sleep(settings.INSTAGRAM_SLEEP)
             print(f'Loaded {i} / {total_medias}')
 
         return likes, medias_deleted
@@ -150,6 +154,8 @@ class Instagram:
             max_id = self._api.LastJson['next_max_id']
             page = i + 1
             print(f'Loaded {page} / {pages}')
+            # Slow down in attempt to avoid blocking by Instagram
+            time.sleep(settings.INSTAGRAM_SLEEP)
 
         medias_output = []
         for m in medias:
