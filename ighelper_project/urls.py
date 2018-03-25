@@ -20,10 +20,9 @@ from ighelper.views.followers import (
     SetFollowedStatusView,
 )
 from ighelper.views.home import HomeView
-from ighelper.views.likes import LikesView
+from ighelper.views.likes import LikesView, LoadLikesView
 from ighelper.views.medias import (
     CaptionUpdateView,
-    LoadLikesView,
     LoadMediasView,
     LoadViewsView,
     MediasView,

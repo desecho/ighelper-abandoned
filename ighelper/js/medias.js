@@ -86,20 +86,6 @@ window.vm = new Vue({
     showRemovedMediaMessage: function() {
       vm.info(gettext('Media has been removed because it no longer exists on Instagram'));
     },
-    loadLikes: function() {
-      function success(response) {
-        if (response.data.status === 'success') {
-          vm.success(gettext('Likes have been loaded'));
-          vm.medias = response.data.medias;
-        }
-      }
-
-      function fail() {
-        vm.error(gettext('Error loading likes'));
-      }
-
-      axios.post(urls.loadLikes).then(success).catch(fail);
-    },
     loadViews: function() {
       function success(response) {
         if (response.data.status === 'success') {

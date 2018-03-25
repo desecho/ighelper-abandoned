@@ -15,6 +15,7 @@ const vendorPackages = ['font-awesome-webpack', 'vue-flash-message/dist/vue-flas
 
 module.exports = {
   entry: {
+    likes: path.join(jsPath, 'likes.js'),
     followed: path.join(jsPath, 'followed.js'),
     followers: path.join(jsPath, 'followers.js'),
     medias: path.join(jsPath, 'medias.js'),

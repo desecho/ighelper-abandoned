@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-25 01:53-0400\n"
+"POT-Creation-Date: 2018-03-25 02:25-0400\n"
 "PO-Revision-Date: 2018-03-25 01:47-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,14 @@ msgstr "Ошибка установки статуса одобрено"
 msgid "Error blocking follower"
 msgstr "Ошибка блокирования фолловера"
 
+#: ighelper/js/likes.js:16
+msgid "Likes have been loaded"
+msgstr "Лайки были загружены"
+
+#: ighelper/js/likes.js:22
+msgid "Error loading likes"
+msgstr "Ошибка загрузки лайков"
+
 #: ighelper/js/medias.js:18
 msgid "Medias have been loaded"
 msgstr "Медиа были загружены"
@@ -78,26 +86,18 @@ msgid "Media has been removed because it no longer exists on Instagram"
 msgstr "Медиа было удалено потому что оно более недоступно в Instagram"
 
 #: ighelper/js/medias.js:92
-msgid "Likes have been loaded"
-msgstr "Лайки были загружены"
-
-#: ighelper/js/medias.js:98
-msgid "Error loading likes"
-msgstr "Ошибка загрузки лайков"
-
-#: ighelper/js/medias.js:106
 msgid "Views have been loaded"
 msgstr "Просмотры были загружены"
 
-#: ighelper/js/medias.js:112
+#: ighelper/js/medias.js:98
 msgid "Error loading views"
 msgstr "Ошибка загрузки просмотров"
 
-#: ighelper/js/medias.js:128
+#: ighelper/js/medias.js:114
 msgid "Error editing caption"
 msgstr "Ошибка изменения описания"
 
-#: ighelper/js/medias.js:131
+#: ighelper/js/medias.js:117
 msgid "Caption"
 msgstr "Описание"
 

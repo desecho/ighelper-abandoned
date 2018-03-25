@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-25 01:53-0400\n"
+"POT-Creation-Date: 2018-03-25 02:25-0400\n"
 "PO-Revision-Date: 2018-03-25 01:54-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.8.1\n"
 
 #: ighelper/menus.py:12
@@ -31,8 +33,8 @@ msgstr "Фолловеры"
 msgid "Medias"
 msgstr "Медиа"
 
-#: ighelper/menus.py:15 templates/followers.html:22 templates/likes.html:13
-#: templates/medias.html:30
+#: ighelper/menus.py:15 templates/followers.html:22 templates/likes.html:16
+#: templates/medias.html:28
 msgid "Likes"
 msgstr "Лайки"
 
@@ -54,17 +56,16 @@ msgid "Load users I am following"
 msgstr "Загрузить пользователей которых я фолловлю"
 
 #: templates/followed.html:13
-#| msgid "Confirmed"
 msgid "Hide confirmed"
 msgstr "Спрятать подтвержденные"
 
 #: templates/followed.html:18 templates/followers.html:20
-#: templates/likes.html:11
+#: templates/likes.html:14
 msgid "Avatar"
 msgstr "Аватар"
 
 #: templates/followed.html:19 templates/followers.html:21
-#: templates/likes.html:12
+#: templates/likes.html:15
 msgid "Name"
 msgstr "Имя"
 
@@ -138,11 +139,14 @@ msgstr "Переключить навигацию"
 
 #: templates/likes.html:5
 msgid ""
-"List of users which does not include your followers but who liked your "
-"medias"
+"List of users which does not include your followers but who liked your medias"
 msgstr ""
 "Список пользователей который не включает ваших фолловеров но которые "
 "залайкали ваши медиа"
+
+#: templates/likes.html:7
+msgid "Load likes"
+msgstr "Загрузить лайки"
 
 #: templates/medias.html:7
 msgid "Load new medias"
@@ -153,66 +157,62 @@ msgid "Update medias"
 msgstr "Обновить медиа"
 
 #: templates/medias.html:11
-msgid "Load likes"
-msgstr "Загрузить лайки"
-
-#: templates/medias.html:13
 msgid "Load views"
 msgstr "Загрузить просмотры"
 
-#: templates/medias.html:19
+#: templates/medias.html:17
 msgid "Show issues columns"
 msgstr "Показывать столбцы с проблемами"
 
-#: templates/medias.html:21
+#: templates/medias.html:19
 msgid "Only shows medias with issues"
 msgstr "Показывать только медиа с проблемами"
 
-#: templates/medias.html:26
+#: templates/medias.html:24
 msgid "Image"
 msgstr "Изображение"
 
-#: templates/medias.html:27
+#: templates/medias.html:25
 msgid "No caption"
 msgstr "Нет описания"
 
-#: templates/medias.html:28
+#: templates/medias.html:26
 msgid "No tags"
 msgstr "Нет тагов"
 
-#: templates/medias.html:29
+#: templates/medias.html:27
 msgid "No location"
 msgstr "Нет местонахождения"
 
-#: templates/medias.html:31
+#: templates/medias.html:29
 msgid "Views"
 msgstr "Просмотры"
 
-#: templates/medias.html:32
+#: templates/medias.html:30
 msgid "Caption"
 msgstr "Описание"
 
-#: templates/medias.html:33
+#: templates/medias.html:31
 msgid "Location"
 msgstr "Местонахождение"
 
-#: templates/medias.html:34
+#: templates/medias.html:32
 msgid "Date"
 msgstr "Дата"
 
-#: templates/medias.html:35
+#: templates/medias.html:33
 msgid "Actions"
 msgstr "Действия"
 
-#: templates/medias.html:48
+#: templates/medias.html:46
 msgid "Edit caption"
 msgstr "Изменить описание"
 
-#: templates/medias.html:49
+#: templates/medias.html:47
 msgid "Update media"
 msgstr "Обновить медиа"
 
-#: templates/medias.html:50
+#: templates/medias.html:48
 msgid "Delete media"
 msgstr "Удалить медиа"
 

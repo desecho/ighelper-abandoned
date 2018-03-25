@@ -3,26 +3,38 @@
 
 {% block content %}
   <p>{% trans 'List of users which does not include your followers but who liked your medias' %}.</p>
+  <button class="btn btn-primary form-control"
+          @click="loadLikes">{% trans 'Load likes' %}</button>
+  <br><br>
   <div class="container">
     <div class="row">
       <div class="col-sm-8">
-        <table class="table">
+        <table class="table" v-cloak>
           <tr>
             <th>{% trans 'Avatar' %}</th>
             <th>{% trans 'Name' %}</th>
             <th>{% trans 'Likes' %}</th>
           </tr>
-          {% for user, likes_count in user_likes_counts %}
-            <tr>
-              <td><a href="{{ user.profile }}" target="_blank"><img src="{{ user.avatar }}" alt="{{ user }}"
-                                                                    class="avatar"/></a></td>
-              <td><a href="{{ user.profile }}" target="_blank">{{ user }}</a></td>
-              <td>{{ likes_count }}</td>
-            </tr>
-          {% endfor %}
+          <tr v-for="user in users">
+            <td><a :href="user.profile" target="_blank"><img :src="user.avatar" :alt="user.name"
+                                                                  class="avatar"/></a></td>
+            <td><a :href="user.profile" target="_blank">[[ user.name ]]</a></td>
+            <td>[[ user.likes_count ]]</td>
+          </tr>
         </table>
       </div>
     </div>
   </div>
 
+{% endblock %}
+
+{% block js %}
+  <script>
+    'use strict';
+
+    urls.loadLikes = '{% url 'load_likes' %}';
+
+    vars.users = JSON.parse('{{ users|safe }}');
+  </script>
+  <script src="{% static 'js/likes.js' %}"></script>
 {% endblock %}
