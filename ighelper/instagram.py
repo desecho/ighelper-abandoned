@@ -68,7 +68,6 @@ class Instagram:
                     api_response = json.dumps(result)
                     raise InstagramException(f'Error getting media likes. API response - {api_response}')
             # Slow down in attempt to avoid blocking by Instagram
-            # Slow down in attempt to avoid blocking by Instagram
             time.sleep(settings.INSTAGRAM_SLEEP)
             print(f'Loaded {i} / {total_medias}')
 
