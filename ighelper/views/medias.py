@@ -130,7 +130,7 @@ class LoadViewsView(InstagramAjaxView):
         for video in videos:
             instagram_media = self.instagram.get_media(video.instagram_id)
             if instagram_media is None:
-                media.delete()
+                video.delete()
                 return self.fail()
             video.views_count = instagram_media['views_count']
             video.save()
