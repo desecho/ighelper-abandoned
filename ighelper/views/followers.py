@@ -64,16 +64,12 @@ class SetFollowedStatusView(InstagramAjaxView):
         follower_id = kwargs['id']
         follower = get_object_or_404(Follower, user=self.request.user, pk=follower_id)
         if status:
-            result = self.instagram.follow(follower.instagram_id)
+            self.instagram.follow(follower.instagram_id)
         else:
-            result = self.instagram.unfollow(follower.instagram_id)
-        if result:
-
-            follower.followed = status
-            follower.save()
-            return self.success()
-        else:
-            return self.fail()
+            self.instagram.unfollow(follower.instagram_id)
+        follower.followed = status
+        follower.save()
+        return self.success()
 
 
 class BlockView(InstagramAjaxView):
@@ -81,9 +77,6 @@ class BlockView(InstagramAjaxView):
         self.get_data()
         follower_id = kwargs['id']
         follower = get_object_or_404(Follower, user=self.request.user, pk=follower_id)
-        result = self.instagram.block(follower.instagram_id)
-        if result:
-            follower.delete()
-            return self.success()
-        else:
-            return self.fail()
+        self.instagram.block(follower.instagram_id)
+        follower.delete()
+        return self.success()

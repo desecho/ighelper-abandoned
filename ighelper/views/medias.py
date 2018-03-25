@@ -2,6 +2,7 @@ import json
 
 from babel.dates import format_date
 
+from ighelper.exceptions import InstagramMediaNotFoundException
 from ighelper.models import Media
 
 from .mixins import InstagramAjaxView, TemplateView
@@ -96,11 +97,9 @@ class MediaView(InstagramAjaxView):
         self.get_data()
         media_id = kwargs['id']
         media = self.user.medias.get(pk=media_id)
-        result = self.instagram.delete_media(media.instagram_id)
-        if result:
-            media.delete()
-            return self.success()
-        return self.fail()
+        self.instagram.delete_media(media.instagram_id)
+        media.delete()
+        return self.success()
 
 
 class CaptionUpdateView(InstagramAjaxView):
@@ -113,14 +112,15 @@ class CaptionUpdateView(InstagramAjaxView):
         self.get_data()
         media_id = kwargs['id']
         media = self.user.medias.get(pk=media_id)
-        success = self.instagram.update_media_caption(media.instagram_id, caption)
-        if success:
-            media.caption = caption
-            media.save()
-            return self.success()
+        try:
+            self.instagram.update_media_caption(media.instagram_id, caption)
+        except InstagramMediaNotFoundException:
+            media.delete()
+            return self.fail()
 
-        media.delete()
-        return self.fail()
+        media.caption = caption
+        media.save()
+        return self.success()
 
 
 class LoadViewsView(InstagramAjaxView):

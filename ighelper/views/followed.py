@@ -62,9 +62,6 @@ class UnfollowView(InstagramAjaxView):
         self.get_data()
         user_id = kwargs['id']
         followed_user = get_object_or_404(Followed, user=self.request.user, pk=user_id)
-        result = self.instagram.unfollow(followed_user.instagram_id)
-        if result:
-            followed_user.delete()
-            return self.success()
-        else:
-            return self.fail()
+        self.instagram.unfollow(followed_user.instagram_id)
+        followed_user.delete()
+        return self.success()
