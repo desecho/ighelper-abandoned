@@ -117,7 +117,7 @@ class Instagram:
             api_response = json.dumps(result)
             raise InstagramException(f'Error getting media. API response - {api_response}')
 
-    def get_medias(self, media_ids=None):
+    def get_medias(self, media_ids=None):  # pylint: disable=too-many-locals
         if media_ids is None:
             media_ids = []
         self._api.getSelfUsernameInfo()

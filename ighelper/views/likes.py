@@ -30,16 +30,30 @@ class LikesView(TemplateView):
 
 
 class LoadLikesView(InstagramAjaxView):
-    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
+    def _get_medias(self, only_for_new_medias):
+        medias = self.user.medias.all()
+        if only_for_new_medias:
+            medias = medias.filter(likes_count=0)
+        return medias
+
+    def _update_likes_counters(self, medias, instagram_users):
+        for media in medias:
+            media.likes_count = media.likes.count()
+            media.save()
+
+        InstagramUserCounter.objects.filter(user=self.user).delete()
+        for instagram_user in instagram_users:
+            likes_count = instagram_user.likes.filter(media__user=self.user).count()
+            InstagramUserCounter.objects.create(user=self.user, instagram_user=instagram_user, likes_count=likes_count)
+
+    def post(self, *args, **kwargs):  # pylint: disable=unused-argument,too-many-locals
         try:
             only_for_new_medias = json.loads(self.request.POST['onlyForNewMedias'])
         except KeyError:
             return self.render_bad_request_response()
 
         self.get_data()
-        medias = self.user.medias.all()
-        if only_for_new_medias:
-            medias = medias.filter(likes_count=0)
+        medias = self._get_medias(only_for_new_medias)
         media_ids = medias.values_list('instagram_id', flat=True)
         instagram_id_medias = {media.instagram_id: media for media in medias}
         likes, medias_deleted = self.instagram.get_likes_and_deleted_medias(media_ids)
@@ -63,14 +77,5 @@ class LoadLikesView(InstagramAjaxView):
             Like.objects.create(media=media, instagram_user=instagram_user)
             instagram_users.add(instagram_user)
 
-        # Update likes counters
-        for media in medias:
-            media.likes_count = media.likes.count()
-            media.save()
-
-        InstagramUserCounter.objects.filter(user=self.user).delete()
-        for instagram_user in instagram_users:
-            likes_count = instagram_user.likes.filter(media__user=self.user).count()
-            InstagramUserCounter.objects.create(user=self.user, instagram_user=instagram_user, likes_count=likes_count)
-
+        self._update_likes_counters(medias, instagram_users)
         return self.success(users=get_users_who_liked_medias_excluding_followers(self.user))
