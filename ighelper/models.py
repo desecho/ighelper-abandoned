@@ -96,8 +96,10 @@ class InstagramUser(models.Model):
         return f'{settings.INSTAGRAM_BASE_URL}/{self.username}/'
 
     def get_likes_count(self, user):
-        instagram_counter = InstagramUserCounter.objects.get(user=user, instagram_user=self)
-        return instagram_counter.likes_count
+        instagram_counters = InstagramUserCounter.objects.filter(user=user, instagram_user=self)
+        if instagram_counters.exists():
+            return instagram_counters[0].likes_count
+        return 0
 
 
 class InstagramUserCounter(models.Model):
