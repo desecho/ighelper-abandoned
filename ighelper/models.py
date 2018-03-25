@@ -1,4 +1,3 @@
-from collections import defaultdict
 from operator import itemgetter
 
 from django.conf import settings
@@ -56,25 +55,6 @@ class User(AbstractUser):
             followed_users_excluding_followers.append(followed_user_excluding_followers)
 
         return sorted(followed_users_excluding_followers, key=itemgetter('name'))
-
-    def get_users_who_liked_medias_excluding_followers(self):
-        followers = self.followers.values_list('instagram_user__pk', flat=True).distinct()
-        likes = Like.objects.filter(media__user=self).exclude(instagram_user__in=followers)
-        user_likes_counts = defaultdict(int)
-        for like in likes:
-            user_likes_counts[like.instagram_user] += 1
-
-        user_likes_counts = sorted(user_likes_counts.items(), key=itemgetter(1), reverse=True)
-        users = []
-        for user, likes_count in user_likes_counts:
-            user = {
-                'profile': user.profile,
-                'avatar': user.avatar,
-                'name': str(user),
-                'likes_count': likes_count,
-            }
-            users.append(user)
-        return users
 
 
 class ImageManager(models.Manager):
@@ -153,7 +133,20 @@ class InstagramUser(models.Model):
         return f'{settings.INSTAGRAM_BASE_URL}/{self.username}/'
 
     def get_likes_count(self, user):
-        return self.likes.filter(media__user=user).count()
+        instagram_counter = InstagramUserCounter.objects.get(user=user, instagram_user=self)
+        return instagram_counter.likes_count
+
+
+class InstagramUserCounter(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, related_name='instagram_user_counters')
+    instagram_user = models.ForeignKey(InstagramUser, models.CASCADE, related_name='instagram_user_counters')
+    likes_count = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.user} - {self.instagram_user} - {self.likes_count}'
+
+    class Meta:
+        ordering = ['-likes_count']
 
 
 class Followed(models.Model):
