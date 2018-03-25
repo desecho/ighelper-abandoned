@@ -10,7 +10,7 @@ window.vm = new Vue({
     users: vars.users,
   },
   methods: {
-    loadLikes: function() {
+    loadLikes: function(onlyForNewMedias = false) {
       function success(response) {
         if (response.data.status === 'success') {
           vm.success(gettext('Likes have been loaded'));
@@ -22,7 +22,9 @@ window.vm = new Vue({
         vm.error(gettext('Error loading likes'));
       }
 
-      axios.post(urls.loadLikes).then(success).catch(fail);
+      axios.post(urls.loadLikes, $.param({
+        'onlyForNewMedias': JSON.stringify(onlyForNewMedias),
+      })).then(success).catch(fail);
     },
   },
 });

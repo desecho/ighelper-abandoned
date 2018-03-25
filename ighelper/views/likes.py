@@ -31,8 +31,15 @@ class LikesView(TemplateView):
 
 class LoadLikesView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
+        try:
+            only_for_new_medias = json.loads(self.request.POST['onlyForNewMedias'])
+        except KeyError:
+            return self.render_bad_request_response()
+
         self.get_data()
         medias = self.user.medias.all()
+        if only_for_new_medias:
+            medias = medias.filter(likes_count=0)
         media_ids = medias.values_list('instagram_id', flat=True)
         instagram_id_medias = {media.instagram_id: media for media in medias}
         likes, medias_deleted = self.instagram.get_likes_and_deleted_medias(media_ids)
