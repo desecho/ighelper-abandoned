@@ -12,6 +12,9 @@ django-rosetta==0.8.1
 python-dateutil==2.7.0
 mysqlclient==1.3.12
 raven==6.6.0
-InstagramAPI==1.0.2
 requests==2.18.4
 Babel==2.5.3
+
+# InstagramAPI==1.0.2
+# Includes an open PR - https://github.com/LevPasha/Instagram-API-python/pull/352
+-e git+https://github.com/desecho/Instagram-API-python.git@sentry-block#egg=InstagramAPI
