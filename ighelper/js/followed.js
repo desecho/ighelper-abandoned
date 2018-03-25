@@ -8,6 +8,7 @@ window.vm = new Vue({
   el: '#app',
   data: {
     followed: vars.followed,
+    hideConfirmed: false,
   },
   methods: {
     loadFollowed: function() {

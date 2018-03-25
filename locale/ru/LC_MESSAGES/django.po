@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-25 01:45-0400\n"
-"PO-Revision-Date: 2018-03-25 01:46-0456\n"
+"POT-Creation-Date: 2018-03-25 01:53-0400\n"
+"PO-Revision-Date: 2018-03-25 01:54-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -37,7 +37,6 @@ msgid "Likes"
 msgstr "Лайки"
 
 #: ighelper/menus.py:16
-#| msgid "Followed by me"
 msgid "Followed by Me"
 msgstr "Зафолловлен Мной"
 
@@ -47,9 +46,6 @@ msgid "not available"
 msgstr "не доступно"
 
 #: templates/followed.html:5
-#| msgid ""
-#| "List of users which does not include your followers but who liked your "
-#| "medias"
 msgid "List of users which does not include your followers"
 msgstr "Список пользователей который не включает ваших фолловеров"
 
@@ -57,21 +53,26 @@ msgstr "Список пользователей который не включа
 msgid "Load users I am following"
 msgstr "Загрузить пользователей которых я фолловлю"
 
-#: templates/followed.html:14 templates/followers.html:20
+#: templates/followed.html:13
+#| msgid "Confirmed"
+msgid "Hide confirmed"
+msgstr "Спрятать подтвержденные"
+
+#: templates/followed.html:18 templates/followers.html:20
 #: templates/likes.html:11
 msgid "Avatar"
 msgstr "Аватар"
 
-#: templates/followed.html:15 templates/followers.html:21
+#: templates/followed.html:19 templates/followers.html:21
 #: templates/likes.html:12
 msgid "Name"
 msgstr "Имя"
 
-#: templates/followed.html:16
+#: templates/followed.html:20
 msgid "Confirmed"
 msgstr "Подтвержден"
 
-#: templates/followed.html:17 templates/followed.html:25
+#: templates/followed.html:21 templates/followed.html:29
 msgid "Unfollow"
 msgstr "Расфолловить"
 
