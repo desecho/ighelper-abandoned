@@ -40,26 +40,6 @@ class LoadFollowersView(InstagramAjaxView):
         return self.success(followers=self.user.get_followers())
 
 
-class LoadUsersIAmFollowingView(InstagramAjaxView):
-    def post(self, *args, **kwargs):  # pylint: disable=unused-argument
-        self.get_data()
-        users_i_am_following = self.instagram.get_users_i_am_following()
-
-        # Reset followed status.
-        self.user.followers.update(followed=False)
-        followers = self.user.followers.all()
-
-        for u in users_i_am_following:
-            # We have a mutual followership.
-            followers_found = followers.filter(instagram_user__instagram_id=u['id'])
-            if followers_found.exists():
-                follower = followers_found[0]
-                follower.followed = True
-                follower.save()
-
-        return self.success(followers=self.user.get_followers())
-
-
 class SetApprovedStatusView(AjaxView):
     def put(self, *args, **kwargs):  # pylint: disable=unused-argument
         try:

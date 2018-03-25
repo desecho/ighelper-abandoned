@@ -13,10 +13,10 @@ class LikesView(TemplateView):
         user = self.request.user
         followers = user.followers.values_list('instagram_user__pk', flat=True).distinct()
         likes = Like.objects.filter(media__user=user).exclude(instagram_user__in=followers)
-        users_likes_count = defaultdict(int)
+        user_likes_counts = defaultdict(int)
         for like in likes:
             instagram_user = like.instagram_user
-            users_likes_count[instagram_user] += 1
+            user_likes_counts[instagram_user] += 1
 
-        users_likes_count = sorted(users_likes_count.items(), key=operator.itemgetter(1), reverse=True)
-        return {'users_likes_count': users_likes_count}
+        user_likes_counts = sorted(user_likes_counts.items(), key=operator.itemgetter(1), reverse=True)
+        return {'user_likes_counts': user_likes_counts}

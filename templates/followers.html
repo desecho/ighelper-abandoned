@@ -5,8 +5,6 @@
   <div id="followers">
     <button class="btn btn-primary form-control"
             @click="loadFollowers">{% trans 'Load followers' %}</button>
-    <button class="btn btn-primary form-control"
-            @click="loadUsersIAmFollowing">{% trans 'Load users I am following' %}</button>
     <br><br>
     <div class="container">
       <div class="row">
@@ -24,7 +22,7 @@
               <th>{% trans 'Likes' %}</th>
               <th class="followed-by-me">{% trans 'Followed by me' %}</th>
               <th>{% trans 'Approved' %}</th>
-              <th>{% trans 'Actions' %}</th>
+              <th>{% trans 'Block' %}</th>
             </tr>
             <tr v-for="follower in followers" class="follower" v-show="!(hideApproved && isApproved(follower)) && !(hideFollowed && follower.followed)">
               <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name" class="avatar" /></a>
@@ -51,7 +49,6 @@
 
     urls.followers = '{% url 'followers' %}';
     urls.loadFollowers = '{% url 'load_followers' %}';
-    urls.loadUsersIAmFollowing = '{% url 'load_users_i_am_following' %}';
 
     vars.followers = JSON.parse('{{ followers|safe }}');
   </script>

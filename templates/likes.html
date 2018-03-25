@@ -12,7 +12,7 @@
             <th>{% trans 'Name' %}</th>
             <th>{% trans 'Likes' %}</th>
           </tr>
-          {% for user, likes_count in users_likes_count %}
+          {% for user, likes_count in user_likes_counts %}
             <tr>
               <td><a href="{{ user.profile }}" target="_blank"><img src="{{ user.avatar }}" alt="{{ user }}"
                                                                     class="avatar"/></a></td>

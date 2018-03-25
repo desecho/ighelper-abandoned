@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-24 17:25-0400\n"
-"PO-Revision-Date: 2018-03-24 17:26-0456\n"
+"POT-Creation-Date: 2018-03-25 01:45-0400\n"
+"PO-Revision-Date: 2018-03-25 01:46-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,81 +31,103 @@ msgstr "Фолловеры"
 msgid "Medias"
 msgstr "Медиа"
 
-#: ighelper/menus.py:15 templates/followers.html:24 templates/likes.html:13
+#: ighelper/menus.py:15 templates/followers.html:22 templates/likes.html:13
 #: templates/medias.html:30
 msgid "Likes"
 msgstr "Лайки"
 
-#: ighelper/views/home.py:22 ighelper/views/home.py:26
-#: ighelper/views/home.py:29
+#: ighelper/menus.py:16
+#| msgid "Followed by me"
+msgid "Followed by Me"
+msgstr "Зафолловлен Мной"
+
+#: ighelper/views/home.py:26 ighelper/views/home.py:30
+#: ighelper/views/home.py:33
 msgid "not available"
 msgstr "не доступно"
+
+#: templates/followed.html:5
+#| msgid ""
+#| "List of users which does not include your followers but who liked your "
+#| "medias"
+msgid "List of users which does not include your followers"
+msgstr "Список пользователей который не включает ваших фолловеров"
+
+#: templates/followed.html:7
+msgid "Load users I am following"
+msgstr "Загрузить пользователей которых я фолловлю"
+
+#: templates/followed.html:14 templates/followers.html:20
+#: templates/likes.html:11
+msgid "Avatar"
+msgstr "Аватар"
+
+#: templates/followed.html:15 templates/followers.html:21
+#: templates/likes.html:12
+msgid "Name"
+msgstr "Имя"
+
+#: templates/followed.html:16
+msgid "Confirmed"
+msgstr "Подтвержден"
+
+#: templates/followed.html:17 templates/followed.html:25
+msgid "Unfollow"
+msgstr "Расфолловить"
 
 #: templates/followers.html:7
 msgid "Load followers"
 msgstr "Загрузить фолловеров"
 
-#: templates/followers.html:9
-msgid "Load users I am following"
-msgstr "Загрузить пользователей которых я фолловлю"
-
-#: templates/followers.html:15
+#: templates/followers.html:13
 msgid "Hide approved"
 msgstr "Спрятать одобренные"
 
-#: templates/followers.html:17
+#: templates/followers.html:15
 msgid "Hide followed by me"
 msgstr "Скрыть зафолловленных мной"
 
-#: templates/followers.html:22 templates/likes.html:11
-msgid "Avatar"
-msgstr "Аватар"
-
-#: templates/followers.html:23 templates/likes.html:12
-msgid "Name"
-msgstr "Имя"
-
-#: templates/followers.html:25
+#: templates/followers.html:23
 msgid "Followed by me"
 msgstr "Зафолловлен мной"
 
-#: templates/followers.html:26
+#: templates/followers.html:24
 msgid "Approved"
 msgstr "Одобрен"
 
-#: templates/followers.html:27 templates/medias.html:35
-msgid "Actions"
-msgstr "Действия"
-
-#: templates/followers.html:38
+#: templates/followers.html:25 templates/followers.html:36
 msgid "Block"
 msgstr "Заблокировать"
 
-#: templates/home.html:5
+#: templates/home.html:9
 msgid "Total images"
 msgstr "Всего фото"
 
-#: templates/home.html:6
+#: templates/home.html:13
 msgid "Total videos"
 msgstr "Всего видео"
 
-#: templates/home.html:8
+#: templates/home.html:17
 msgid "Total followers"
 msgstr "Всего фолловеров"
 
-#: templates/home.html:9
+#: templates/home.html:25
+msgid "Percentage of likes from followers"
+msgstr "Процент лайков от фолловеров"
+
+#: templates/home.html:33
 msgid "Total likes"
 msgstr "Всего лайков"
 
-#: templates/home.html:10
+#: templates/home.html:37
 msgid "Average likes per media"
 msgstr "Среднее число лайков на медиа"
 
-#: templates/home.html:12
+#: templates/home.html:45
 msgid "Total videos views"
 msgstr "Всего видео просмотров"
 
-#: templates/home.html:13
+#: templates/home.html:49
 msgid "Average views per video"
 msgstr "Среднее число просмотров на видео"
 
@@ -176,6 +198,10 @@ msgstr "Местонахождение"
 #: templates/medias.html:34
 msgid "Date"
 msgstr "Дата"
+
+#: templates/medias.html:35
+msgid "Actions"
+msgstr "Действия"
 
 #: templates/medias.html:48
 msgid "Edit caption"

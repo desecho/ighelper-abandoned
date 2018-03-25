@@ -6,11 +6,16 @@ from django.contrib.auth.views import login
 from django.urls import path, re_path
 from django.views.i18n import JavaScriptCatalog
 
+from ighelper.views.followed import (
+    FollowedView,
+    LoadFollowedView,
+    SetConfirmedStatusView,
+    UnfollowView,
+)
 from ighelper.views.followers import (
     BlockView,
     FollowersView,
     LoadFollowersView,
-    LoadUsersIAmFollowingView,
     SetApprovedStatusView,
     SetFollowedStatusView,
 )
@@ -73,5 +78,9 @@ urlpatterns += [
         r'followers/(?P<id>\d+)/set-approved-status/', SetApprovedStatusView.as_view(), name='set_approved_status'),
     re_path(
         r'followers/(?P<id>\d+)/set-followed-status/', SetFollowedStatusView.as_view(), name='set_followed_status'),
-    path('load-users-i-am-following/', LoadUsersIAmFollowingView.as_view(), name='load_users_i_am_following'),
+    path('followed/', FollowedView.as_view(), name='followed'),
+    path('followed/load/', LoadFollowedView.as_view(), name='load_followed'),
+    re_path(r'followed/(?P<id>\d+)/unfollow/', UnfollowView.as_view(), name='unfollow'),
+    re_path(
+        r'followed/(?P<id>\d+)/set-confirmed-status/', SetConfirmedStatusView.as_view(), name='set_confirmed_status'),
 ]

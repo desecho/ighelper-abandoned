@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block content %}
+  <p>{% trans 'List of users which does not include your followers' %}.</p>
+  <button class="btn btn-primary form-control"
+          @click="loadFollowed">{% trans 'Load users I am following' %}</button>
+  <br><br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8">
+        <table class="table" v-cloak>
+          <tr>
+            <th>{% trans 'Avatar' %}</th>
+            <th>{% trans 'Name' %}</th>
+            <th>{% trans 'Confirmed' %}</th>
+            <th>{% trans 'Unfollow' %}</th>
+          </tr>
+          <tr v-for="user in followed">
+            <td><a :href="user.profile" target="_blank"><img :src="user.avatar" :alt="user.name"
+                                                                  class="avatar"/></a></td>
+            <td><a :href="user.profile" target="_blank">[[ user.name ]]</a></td>
+            <td><input :id="user.elementIdConfirmed" type="checkbox" :checked="user.confirmed" @click="setConfirmedStatus(user)"></td>
+            <td>
+              <button class="btn btn-primary form-control" @click="unfollow(user)">{% trans 'Unfollow' %}</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+  <script>
+    'use strict';
+    urls.followed = '{% url 'followed' %}';
+    urls.loadFollowed = '{% url 'load_followed' %}';
+
+    vars.followed = JSON.parse('{{ followed|safe }}');
+  </script>
+  <script src="{% static 'js/followed.js' %}"></script>
+{% endblock %}

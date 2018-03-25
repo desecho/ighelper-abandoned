@@ -5,7 +5,6 @@ from django.conf import settings
 from InstagramAPI import InstagramAPI
 
 from ighelper.exceptions import InstagramException
-from ighelper.helpers import get_name
 from ighelper.models import Media
 
 
@@ -145,10 +144,10 @@ class Instagram:
 
         return medias_output
 
-    def get_users_i_am_following(self):
+    def get_get_followed(self):
         self._api.getSelfUsersFollowing()
         users = self._api.LastJson['users']
-        return [{'id': user['pk'], 'name': get_name(user['full_name'], user['username'])} for user in users]
+        return [self._get_user_data(user) for user in users]
 
     def update_media_caption(self, media_id, caption):
         """

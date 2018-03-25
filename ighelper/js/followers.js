@@ -29,20 +29,6 @@ window.vm = new Vue({
 
       axios.post(urls.loadFollowers).then(success).catch(fail);
     },
-    loadUsersIAmFollowing: function() {
-      function success(response) {
-        if (response.data.status === 'success') {
-          vm.success(gettext('Users you are following have updated'));
-        }
-        vm.followers = response.data.followers;
-      }
-
-      function fail() {
-        vm.error(gettext('Error updating users you are following'));
-      }
-
-      axios.post(urls.loadUsersIAmFollowing).then(success).catch(fail);
-    },
     setApprovedStatus: function(follower) {
       function success() {
         follower.approved = status;
@@ -81,7 +67,7 @@ window.vm = new Vue({
     },
     block: function(follower) {
       function success() {
-        vm.followers = vm.followers.filter((m) => m.id != id);
+        vm.followers = vm.followers.filter((f) => f.id != id);
       }
 
       function fail() {

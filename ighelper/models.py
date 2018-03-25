@@ -17,13 +17,17 @@ def activate_user_language_preference(request, lang):
 class User(AbstractUser):
     language = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
 
+    @property
+    def videos(self):
+        return self.medias.filter(media_type=Media.MEDIA_TYPE_VIDEO)
+
     def get_followers(self):
         followers = []
         for f in self.followers.all():
             follower = {
-                'id': f.id,
-                'elementIdApproved': f'follower-approved{f.id}',
-                'elementIdFollowed': f'follower-followed{f.id}',
+                'id': f.pk,
+                'elementIdApproved': f'follower-approved{f.pk}',
+                'elementIdFollowed': f'follower-followed{f.pk}',
                 'name': str(f),
                 'likes_count': f.get_likes_count(),
                 'avatar': f.avatar,
@@ -34,9 +38,23 @@ class User(AbstractUser):
             followers.append(follower)
         return sorted(followers, key=itemgetter('likes_count'), reverse=True)
 
-    @property
-    def videos(self):
-        return self.medias.filter(media_type=Media.MEDIA_TYPE_VIDEO)
+    def get_followed_users_excluding_followers(self):
+        followers = self.followers.values_list('instagram_user', flat=True)
+        followed_users = self.followed_users.exclude(instagram_user__in=followers)
+        followed_users_excluding_followers = []
+        for user in followed_users:
+            instagram_user = user.instagram_user
+            followed_user_excluding_followers = {
+                'id': user.pk,
+                'elementIdConfirmed': f'user-confirmed{user.pk}',
+                'confirmed': user.confirmed,
+                'profile': instagram_user.profile,
+                'avatar': instagram_user.avatar,
+                'name': str(user),
+            }
+            followed_users_excluding_followers.append(followed_user_excluding_followers)
+
+        return sorted(followed_users_excluding_followers, key=itemgetter('name'))
 
 
 class ImageManager(models.Manager):
@@ -116,6 +134,19 @@ class InstagramUser(models.Model):
 
     def get_likes_count(self, user):
         return self.likes.filter(media__user=user).count()
+
+
+class Followed(models.Model):
+    user = models.ForeignKey(User, models.CASCADE, related_name='followed_users')
+    instagram_user = models.ForeignKey(InstagramUser, models.CASCADE)
+    confirmed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.instagram_user)
+
+    @property
+    def instagram_id(self):
+        return self.instagram_user.instagram_id
 
 
 class Follower(models.Model):
