@@ -40,6 +40,8 @@ class Instagram:
 
     def get_likes_and_deleted_medias(self, medias_ids):
         """
+        Get likes and deleted medias.
+
         Return a tuple - (likes, deleted_medias) - (list of dicts, 'deleted_medias': list).
         """
         i = 0
