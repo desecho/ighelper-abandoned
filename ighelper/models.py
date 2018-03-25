@@ -1,5 +1,3 @@
-from operator import itemgetter
-
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.signals import user_logged_in
@@ -20,41 +18,6 @@ class User(AbstractUser):
     @property
     def videos(self):
         return self.medias.filter(media_type=Media.MEDIA_TYPE_VIDEO)
-
-    def get_followers(self):
-        followers = []
-        for f in self.followers.all():
-            follower = {
-                'id': f.pk,
-                'elementIdApproved': f'follower-approved{f.pk}',
-                'elementIdFollowed': f'follower-followed{f.pk}',
-                'name': str(f),
-                'likes_count': f.get_likes_count(),
-                'avatar': f.avatar,
-                'profile': f.profile,
-                'followed': f.followed,
-                'approved': f.approved
-            }
-            followers.append(follower)
-        return sorted(followers, key=itemgetter('likes_count'), reverse=True)
-
-    def get_followed_users_excluding_followers(self):
-        followers = self.followers.values_list('instagram_user', flat=True)
-        followed_users = self.followed_users.exclude(instagram_user__in=followers)
-        followed_users_excluding_followers = []
-        for user in followed_users:
-            instagram_user = user.instagram_user
-            followed_user_excluding_followers = {
-                'id': user.pk,
-                'elementIdConfirmed': f'user-confirmed{user.pk}',
-                'confirmed': user.confirmed,
-                'profile': instagram_user.profile,
-                'avatar': instagram_user.avatar,
-                'name': str(user),
-            }
-            followed_users_excluding_followers.append(followed_user_excluding_followers)
-
-        return sorted(followed_users_excluding_followers, key=itemgetter('name'))
 
 
 class ImageManager(models.Manager):

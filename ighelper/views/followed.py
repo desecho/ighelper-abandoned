@@ -1,4 +1,5 @@
 import json
+from operator import itemgetter
 
 from django.shortcuts import get_object_or_404
 
@@ -7,11 +8,30 @@ from ighelper.models import Followed, InstagramUser
 from .mixins import AjaxView, InstagramAjaxView, TemplateView
 
 
+def get_followed_users_excluding_followers(user):
+    followers = user.followers.values_list('instagram_user', flat=True)
+    followed_users = user.followed_users.exclude(instagram_user__in=followers)
+    followed_users_excluding_followers = []
+    for user in followed_users:
+        instagram_user = user.instagram_user
+        followed_user_excluding_followers = {
+            'id': user.pk,
+            'elementIdConfirmed': f'user-confirmed{user.pk}',
+            'confirmed': user.confirmed,
+            'profile': instagram_user.profile,
+            'avatar': instagram_user.avatar,
+            'name': str(user),
+        }
+        followed_users_excluding_followers.append(followed_user_excluding_followers)
+
+    return sorted(followed_users_excluding_followers, key=itemgetter('name'))
+
+
 class FollowedView(TemplateView):
     template_name = 'followed.html'
 
     def get_context_data(self):
-        return {'followed': json.dumps(self.request.user.get_followed_users_excluding_followers())}
+        return {'followed': json.dumps(get_followed_users_excluding_followers(self.request.user))}
 
 
 class LoadFollowedView(InstagramAjaxView):
@@ -41,7 +61,7 @@ class LoadFollowedView(InstagramAjaxView):
                 follower.followed = True
                 follower.save()
 
-        return self.success(followers=self.user.get_followed_users_excluding_followers())
+        return self.success(followers=get_followed_users_excluding_followers(self.user))
 
 
 class SetConfirmedStatusView(AjaxView):

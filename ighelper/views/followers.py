@@ -1,4 +1,5 @@
 import json
+from operator import itemgetter
 
 from django.shortcuts import get_object_or_404
 
@@ -7,11 +8,29 @@ from ighelper.models import Follower, InstagramUser
 from .mixins import AjaxView, InstagramAjaxView, TemplateView
 
 
+def get_followers(user):
+    followers = []
+    for f in user.followers.all():
+        follower = {
+            'id': f.pk,
+            'elementIdApproved': f'follower-approved{f.pk}',
+            'elementIdFollowed': f'follower-followed{f.pk}',
+            'name': str(f),
+            'likes_count': f.get_likes_count(),
+            'avatar': f.avatar,
+            'profile': f.profile,
+            'followed': f.followed,
+            'approved': f.approved
+        }
+        followers.append(follower)
+    return sorted(followers, key=itemgetter('likes_count'), reverse=True)
+
+
 class FollowersView(TemplateView):
     template_name = 'followers.html'
 
     def get_context_data(self):
-        return {'followers': json.dumps(self.request.user.get_followers())}
+        return {'followers': json.dumps(get_followers(self.request.user))}
 
 
 class LoadFollowersView(InstagramAjaxView):
@@ -37,7 +56,7 @@ class LoadFollowersView(InstagramAjaxView):
             if not current_followers.filter(instagram_user=instagram_user).exists():
                 Follower.objects.create(user=self.user, instagram_user=instagram_user)
 
-        return self.success(followers=self.user.get_followers())
+        return self.success(followers=get_followers(self.user))
 
 
 class SetApprovedStatusView(AjaxView):
