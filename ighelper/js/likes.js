@@ -10,7 +10,7 @@ window.vm = new Vue({
     users: vars.users,
   },
   methods: {
-    loadLikes: function(onlyForNewMedias = false) {
+    loadLikes: function(event, onlyForNewMedias = false) {
       function success(response) {
         if (response.data.status === 'success') {
           vm.success(gettext('Likes have been loaded'));
