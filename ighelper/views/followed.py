@@ -43,11 +43,11 @@ class LoadFollowedView(InstagramAjaxView):
         self.user.followers.update(followed=False)
         followers = self.user.followers.all()
         followed_users_instagram_ids = [u['instagram_id'] for u in followed_users_instagram]
-        self.user.followed.exclude(instagram_user__instagram_id__in=followed_users_instagram_ids).delete()
+        self.user.followed_users.exclude(instagram_user__instagram_id__in=followed_users_instagram_ids).delete()
         for followed_user_instagram in followed_users_instagram:
             users_found = InstagramUser.objects.filter(instagram_id=followed_user_instagram['instagram_id'])
             if users_found.exists():
-                InstagramUser.objects.update(**followed_user_instagram)
+                users_found.update(**followed_user_instagram)
                 instagram_user = users_found[0]
             else:
                 instagram_user = InstagramUser.objects.create(**followed_user_instagram)
@@ -61,7 +61,7 @@ class LoadFollowedView(InstagramAjaxView):
                 follower.followed = True
                 follower.save()
 
-        return self.success(followers=get_followed_users_excluding_followers(self.user))
+        return self.success(followed=get_followed_users_excluding_followers(self.user))
 
 
 class SetConfirmedStatusView(AjaxView):

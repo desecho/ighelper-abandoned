@@ -43,7 +43,7 @@ class Instagram:
 
     def get_followers(self):
         self._login()
-        self._api.getUserFollowers(self.username_real)
+        self._api.getUserFollowers(self._user_id_real)
         response = self._api.LastJson
         if 'users' not in response:
             response = json.dumps(response)
