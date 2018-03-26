@@ -24,7 +24,7 @@ class Instagram:
         self._username_fake = username_fake
         self._password_fake = password_fake
 
-    def _login(real=False):
+    def _login(self, real=False):
         if real:
             self._api_real = InstagramAPI(self._username_real, self._password_real)
             self._api_real.login()
