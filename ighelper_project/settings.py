@@ -214,8 +214,10 @@ LOGIN_URL = '/login/'
 
 # django-modeladmin-reorder
 ADMIN_REORDER = ({
-    'app': 'ighelper',
-    'models': ('ighelper.User', 'ighelper.Media', 'ighelper.Follower', 'ighelper.Like')
+    'app':
+    'ighelper',
+    'models': ('ighelper.User', 'ighelper.Media', 'ighelper.InstagramUser', 'ighelper.Follower', 'ighelper.Followed',
+               'ighelper.Like')
 }, )
 
 # raven
