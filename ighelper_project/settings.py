@@ -247,6 +247,7 @@ ADMIN_INSTAGRAM_ID = local_settings.ADMIN_INSTAGRAM_ID
 ADMIN_PASSWORD = local_settings.ADMIN_PASSWORD
 FAKE_USERNAME = local_settings.FAKE_USERNAME
 FAKE_PASSWORD = local_settings.FAKE_PASSWORD
+PROXY = local_settings.PROXY
 MEDIAS_PER_PAGE = 18
 
 # This is here to fix the problem with static files on dev

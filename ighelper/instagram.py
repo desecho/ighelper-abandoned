@@ -27,9 +27,12 @@ class Instagram:
     def _login(self, real=False):
         if real:
             self._api_real = InstagramAPI(self._username_real, self._password_real)
+            if settings.PROXY:
+                self._api_real.setProxy(settings.PROXY)
             self._api_real.login()
         else:
             self._api = InstagramAPI(self._username_fake, self._password_fake)
+            self._api.setProxy(settings.PROXY)
             self._api.login()
 
     @staticmethod
