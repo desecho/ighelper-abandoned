@@ -239,8 +239,12 @@ DEBUG_TOOLBAR_PANELS = [
 ADMIN_EMAIL = local_settings.ADMIN_EMAIL
 INSTAGRAM_BASE_URL = 'https://www.instagram.com'
 INSTAGRAM_SLEEP = 2
-DESECHO8653_USERNAME = 'desecho8653'
-DESECHO8653_PASSWORD = local_settings.DESECHO8653_PASSWORD
+ADMIN_USERNAME = local_settings.ADMIN_USERNAME
+# https://smashballoon.com/instagram-feed/find-instagram-user-id/
+ADMIN_INSTAGRAM_ID = local_settings.ADMIN_INSTAGRAM_ID
+ADMIN_PASSWORD = local_settings.ADMIN_PASSWORD
+FAKE_USERNAME = local_settings.FAKE_USERNAME
+FAKE_PASSWORD = local_settings.FAKE_PASSWORD
 MEDIAS_PER_PAGE = 18
 
 # This is here to fix the problem with static files on dev

@@ -32,8 +32,8 @@ class InstagramAjaxView(AjaxView):
 
     def get_data(self):
         self.user = self.request.user
-        if self.user.username == settings.DESECHO8653_USERNAME:
-            password = settings.DESECHO8653_PASSWORD
+        if self.user.username == settings.ADMIN_USERNAME:
+            password = settings.ADMIN_PASSWORD
         # instagram = cache.get('instagram')
         # if instagram is None:
         #     instagram = Instagram(self.user.username, password)
@@ -41,7 +41,8 @@ class InstagramAjaxView(AjaxView):
         # Slow down in attempt to avoid blocking by Instagram / Simulate client behaviour.
         # See https://github.com/mgp25/Instagram-API/wiki/FAQ
 
-        self.instagram = Instagram(self.user.username, password)
+        self.instagram = Instagram(settings.ADMIN_INSTAGRAM_ID, self.user.username, password, settings.FAKE_USERNAME,
+                                   settings.FAKE_PASSWORD)
 
 
 class TemplateView(LoginRequiredMixin, TemplateViewOriginal):
