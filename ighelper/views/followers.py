@@ -37,6 +37,7 @@ class LoadFollowersView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
         instagram_followers = self.instagram.get_followers()
+        self.update_cache()
         current_followers = self.user.followers.all()
 
         # Remove followers which have been deleted / have unfollowed
@@ -86,6 +87,7 @@ class SetFollowedStatusView(InstagramAjaxView):
             self.instagram.follow(follower.instagram_id)
         else:
             self.instagram.unfollow(follower.instagram_id)
+        self.update_cache()
         follower.followed = status
         follower.save()
         return self.success()
@@ -97,5 +99,6 @@ class BlockView(InstagramAjaxView):
         follower_id = kwargs['id']
         follower = get_object_or_404(Follower, user=self.request.user, pk=follower_id)
         self.instagram.block(follower.instagram_id)
+        self.update_cache()
         follower.delete()
         return self.success()

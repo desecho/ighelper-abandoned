@@ -57,6 +57,7 @@ class LoadLikesView(InstagramAjaxView):
         media_ids = medias.values_list('instagram_id', flat=True)
         instagram_id_medias = {media.instagram_id: media for media in medias}
         likes, medias_deleted = self.instagram.get_likes_and_deleted_medias(media_ids)
+        self.update_cache()
         Like.objects.filter(media__user=self.user).delete()
         medias.filter(instagram_id__in=medias_deleted).delete()
         instagram_users_ids_updated = []

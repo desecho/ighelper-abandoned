@@ -54,6 +54,7 @@ class LoadMediasView(InstagramAjaxView):
         self.get_data()
         media_ids = self.user.medias.values_list('instagram_id', flat=True)
         medias = self.instagram.get_medias(media_ids)
+        self.update_cache()
         for m in medias:
             Media.objects.create(user=self.user, **m)
 
@@ -64,6 +65,7 @@ class UpdateMediasView(InstagramAjaxView):
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
         instagram_medias = self.instagram.get_medias()
+        self.update_cache()
         instagram_medias = {m['instagram_id']: m for m in instagram_medias}
         medias = self.user.medias.all()
         medias_instagram_ids = medias.values_list('instagram_id', flat=True)
@@ -82,6 +84,7 @@ class MediaView(InstagramAjaxView):
         media_id = kwargs['id']
         media = self.user.medias.get(pk=media_id)
         instagram_media = self.instagram.get_media(media.instagram_id)
+        self.update_cache()
         if instagram_media is None:
             media.delete()
             return self.fail()
@@ -98,6 +101,7 @@ class MediaView(InstagramAjaxView):
         media_id = kwargs['id']
         media = self.user.medias.get(pk=media_id)
         self.instagram.delete_media(media.instagram_id, media.media_type)
+        self.update_cache()
         media.delete()
         return self.success()
 
@@ -114,8 +118,10 @@ class CaptionUpdateView(InstagramAjaxView):
         media = self.user.medias.get(pk=media_id)
         try:
             self.instagram.update_media_caption(media.instagram_id, caption)
+            self.update_cache()
         except InstagramMediaNotFoundException:
             media.delete()
+            self.update_cache()
             return self.fail()
 
         media.caption = caption
@@ -129,6 +135,7 @@ class LoadViewsView(InstagramAjaxView):
         videos = self.user.videos.all()
         for video in videos:
             instagram_media = self.instagram.get_media(video.instagram_id)
+            self.update_cache()
             if instagram_media is None:
                 video.delete()
                 return self.fail()

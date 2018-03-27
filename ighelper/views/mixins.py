@@ -41,8 +41,10 @@ class InstagramAjaxView(AjaxView):
         if instagram is None:
             instagram = Instagram(settings.ADMIN_INSTAGRAM_ID, username, password, settings.FAKE_USERNAME,
                                   settings.FAKE_PASSWORD)
-            cache.set('instagram', instagram)
         self.instagram = instagram
+
+    def update_cache(self):
+        cache.set('instagram', self.instagram)
 
 
 class TemplateView(LoginRequiredMixin, TemplateViewOriginal):
