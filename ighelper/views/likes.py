@@ -1,6 +1,7 @@
 import json
 
 from ighelper.models import InstagramUser, InstagramUserCounter, Like
+from django.utils.translation import gettext_lazy as _
 
 from .mixins import InstagramAjaxView, TemplateView
 
@@ -52,7 +53,15 @@ class LoadLikesView(InstagramAjaxView):
             return self.render_bad_request_response()
 
         self.get_data()
-        medias = self._get_medias(only_for_new_medias)
+        medias = self.user.medias.all()
+        if not medias.exists():
+            return self.fail(_('You need to load medias first'), self.MESSAGE_WARNING)
+
+        if only_for_new_medias:
+            medias = medias.filter(likes_count=0)
+            if not medias.exists():
+                return self.fail(_('There are no new medias'), self.MESSAGE_INFO)
+
         media_ids = medias.values_list('instagram_id', flat=True)
         instagram_id_medias = {media.instagram_id: media for media in medias}
         likes, medias_deleted = self.instagram.get_likes_and_deleted_medias(media_ids)

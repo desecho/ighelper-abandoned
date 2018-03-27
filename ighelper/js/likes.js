@@ -12,9 +12,12 @@ window.vm = new Vue({
   methods: {
     loadLikes: function(event, onlyForNewMedias = false) {
       function success(response) {
-        if (response.data.status === 'success') {
+        const data = response.data;
+        if (data.status === 'success') {
           vm.success(gettext('Likes have been loaded'));
           vm.users = response.data.users;
+        } else {
+          vm.flash(data.message, data.messageType);
         }
       }
 
