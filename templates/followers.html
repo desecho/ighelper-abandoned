@@ -12,7 +12,7 @@
           <div class="filters">
             <label for="hide-approved">{% trans 'Hide approved' %}</label>
             <input id="hide-approved" type="checkbox" v-model="hideApproved"><br>
-            <label for="hide-followed">{% trans 'Hide followed by me' %}</label>
+            <label for="hide-followed">{% trans 'Hide following' %}</label>
             <input id="hide-followed" type="checkbox" v-model="hideFollowed">
           </div>
           <table v-cloak class="table">
@@ -20,7 +20,7 @@
               <th>{% trans 'Avatar' %}</th>
               <th>{% trans 'Name' %}</th>
               <th>{% trans 'Likes' %}</th>
-              <th class="followed-by-me">{% trans 'Followed by me' %}</th>
+              <th class="followed-by-me">{% trans 'Following' %}</th>
               <th>{% trans 'Approved' %}</th>
               <th>{% trans 'Block' %}</th>
             </tr>
