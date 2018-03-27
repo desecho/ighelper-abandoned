@@ -39,8 +39,6 @@ class LoadFollowedView(InstagramAjaxView):
         self.get_data()
         followed_users_instagram = self.instagram.get_followed()
         self.update_cache()
-        # Reset followed status.
-        self.user.followers.update(followed=False)
         followers = self.user.followers.all()
         followed_users_instagram_ids = [u['instagram_id'] for u in followed_users_instagram]
         self.user.followed_users.exclude(instagram_user__instagram_id__in=followed_users_instagram_ids).delete()
@@ -54,13 +52,7 @@ class LoadFollowedView(InstagramAjaxView):
 
             Followed.objects.get_or_create(user=self.user, instagram_user=instagram_user)
 
-            # We have a mutual followership.
-            followers_found = followers.filter(instagram_user=instagram_user)
-            if followers_found.exists():
-                follower = followers_found[0]
-                follower.followed = True
-                follower.save()
-
+        self.update_mutual()
         return self.success(followed=get_followed_users_excluding_followers(self.user))
 
 

@@ -46,6 +46,12 @@ class InstagramAjaxView(AjaxView):
     def update_cache(self):
         cache.set('instagram', self.instagram)
 
+    def update_mutual(self):
+        following_instagram_users_ids = self.user.followed_users.values_list('instagram_user', flat=True)
+        followers = self.user.followers.all()
+        followers.update(followed=False)
+        followers.filter(instagram_user__pk__in=following_instagram_users_ids).update(followed=True)
+
 
 class TemplateView(LoginRequiredMixin, TemplateViewOriginal):
     pass

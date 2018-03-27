@@ -57,6 +57,7 @@ class LoadFollowersView(InstagramAjaxView):
             if not current_followers.filter(instagram_user=instagram_user).exists():
                 Follower.objects.create(user=self.user, instagram_user=instagram_user)
 
+        self.update_mutual()
         return self.success(followers=get_followers(self.user))
 
 
