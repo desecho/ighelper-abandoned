@@ -64,7 +64,7 @@ class Instagram:
     def get_followers(self):
         self._login_real()
         # If we use a fake account we get only some of the followers.
-        self._api_fake.getSelfUserFollowers()
+        self._api_real.getSelfUserFollowers()
         response = self._api_real.LastJson
         if 'users' not in response:
             response = json.dumps(response)
