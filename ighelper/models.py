@@ -39,7 +39,7 @@ class Media(models.Model):
     )
 
     user = models.ForeignKey(User, models.CASCADE, related_name='medias')
-    instagram_id = models.CharField(max_length=255)
+    instagram_id = models.CharField(max_length=255, unique=True)
     date = models.DateTimeField()
     media_type = models.PositiveIntegerField(choices=MEDIA_TYPES)
     caption = models.CharField(max_length=255, blank=True)
@@ -83,7 +83,7 @@ class Media(models.Model):
 
 
 class InstagramUser(models.Model):
-    instagram_id = models.BigIntegerField()
+    instagram_id = models.BigIntegerField(unique=True, db_index=True)
     username = models.CharField(max_length=255)
     name = models.CharField(max_length=255, blank=True)
     avatar = models.URLField()

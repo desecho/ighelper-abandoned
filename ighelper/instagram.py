@@ -222,9 +222,9 @@ class Instagram:
             response = json.dumps(self._api.LastJson)
             raise InstagramException(f'Error blocking a user. API response - {response}')
 
-    def delete_media(self, media_id):
+    def delete_media(self, media_id, media_type):
         self._login(True)
-        success = self._api.deleteMedia(media_id)
+        success = self._api.deleteMedia(media_id, media_type)
         if not success:
             response = json.dumps(self._api.LastJson)
             raise InstagramException(f'Error deleting media caption. API response - {response}')

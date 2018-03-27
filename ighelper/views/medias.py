@@ -97,7 +97,7 @@ class MediaView(InstagramAjaxView):
         self.get_data()
         media_id = kwargs['id']
         media = self.user.medias.get(pk=media_id)
-        self.instagram.delete_media(media.instagram_id)
+        self.instagram.delete_media(media.instagram_id, media.media_type)
         media.delete()
         return self.success()
 

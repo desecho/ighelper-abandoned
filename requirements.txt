@@ -16,5 +16,5 @@ requests==2.18.4
 Babel==2.5.3
 
 # InstagramAPI==1.0.2
-# Includes an open PR - https://github.com/LevPasha/Instagram-API-python/pull/352
--e git+https://github.com/desecho/Instagram-API-python.git@sentry-block#egg=InstagramAPI
+# We need changes which have not yet been released
+-e git+https://github.com/LevPasha/Instagram-API-python.git@cf0fe1d0167d153b0fc6c9be56e265e653c3da7a#egg=InstagramAPI
