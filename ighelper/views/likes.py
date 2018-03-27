@@ -6,8 +6,7 @@ from .mixins import InstagramAjaxView, TemplateView
 
 
 def get_users_who_liked_medias_excluding_followers(user):
-    followers = user.followers.values_list('instagram_user__pk', flat=True).distinct()
-    instagram_user_counters = user.instagram_user_counters.exclude(instagram_user__in=followers)
+    instagram_user_counters = user.get_instagram_user_counters_of_users_who_are_not_followers_but_liked_media()
     users = []
     for instagram_user_counter in instagram_user_counters:
         user = instagram_user_counter.instagram_user

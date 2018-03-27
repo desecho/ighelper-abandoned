@@ -19,6 +19,10 @@ class User(AbstractUser):
     def videos(self):
         return self.medias.filter(media_type=Media.MEDIA_TYPE_VIDEO)
 
+    def get_instagram_user_counters_of_users_who_are_not_followers_but_liked_media(self):
+        followers = self.followers.values_list('instagram_user__pk', flat=True).distinct()
+        return self.instagram_user_counters.exclude(instagram_user__in=followers)
+
 
 class ImageManager(models.Manager):
     def get_queryset(self):
