@@ -12,6 +12,7 @@ class HomeView(TemplateView):
     def get_context_data(self):
         user = self.request.user
         followers_count = user.followers.count()
+        following_count = user.followed_users.count()
         images_count = Media.images.filter(user=user).count()
         videos_count = Media.videos.filter(user=user).count()
         videos_views_count = Media.videos.filter(user=user).aggregate(count=Sum('views_count'))['count']
@@ -34,6 +35,7 @@ class HomeView(TemplateView):
 
         return {
             'followers_count': followers_count,
+            'following_count': following_count,
             'images_count': images_count,
             'videos_count': videos_count,
             'videos_views_count': videos_views_count,
