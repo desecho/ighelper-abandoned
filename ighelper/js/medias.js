@@ -54,6 +54,7 @@ window.vm = new Vue({
           media.views = updatedMedia.views;
           media.caption = updatedMedia.caption;
           media.image = updatedMedia.image;
+          media.imageSmall = updatedMedia.imageSmall;
           media.location = updatedMedia.location;
         } else {
           vm.removeMedia(media.id);
