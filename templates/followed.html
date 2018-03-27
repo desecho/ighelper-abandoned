@@ -2,7 +2,7 @@
 {% load i18n static %}
 
 {% block content %}
-  <p>{% trans 'List of following users excluding mutual following' %}.</p>
+  <p>{% trans 'List of users without mutual following' %}.</p>
   <button class="btn btn-primary form-control"
           @click="loadFollowed">{% trans 'Load following' %}</button>
   <br><br>
