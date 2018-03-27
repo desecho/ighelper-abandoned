@@ -35,19 +35,21 @@ class Instagram:
         self._password_real = password_real
         self._username_fake = username_fake
         self._password_fake = password_fake
+        self._api_fake = InstagramAPI(self._username_fake, self._password_fake)
+        self._api_fake.setProxy(settings.PROXY)
+        self._api_real = InstagramAPI(self._username_real, self._password_real)
+        self._api_real.setProxy(settings.PROXY)
 
     def _login_fake(self):
         if self._session_fake is None:
             self._session_fake = InstagramSession()
-        self._api_fake = InstagramAPI(self._username_fake, self._password_fake)
-        self._api_fake.setProxy(settings.PROXY)
+
         self._api_fake.login(self._session_fake.is_expired)
 
     def _login_real(self):
         if self._session_real is None:
             self._session_real = InstagramSession()
-        self._api_real = InstagramAPI(self._username_real, self._password_real)
-        self._api_real.setProxy(settings.PROXY)
+
         self._api_real.login(self._session_real.is_expired)
 
     @staticmethod
@@ -60,9 +62,10 @@ class Instagram:
         }
 
     def get_followers(self):
-        self._login_fake()
-        self._api_fake.getUserFollowers(self._user_id_real)
-        response = self._api_fake.LastJson
+        self._login_real()
+        # If we use a fake account we get only some of the followers.
+        self._api_fake.getSelfUserFollowers()
+        response = self._api_real.LastJson
         if 'users' not in response:
             response = json.dumps(response)
             raise InstagramException(f'Incorrect response. API response - {response}')
