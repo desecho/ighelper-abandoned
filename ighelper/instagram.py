@@ -12,10 +12,22 @@ from ighelper.exceptions import (
 from ighelper.models import Media
 
 
+class InstagramSession:
+    def __init__(self):
+        self.start = datetime.now()
+
+    @property
+    def is_expired(self):
+        time_passed = datetime.now() - self.start
+        return time_passed.seconds > settings.INSTAGRAM_SESSION_LIFETIME
+
+
 class Instagram:
     _MESSAGE_MEDIA_NOT_FOUND = 'Media not found or unavailable'
     _MESSAGE_MEDIA_NOT_FOUND2 = 'You cannot edit this media'
     _MESSAGE_MEDIA_NOT_FOUND3 = 'Sorry, this photo has been deleted.'
+    _session_real = None
+    _session_fake = None
 
     def __init__(self, user_id_real, username_real, password_real, username_fake, password_fake):
         self._user_id_real = user_id_real
@@ -24,16 +36,19 @@ class Instagram:
         self._username_fake = username_fake
         self._password_fake = password_fake
 
-    def _login(self, real=False):
-        if real:
-            self._api_real = InstagramAPI(self._username_real, self._password_real)
-            if settings.PROXY:
-                self._api_real.setProxy(settings.PROXY)
-            self._api_real.login()
-        else:
-            self._api = InstagramAPI(self._username_fake, self._password_fake)
-            self._api.setProxy(settings.PROXY)
-            self._api.login()
+    def _login_fake(self):
+        if self._session_fake is None:
+            self._session_fake = InstagramSession()
+        self._api_fake = InstagramAPI(self._username_fake, self._password_fake)
+        self._api_fake.setProxy(settings.PROXY)
+        self._api_fake.login(self._session_fake.is_expired)
+
+    def _login_real(self):
+        if self._session_real is None:
+            self._session_real = InstagramSession()
+        self._api_real = InstagramAPI(self._username_real, self._password_real)
+        self._api_real.setProxy(settings.PROXY)
+        self._api_real.login(self._session_real.is_expired)
 
     @staticmethod
     def _get_user_data(user):
@@ -45,9 +60,9 @@ class Instagram:
         }
 
     def get_followers(self):
-        self._login()
-        self._api.getUserFollowers(self._user_id_real)
-        response = self._api.LastJson
+        self._login_fake()
+        self._api_fake.getUserFollowers(self._user_id_real)
+        response = self._api_fake.LastJson
         if 'users' not in response:
             response = json.dumps(response)
             raise InstagramException(f'Incorrect response. API response - {response}')
@@ -60,15 +75,15 @@ class Instagram:
 
         Return a tuple - (likes, deleted_medias) - (list of dicts, 'deleted_medias': list).
         """
-        self._login()
+        self._login_fake()
         i = 0
         total_medias = len(medias_ids)
         likes = []
         medias_deleted = []
         for media_id in medias_ids:
             i += 1
-            success = self._api.getMediaLikers(media_id)
-            result = self._api.LastJson
+            success = self._api_fake.getMediaLikers(media_id)
+            result = self._api_fake.LastJson
             if success:
                 users = result['users']
                 for user in users:
@@ -127,9 +142,9 @@ class Instagram:
         }
 
     def get_media(self, media_id):
-        self._login()
-        success = self._api.mediaInfo(media_id)
-        result = self._api.LastJson
+        self._login_fake()
+        success = self._api_fake.mediaInfo(media_id)
+        result = self._api_fake.LastJson
         if success:
             return self._get_media_data(result['items'][0])
 
@@ -140,11 +155,11 @@ class Instagram:
             raise InstagramException(f'Error getting media. API response - {api_response}')
 
     def get_medias(self, media_ids=None):  # pylint: disable=too-many-locals
-        self._login()
+        self._login_fake()
         if media_ids is None:
             media_ids = []
-        self._api.getSelfUsernameInfo()
-        response = self._api.LastJson
+        self._api_fake.getSelfUsernameInfo()
+        response = self._api_fake.LastJson
         if 'user' not in response:
             response = json.dumps(response)
             raise InstagramException(f'Incorrect response. API response - {response}')
@@ -156,19 +171,19 @@ class Instagram:
         pages = media_number // settings.MEDIAS_PER_PAGE
         stop_loading = False
         for i in range(pages + 1):
-            self._api.getUserFeed(self._user_id_real, maxid=max_id)
-            medias_on_page = self._api.LastJson['items']
+            self._api_fake.getUserFeed(self._user_id_real, maxid=max_id)
+            medias_on_page = self._api_fake.LastJson['items']
             for media in medias_on_page:
                 media_id = media['id']
                 if media_id in media_ids:
                     stop_loading = True
                     break
                 medias.append(media)
-            if not self._api.LastJson['more_available']:
+            if not self._api_fake.LastJson['more_available']:
                 stop_loading = True
             if stop_loading:
                 break
-            max_id = self._api.LastJson['next_max_id']
+            max_id = self._api_fake.LastJson['next_max_id']
             page = i + 1
             print(f'Loaded {page} / {pages}')
             # Slow down in attempt to avoid blocking by Instagram
@@ -182,9 +197,9 @@ class Instagram:
         return medias_output
 
     def get_followed(self):
-        self._login()
-        self._api.getUserFollowings(self._user_id_real)
-        response = self._api.LastJson
+        self._login_fake()
+        self._api_fake.getUserFollowings(self._user_id_real)
+        response = self._api_fake.LastJson
         if 'users' not in response:
             response = json.dumps(response)
             raise InstagramException(f'Incorrect response. API response - {response}')
@@ -192,39 +207,39 @@ class Instagram:
         return [self._get_user_data(user) for user in users]
 
     def update_media_caption(self, media_id, caption):
-        self._login(True)
-        success = self._api.editMedia(media_id, caption)
+        self._login_real()
+        success = self._api_real.editMedia(media_id, caption)
         if not success:
-            response = self._api.LastJson
+            response = self._api_real.LastJson
             if 'message' in response and response['message'] == self._MESSAGE_MEDIA_NOT_FOUND2:
                 raise InstagramMediaNotFoundException()
             response = json.dumps(response)
             raise InstagramException(f'Error updating media caption. API response - {response}')
 
     def follow(self, user_id):
-        self._login(True)
-        success = self._api.follow(user_id)
+        self._login_real()
+        success = self._api_real.follow(user_id)
         if not success:
-            response = json.dumps(self._api.LastJson)
+            response = json.dumps(self._api_real.LastJson)
             raise InstagramException(f'Error following a user. API response - {response}')
 
     def unfollow(self, user_id):
-        self._login(True)
-        success = self._api.unfollow(user_id)
+        self._login_real()
+        success = self._api_real.unfollow(user_id)
         if not success:
-            response = json.dumps(self._api.LastJson)
+            response = json.dumps(self._api_real.LastJson)
             raise InstagramException(f'Error unfollowing a user. API response - {response}')
 
     def block(self, user_id):
-        self._login(True)
-        success = self._api.block(user_id)
+        self._login_real()
+        success = self._api_real.block(user_id)
         if not success:
-            response = json.dumps(self._api.LastJson)
+            response = json.dumps(self._api_real.LastJson)
             raise InstagramException(f'Error blocking a user. API response - {response}')
 
     def delete_media(self, media_id, media_type):
-        self._login(True)
-        success = self._api.deleteMedia(media_id, media_type)
+        self._login_real()
+        success = self._api_real.deleteMedia(media_id, media_type)
         if not success:
-            response = json.dumps(self._api.LastJson)
+            response = json.dumps(self._api_real.LastJson)
             raise InstagramException(f'Error deleting media caption. API response - {response}')

@@ -240,6 +240,8 @@ DEBUG_TOOLBAR_PANELS = [
 
 ADMIN_EMAIL = local_settings.ADMIN_EMAIL
 INSTAGRAM_BASE_URL = 'https://www.instagram.com'
+# Slow down in attempt to avoid blocking by Instagram / Simulate client behaviour.
+# See https://github.com/mgp25/Instagram-API/wiki/FAQ
 INSTAGRAM_SLEEP = 2
 ADMIN_USERNAME = local_settings.ADMIN_USERNAME
 # https://smashballoon.com/instagram-feed/find-instagram-user-id/
@@ -249,6 +251,7 @@ FAKE_USERNAME = local_settings.FAKE_USERNAME
 FAKE_PASSWORD = local_settings.FAKE_PASSWORD
 PROXY = local_settings.PROXY
 MEDIAS_PER_PAGE = 18
+INSTAGRAM_SESSION_LIFETIME = 30 * 60  # 30 minutes.
 
 # This is here to fix the problem with static files on dev
 try:

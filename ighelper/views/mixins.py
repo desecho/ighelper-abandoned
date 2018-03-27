@@ -1,5 +1,6 @@
 from braces.views import JsonRequestResponseMixin, LoginRequiredMixin
 from django.conf import settings
+from django.core.cache import cache
 from django.views.generic import TemplateView as TemplateViewOriginal, View
 
 from ighelper.instagram import Instagram
@@ -32,17 +33,16 @@ class InstagramAjaxView(AjaxView):
 
     def get_data(self):
         self.user = self.request.user
-        if self.user.username == settings.ADMIN_USERNAME:
+        username = self.user.username
+        if username == settings.ADMIN_USERNAME:
             password = settings.ADMIN_PASSWORD
-        # instagram = cache.get('instagram')
-        # if instagram is None:
-        #     instagram = Instagram(self.user.username, password)
-        #     cache.set('instagram', instagram)
-        # Slow down in attempt to avoid blocking by Instagram / Simulate client behaviour.
-        # See https://github.com/mgp25/Instagram-API/wiki/FAQ
 
-        self.instagram = Instagram(settings.ADMIN_INSTAGRAM_ID, self.user.username, password, settings.FAKE_USERNAME,
-                                   settings.FAKE_PASSWORD)
+        instagram = cache.get('instagram')
+        if instagram is None:
+            instagram = Instagram(settings.ADMIN_INSTAGRAM_ID, username, password, settings.FAKE_USERNAME,
+                                  settings.FAKE_PASSWORD)
+            cache.set('instagram', instagram)
+        self.instagram = instagram
 
 
 class TemplateView(LoginRequiredMixin, TemplateViewOriginal):
