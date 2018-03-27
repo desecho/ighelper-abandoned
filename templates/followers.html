@@ -12,20 +12,20 @@
           <div class="filters">
             <label for="hide-approved">{% trans 'Hide approved' %}</label>
             <input id="hide-approved" type="checkbox" v-model="hideApproved"><br>
-            <label for="hide-followed">{% trans 'Hide following' %}</label>
-            <input id="hide-followed" type="checkbox" v-model="hideFollowed">
+            <label for="hide-following">{% trans 'Hide following' %}</label>
+            <input id="hide-following" type="checkbox" v-model="hideFollowing">
           </div>
           <table v-cloak class="table">
             <tr>
               <th>{% trans 'Avatar' %}</th>
               <th>{% trans 'Name' %}</th>
               <th>{% trans 'Likes' %}</th>
-              <th class="followed-by-me">{% trans 'Following' %}</th>
+              <th class="following">{% trans 'Following' %}</th>
               <th>{% trans 'Approved' %}</th>
               <th>{% trans 'Block' %}</th>
             </tr>
             <tr v-for="follower in followers" class="follower"
-                v-show="!(hideApproved && isApproved(follower)) && !(hideFollowed && follower.followed)">
+                v-show="!(hideApproved && isApproved(follower)) && !(hideFollowing && follower.followed)">
               <td><a :href="follower.profile" target="_blank"><img :src="follower.avatar" :alt="follower.name"
                                                                    class="avatar"/></a>
               </td>
