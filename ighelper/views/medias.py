@@ -82,18 +82,15 @@ class MediaView(InstagramAjaxView):
     def put(self, *args, **kwargs):  # pylint: disable=unused-argument
         self.get_data()
         media_id = kwargs['id']
-        media = self.user.medias.get(pk=media_id)
+        medias = self.user.medias.filter(pk=media_id)
+        media = medias[0]
         instagram_media = self.instagram.get_media(media.instagram_id)
         self.update_cache()
         if instagram_media is None:
             media.delete()
             return self.fail()
-        media.caption = instagram_media['caption']
-        media.location_name = instagram_media['location_name']
-        media.city = instagram_media['city']
-        media.views_count = instagram_media['views_count']
-        media.image = instagram_media['image']
-        media.save()
+
+        medias.update(**instagram_media)
         return self.success(media=get_medias(self.user, media_id)[0])
 
     def delete(self, *args, **kwargs):  # pylint: disable=unused-argument
