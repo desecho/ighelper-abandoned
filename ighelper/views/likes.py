@@ -30,12 +30,6 @@ class LikesView(TemplateView):
 
 
 class LoadLikesView(InstagramAjaxView):
-    def _get_medias(self, only_for_new_medias):
-        medias = self.user.medias.all()
-        if only_for_new_medias:
-            medias = medias.filter(likes_count=0)
-        return medias
-
     def _update_likes_counters(self, medias, instagram_users):
         for media in medias:
             media.likes_count = media.likes.count()
