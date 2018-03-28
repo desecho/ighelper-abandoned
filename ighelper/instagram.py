@@ -1,5 +1,6 @@
 import json
 import time
+from collections import defaultdict
 from datetime import datetime
 
 from django.conf import settings
@@ -9,6 +10,7 @@ from ighelper.exceptions import (
     InstagramException,
     InstagramMediaNotFoundException,
 )
+from ighelper.helpers import FrozenDict
 from ighelper.models import Media
 
 
@@ -72,17 +74,30 @@ class Instagram:
 
         return [self._get_user_data(user) for user in response['users']]
 
-    def get_likes_and_deleted_medias(self, medias_ids):
+    def get_likes_instagram_users_data_and_deleted_medias(self, medias_ids):
         """
         Get likes and deleted medias.
 
-        Return a tuple - (likes, deleted_medias) - (list of dicts, 'deleted_medias': list).
+        Return a tuple - (likes, instagram_users, deleted_medias) - (dict of lists, list of dicts, list).
+
+        Example:
+        (
+         'media_id': ['user_id']},
+         [{
+            'instagram_id': 'instagram_id',
+            'username': 'username',
+            'name': 'name',
+            'avatar': 'avatar'}],
+         ['media_id']
+        )
         """
         self._login_fake()
         i = 0
         total_medias = len(medias_ids)
         likes = []
         medias_deleted = []
+        likes = defaultdict(list)
+        instagram_users = set()
         for media_id in medias_ids:
             i += 1
             success = self._api_fake.getMediaLikers(media_id)
@@ -90,11 +105,10 @@ class Instagram:
             if success:
                 users = result['users']
                 for user in users:
-                    like = {
-                        'media_instagram_id': media_id,
-                        'user': self._get_user_data(user),
-                    }
-                    likes.append(like)
+                    user_data = self._get_user_data(user)
+                    user_data = FrozenDict(**user_data)
+                    instagram_users.add(user_data)
+                    likes[media_id].append(user_data['instagram_id'])
             else:
                 if 'message' in result and result['message'] == self._MESSAGE_MEDIA_NOT_FOUND3:
                     medias_deleted.append(media_id)
@@ -105,7 +119,8 @@ class Instagram:
             time.sleep(settings.INSTAGRAM_SLEEP)
             print(f'Loaded {i} / {total_medias}')
 
-        return likes, medias_deleted
+        instagram_users = [dict(u) for u in instagram_users]
+        return likes, instagram_users, medias_deleted
 
     @staticmethod
     def _get_media_data(m):

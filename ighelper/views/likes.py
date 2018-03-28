@@ -1,7 +1,8 @@
 import json
 
-from ighelper.models import InstagramUser, InstagramUserCounter, Like
 from django.utils.translation import gettext_lazy as _
+
+from ighelper.models import InstagramUser, InstagramUserCounter, Like
 
 from .mixins import InstagramAjaxView, TemplateView
 
@@ -40,6 +41,20 @@ class LoadLikesView(InstagramAjaxView):
             likes_count = instagram_user.likes.filter(media__user=self.user).count()
             InstagramUserCounter.objects.create(user=self.user, instagram_user=instagram_user, likes_count=likes_count)
 
+    @staticmethod
+    def _get_instagram_users(instagram_users_data):
+        instagram_users = {}
+        for instagram_user in instagram_users_data:
+            instagram_user_id = instagram_user['instagram_id']
+            instagram_users_found = InstagramUser.objects.filter(instagram_id=instagram_user_id)
+            if instagram_users_found.exists():
+                instagram_users_found.update(**instagram_user)
+                instagram_user = instagram_users_found[0]
+            else:
+                instagram_user = InstagramUser.objects.create(**instagram_user)
+            instagram_users[instagram_user_id] = instagram_user
+        return instagram_users
+
     def post(self, *args, **kwargs):  # pylint: disable=unused-argument,too-many-locals
         try:
             only_for_new_medias = json.loads(self.request.POST['onlyForNewMedias'])
@@ -56,29 +71,18 @@ class LoadLikesView(InstagramAjaxView):
             if not medias.exists():
                 return self.fail(_('There are no new medias'), self.MESSAGE_INFO)
 
-        media_ids = medias.values_list('instagram_id', flat=True)
+        media_instagram_ids = medias.values_list('instagram_id', flat=True)
         instagram_id_medias = {media.instagram_id: media for media in medias}
-        likes, medias_deleted = self.instagram.get_likes_and_deleted_medias(media_ids)
+        likes, instagram_users_data, media_instagram_ids_deleted = (
+            self.instagram.get_likes_instagram_users_data_and_deleted_medias(media_instagram_ids))
         self.update_cache()
-        Like.objects.filter(media__user=self.user).delete()
-        medias.filter(instagram_id__in=medias_deleted).delete()
-        instagram_users_ids_updated = []
-        instagram_users = set()
-        for like in likes:
-            instagram_user = like['user']
-            instagram_user_id = instagram_user['instagram_id']
-            instagram_users_found = InstagramUser.objects.filter(instagram_id=instagram_user_id)
-            if instagram_users_found.exists():
-                if instagram_user_id not in instagram_users_ids_updated:
-                    instagram_users_found.update(**instagram_user)
-                    instagram_users_ids_updated.append(instagram_user_id)
-                instagram_user = instagram_users_found[0]
-            else:
-                instagram_user = InstagramUser.objects.create(**instagram_user)
+        Like.objects.filter(media__instagram_id__in=media_instagram_ids).delete()
+        medias.filter(instagram_id__in=media_instagram_ids_deleted).delete()
+        instagram_users = self._get_instagram_users(instagram_users_data)
+        for media_instagram_id, instagram_user_ids in likes.items():
+            media = instagram_id_medias[media_instagram_id]
+            for instagram_user_id in instagram_user_ids:
+                Like.objects.create(media=media, instagram_user=instagram_users[instagram_user_id])
 
-            media = instagram_id_medias[like['media_instagram_id']]
-            Like.objects.create(media=media, instagram_user=instagram_user)
-            instagram_users.add(instagram_user)
-
-        self._update_likes_counters(medias, instagram_users)
+        self._update_likes_counters(medias, instagram_users.values())
         return self.success(users=get_users_who_liked_medias_excluding_followers(self.user))
