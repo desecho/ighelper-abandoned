@@ -47,12 +47,16 @@ class Instagram:
             self._session_fake = InstagramSession()
 
         self._api_fake.login(self._session_fake.is_expired)
+        # Slow down in attempt to avoid blocking by Instagram
+        time.sleep(settings.INSTAGRAM_SLEEP)
 
     def _login_real(self):
         if self._session_real is None:
             self._session_real = InstagramSession()
 
         self._api_real.login(self._session_real.is_expired)
+        # Slow down in attempt to avoid blocking by Instagram
+        time.sleep(settings.INSTAGRAM_SLEEP)
 
     @staticmethod
     def _get_user_data(user):
