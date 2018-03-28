@@ -14,13 +14,13 @@ window.vm = new Vue({
     loadFollowed: function() {
       function success(response) {
         if (response.data.status === 'success') {
-          vm.success(gettext('Users you are following have been loaded'));
+          vm.success(gettext('Following have been loaded'));
         }
         vm.followed = response.data.followed;
       }
 
       function fail() {
-        vm.error(gettext('Error loading users you are following'));
+        vm.error(gettext('Error loading following'));
       }
 
       axios.post(urls.loadFollowed).then(success).catch(fail);

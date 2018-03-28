@@ -8,30 +8,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-25 03:36-0400\n"
-"PO-Revision-Date: 2018-03-25 01:47-0456\n"
+"POT-Creation-Date: 2018-03-28 03:46-0400\n"
+"PO-Revision-Date: 2018-03-28 03:47-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.8.1\n"
 
 #: ighelper/js/followed.js:17
-msgid "Users you are following have been loaded"
-msgstr "Пользователи которых вы фолловите были загружены"
+#| msgid "Followers have been loaded"
+msgid "Following have been loaded"
+msgstr "Подписки были загружены"
 
 #: ighelper/js/followed.js:23
-msgid "Error loading users you are following"
-msgstr "Ошибка загрузки пользователей которых вы фолловите"
+#| msgid "Error loading followers"
+msgid "Error loading following"
+msgstr "Ошибка загрузки подписок"
 
 #: ighelper/js/followed.js:34
 msgid "Error unfollowing user"
-msgstr "Ошибка расфоллования пользователя"
+msgstr "Ошибка отмены подписки"
 
 #: ighelper/js/followed.js:47 ighelper/js/followers.js:56
 msgid "Error"
@@ -39,11 +39,11 @@ msgstr "Ошибка"
 
 #: ighelper/js/followers.js:21
 msgid "Followers have been loaded"
-msgstr "Фолловеры были загружены"
+msgstr "Подписчики были загружены"
 
 #: ighelper/js/followers.js:27
 msgid "Error loading followers"
-msgstr "Ошибка загрузки фолловеров"
+msgstr "Ошибка загрузки подписчиков"
 
 #: ighelper/js/followers.js:38
 msgid "Error setting approved status"
@@ -51,13 +51,13 @@ msgstr "Ошибка установки статуса одобрено"
 
 #: ighelper/js/followers.js:74
 msgid "Error blocking follower"
-msgstr "Ошибка блокирования фолловера"
+msgstr "Ошибка блокирования подписчика"
 
-#: ighelper/js/likes.js:16
+#: ighelper/js/likes.js:17
 msgid "Likes have been loaded"
 msgstr "Лайки были загружены"
 
-#: ighelper/js/likes.js:22
+#: ighelper/js/likes.js:25
 msgid "Error loading likes"
 msgstr "Ошибка загрузки лайков"
 
@@ -77,33 +77,39 @@ msgstr "Медиа были загружены"
 msgid "Error updating medias"
 msgstr "Ошибка обновления медиа"
 
-#: ighelper/js/medias.js:65
+#: ighelper/js/medias.js:66
 msgid "Error updating media"
 msgstr "Ошибка обновления медиа"
 
-#: ighelper/js/medias.js:87
+#: ighelper/js/medias.js:88
 msgid "Media has been removed because it no longer exists on Instagram"
 msgstr "Медиа было удалено потому что оно более недоступно в Instagram"
 
-#: ighelper/js/medias.js:92
+#: ighelper/js/medias.js:93
 msgid "Views have been loaded"
 msgstr "Просмотры были загружены"
 
-#: ighelper/js/medias.js:98
+#: ighelper/js/medias.js:99
 msgid "Error loading views"
 msgstr "Ошибка загрузки просмотров"
 
-#: ighelper/js/medias.js:114
+#: ighelper/js/medias.js:115
 msgid "Error editing caption"
 msgstr "Ошибка изменения описания"
 
-#: ighelper/js/medias.js:117
+#: ighelper/js/medias.js:118
 msgid "Caption"
 msgstr "Описание"
 
 #: ighelper/js/preferences.js:19
 msgid "Error saving settings"
 msgstr "Ошибка сохранения настроек"
+
+#~ msgid "Users you are following have been loaded"
+#~ msgstr "Пользователи которых вы фолловите были загружены"
+
+#~ msgid "Error loading users you are following"
+#~ msgstr "Ошибка загрузки пользователей которых вы фолловите"
 
 #~ msgid "Followers have been updated"
 #~ msgstr "Фолловеры были обновлены"

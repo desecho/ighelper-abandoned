@@ -8,15 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-25 03:36-0400\n"
-"PO-Revision-Date: 2018-03-25 03:36-0456\n"
+"POT-Creation-Date: 2018-03-28 03:46-0400\n"
+"PO-Revision-Date: 2018-03-28 03:45-0456\n"
 "Last-Translator: b'  <desecho@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.8.1\n"
 
 #: ighelper/menus.py:12
@@ -24,34 +26,42 @@ msgid "Home"
 msgstr "Домой"
 
 #: ighelper/menus.py:13
-msgid "Followers"
-msgstr "Фолловеры"
-
-#: ighelper/menus.py:14
 msgid "Medias"
 msgstr "Медиа"
 
-#: ighelper/menus.py:15 templates/followers.html:22 templates/likes.html:18
+#: ighelper/menus.py:14 templates/followers.html:22 templates/likes.html:18
 #: templates/medias.html:28
 msgid "Likes"
 msgstr "Лайки"
 
-#: ighelper/menus.py:16
-msgid "Followed by Me"
-msgstr "Зафолловлен Мной"
+#: ighelper/menus.py:15
+msgid "Followers"
+msgstr "Подписчики"
 
-#: ighelper/views/home.py:26 ighelper/views/home.py:30
-#: ighelper/views/home.py:33
+#: ighelper/menus.py:16 templates/followers.html:23
+msgid "Following"
+msgstr "Подписки"
+
+#: ighelper/views/home.py:30 ighelper/views/home.py:34
+#: ighelper/views/home.py:37
 msgid "not available"
 msgstr "не доступно"
 
+#: ighelper/views/likes.py:67
+msgid "You need to load medias first"
+msgstr "Вам необходимо сначала загрузить медиа"
+
+#: ighelper/views/likes.py:72
+msgid "There are no new medias"
+msgstr "Нет новых медиа"
+
 #: templates/followed.html:5
-msgid "List of users which does not include your followers"
-msgstr "Список пользователей который не включает ваших фолловеров"
+msgid "List of users without mutual following"
+msgstr "Список пользователей без взаимной подписки"
 
 #: templates/followed.html:7
-msgid "Load users I am following"
-msgstr "Загрузить пользователей которых я фолловлю"
+msgid "Load following"
+msgstr "Загрузить подписки"
 
 #: templates/followed.html:13
 msgid "Hide confirmed"
@@ -71,31 +81,27 @@ msgstr "Имя"
 msgid "Confirmed"
 msgstr "Подтвержден"
 
-#: templates/followed.html:21 templates/followed.html:29
+#: templates/followed.html:21 templates/followed.html:30
 msgid "Unfollow"
 msgstr "Расфолловить"
 
 #: templates/followers.html:7
 msgid "Load followers"
-msgstr "Загрузить фолловеров"
+msgstr "Загрузить подписчиков"
 
 #: templates/followers.html:13
 msgid "Hide approved"
 msgstr "Спрятать одобренные"
 
 #: templates/followers.html:15
-msgid "Hide followed by me"
-msgstr "Скрыть зафолловленных мной"
-
-#: templates/followers.html:23
-msgid "Followed by me"
-msgstr "Зафолловлен мной"
+msgid "Hide following"
+msgstr "Скрыть подписки"
 
 #: templates/followers.html:24
 msgid "Approved"
 msgstr "Одобрен"
 
-#: templates/followers.html:25 templates/followers.html:36
+#: templates/followers.html:25 templates/followers.html:40
 msgid "Block"
 msgstr "Заблокировать"
 
@@ -109,25 +115,35 @@ msgstr "Всего видео"
 
 #: templates/home.html:17
 msgid "Total followers"
-msgstr "Всего фолловеров"
+msgstr "Всего подписчиков"
+
+#: templates/home.html:21
+msgid "Total following"
+msgstr "Всего подписок"
 
 #: templates/home.html:25
-msgid "Percentage of likes from followers"
-msgstr "Процент лайков от фолловеров"
+msgid "Total users who are not followers but liked medias"
+msgstr ""
+"Список пользователей который не включает ваших подписчиков но которые "
+"залайкали ваши медиа"
 
 #: templates/home.html:33
+msgid "Percentage of likes from followers"
+msgstr "Процент лайков от подписчиков"
+
+#: templates/home.html:41
 msgid "Total likes"
 msgstr "Всего лайков"
 
-#: templates/home.html:37
+#: templates/home.html:45
 msgid "Average likes per media"
 msgstr "Среднее число лайков на медиа"
 
-#: templates/home.html:45
+#: templates/home.html:53
 msgid "Total videos views"
 msgstr "Всего видео просмотров"
 
-#: templates/home.html:49
+#: templates/home.html:57
 msgid "Average views per video"
 msgstr "Среднее число просмотров на видео"
 
@@ -137,10 +153,9 @@ msgstr "Переключить навигацию"
 
 #: templates/likes.html:5
 msgid ""
-"List of users which does not include your followers but who liked your "
-"medias"
+"List of users which does not include your followers but who liked your medias"
 msgstr ""
-"Список пользователей который не включает ваших фолловеров но которые "
+"Список пользователей который не включает ваших подписчиков но которые "
 "залайкали ваши медиа"
 
 #: templates/likes.html:7
@@ -148,9 +163,8 @@ msgid "Load likes"
 msgstr "Загрузить лайки"
 
 #: templates/likes.html:9
-#| msgid "Load new medias"
-msgid "Load likes only for new medias"
-msgstr "Загрузить лайки только для новых медиа"
+msgid "Load likes for new medias"
+msgstr "Загрузить лайки для новых медиа"
 
 #: templates/medias.html:7
 msgid "Load new medias"
@@ -208,15 +222,15 @@ msgstr "Дата"
 msgid "Actions"
 msgstr "Действия"
 
-#: templates/medias.html:46
+#: templates/medias.html:48
 msgid "Edit caption"
 msgstr "Изменить описание"
 
-#: templates/medias.html:47
+#: templates/medias.html:50
 msgid "Update media"
 msgstr "Обновить медиа"
 
-#: templates/medias.html:48
+#: templates/medias.html:51
 msgid "Delete media"
 msgstr "Удалить медиа"
 
@@ -239,6 +253,15 @@ msgstr "Настройки"
 #: templates/user/preferences.html:10
 msgid "Language"
 msgstr "Язык"
+
+#~ msgid "Followed by Me"
+#~ msgstr "Зафолловлен Мной"
+
+#~ msgid "List of users which does not include your followers"
+#~ msgstr "Список пользователей который не включает ваших фолловеров"
+
+#~ msgid "Followed by me"
+#~ msgstr "Зафолловлен мной"
 
 #~ msgid "Load / Update followers"
 #~ msgstr "Загрузить / Обновить фолловеров"
