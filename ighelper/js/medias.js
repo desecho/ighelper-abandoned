@@ -46,16 +46,7 @@ window.vm = new Vue({
     updateMedia: function(media) {
       function success(response) {
         if (response.data.status === 'success') {
-          const updatedMedia = response.data.media;
-          media.noLocation = updatedMedia.noLocation;
-          media.noCaption = updatedMedia.noCaption;
-          media.noTags = updatedMedia.noTags;
-          media.likes = updatedMedia.likes;
-          media.views = updatedMedia.views;
-          media.caption = updatedMedia.caption;
-          media.image = updatedMedia.image;
-          media.imageSmall = updatedMedia.imageSmall;
-          media.location = updatedMedia.location;
+          $.extend(media, response.data.media);
         } else {
           vm.removeMedia(media.id);
           vm.showRemovedMediaMessage();
