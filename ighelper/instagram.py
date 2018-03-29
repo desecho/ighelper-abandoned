@@ -180,7 +180,7 @@ class Instagram:
         self._login_fake()
         if media_ids is None:
             media_ids = []
-        self._api_fake.getSelfUsernameInfo()
+        self._api_fake.getUsernameInfo(self._user_id_real)
         response = self._api_fake.LastJson
         if 'user' not in response:
             response = json.dumps(response)

@@ -68,13 +68,11 @@ class UpdateMediasView(InstagramAjaxView):
         self.update_cache()
         instagram_medias = {m['instagram_id']: m for m in instagram_medias}
         medias = self.user.medias.all()
-        medias_instagram_ids = medias.values_list('instagram_id', flat=True)
-        for media_instagram_id in medias_instagram_ids:
-            medias_found = medias.filter(instagram_id=media_instagram_id)
-            if medias_found.exists():
-                medias_found.update(**instagram_medias[media_instagram_id])
+        for media in medias:
+            if media.instagram_id in instagram_medias:
+                medias.filter(pk=media.instagram_id).update(**instagram_medias[media.instagram_id])
             else:
-                medias_found.delete()
+                media.delete()
         return self.success(medias=get_medias(self.user))
 
 
